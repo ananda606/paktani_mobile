@@ -99,7 +99,6 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                   return Text('Failed');
                 }
               }),
-              
             ],
           ),
         ),
@@ -135,7 +134,7 @@ class MovieGridList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
+      height: 500,
       child: GridView.builder(
         gridDelegate:
             SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
@@ -152,15 +151,26 @@ class MovieGridList extends StatelessWidget {
                   arguments: movie.id,
                 );
               },
-              child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-                child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
-                  placeholder: (context, url) => Center(
-                    child: CircularProgressIndicator(),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 100,
+                      width: 200,
+                      child: CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
+                        placeholder: (context, url) => Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
+                    ),
                   ),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                ),
+                  Text(movie.title.toString()),
+                  Text(movie.adult.toString()),
+                ],
               ),
             ),
           );
