@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:paktani_mobile/domain/entities/product_detail.dart';
 //belom selese
-class ProductDetailResponse extends Equatable {
-  ProductDetailResponse(
+class ProductDetailModel extends Equatable {
+  ProductDetailModel(
       {required this.id,
       required this.productName,
       required this.productDescription,

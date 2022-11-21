@@ -142,6 +142,7 @@ class MovieGridList extends StatelessWidget {
         itemBuilder: (context, index) {
           final movie = movies[index];
           return Container(
+          
             padding: const EdgeInsets.all(8),
             child: InkWell(
               onTap: () {
@@ -152,6 +153,9 @@ class MovieGridList extends StatelessWidget {
                 );
               },
               child: Column(
+                
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -168,8 +172,29 @@ class MovieGridList extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Text(movie.title.toString()),
-                  Text(movie.adult.toString()),
+                  Text(
+                    movie.title.toString(),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                  SafeArea(
+                    child: Row(mainAxisSize: MainAxisSize.min, children: [
+                      Icon(Icons.location_on, size: 20,),
+                      Text(
+                        movie.releaseDate.toString(),
+                        softWrap: true,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    ]),
+                  ),
+               
+                Text(
+                  movie.overview.toString(),
+                  softWrap: true,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
                 ],
               ),
             ),

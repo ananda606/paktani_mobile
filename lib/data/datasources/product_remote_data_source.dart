@@ -28,12 +28,12 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   }
 
   @override
-  Future<ProductDetailResponse> getProductDetail(int id) async {
+  Future<ProductDetailModel> getProductDetail(int id) async {
     final response =
         await client.get(Uri.parse('$BASE_URL/movie/$id?$API_KEY'));
 
     if (response.statusCode == 200) {
-      return ProductDetailResponse.fromJson(json.decode(response.body));
+      return ProductDetailModel.fromJson(json.decode(response.body));
     } else {
       throw ServerException();
     }
