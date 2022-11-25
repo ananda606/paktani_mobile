@@ -42,7 +42,7 @@ class DatabaseHelperProduct {
     return await db!.insert(_tblWishlist, productTable.toJson());
   }
 
-  Future<int> removeWatchlist(ProductTable product) async {
+  Future<int> removeWishlist(ProductTable product) async {
     final db = await database;
     return await db!.delete(
       _tblWishlist,
@@ -66,7 +66,7 @@ class DatabaseHelperProduct {
     }
   }
 
-  Future<List<Map<String, dynamic>>> getWatchlistproducts() async {
+  Future<List<Map<String, dynamic>>> getWishlistProducts() async {
     final db = await database;
     final List<Map<String, dynamic>> results = await db!.query(_tblWishlist);
 

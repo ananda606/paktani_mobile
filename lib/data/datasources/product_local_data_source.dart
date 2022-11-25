@@ -28,7 +28,7 @@ class ProductLocalDataSourceImpl implements ProductLocalDataSource {
   @override
   Future<String> removeWishlist(ProductTable productTable) async {
     try {
-      await databaseHelperProduct.removeWatchlist(productTable);
+      await databaseHelperProduct.removeWishlist(productTable);
       return 'Removed from Wishlist';
     } catch (e) {
       throw DatabaseException(e.toString());
@@ -47,7 +47,7 @@ class ProductLocalDataSourceImpl implements ProductLocalDataSource {
 
   @override
   Future<List<ProductTable>> getWishlistProducts() async {
-    final result = await databaseHelperProduct.getWatchlistproducts();
+    final result = await databaseHelperProduct.getWishlistProducts();
     return result.map((data) => ProductTable.fromMap(data)).toList();
   }
 }

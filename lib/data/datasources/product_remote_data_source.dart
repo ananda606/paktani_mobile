@@ -8,6 +8,10 @@ import 'package:http/http.dart' as http;
 
 abstract class ProductRemoteDataSource {
   Future<List<ProductModel>> getProducts();
+  Future<ProductDetailModel> getProductDetail(int id);
+  Future<List<ProductModel>> getProductRecommendations(int id);
+  Future<List<ProductModel>> getPopularProducts();
+  Future<List<ProductModel>> searchProducts(String query);
 }
 
 class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
@@ -16,7 +20,7 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
   final http.Client client;
   ProductRemoteDataSourceImpl({required this.client});
   @override
-  Future<List<ProductModel>> getNowPlayingProducts() async {
+  Future<List<ProductModel>> getProducts() async {
     final response =
         await client.get(Uri.parse('$BASE_URL/movie/now_playing?$API_KEY'));
 
