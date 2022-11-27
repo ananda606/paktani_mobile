@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:paktani_mobile/domain/entities/product.dart';
+import 'package:paktani_mobile/domain/entities/product/product.dart';
 import 'package:equatable/equatable.dart';
 
 class ProductModel extends Equatable {

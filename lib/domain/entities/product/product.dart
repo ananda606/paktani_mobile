@@ -10,12 +10,14 @@ class Product extends Equatable {
   final String productName;
   final String descriptionProduct;
   final List<String> imageUrls;
+
   Product.productlist({
     required this.id,
     required this.productName,
     required this.descriptionProduct,
     required this.imageUrls,
   });
+  @override
   List<Object?> get props => [
         id,
         productName,

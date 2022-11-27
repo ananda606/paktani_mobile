@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:paktani_mobile/domain/entities/product_detail.dart';
+import 'package:paktani_mobile/domain/entities/product/product_detail.dart';
 
 //belom selese
 class ProductDetailModel extends Equatable {
@@ -26,7 +26,7 @@ class ProductDetailModel extends Equatable {
         'imageUrls': imageUrls,
       };
   ProductDetail toEntity() {
-    return ProductDetail();
+    return ProductDetail(productName: this.productName,productDescription: productDescription,);
   }
 
   @override

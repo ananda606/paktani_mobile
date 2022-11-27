@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:paktani_mobile/domain/entities/product.dart';
+import 'package:paktani_mobile/domain/entities/product/product.dart';
 import 'package:paktani_mobile/domain/entities/movie_detail.dart';
 
 class ProductTable extends Equatable {

@@ -1,18 +1,18 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:paktani_mobile/data/datasources/movie_local_data_source.dart';
-import 'package:paktani_mobile/data/datasources/movie_remote_data_source.dart';
-import 'package:paktani_mobile/data/models/movie_table.dart';
-import 'package:paktani_mobile/domain/entities/movie.dart';
-import 'package:paktani_mobile/domain/entities/movie_detail.dart';
-import 'package:paktani_mobile/domain/repositories/movie_repository.dart';
+import 'package:paktani_mobile/data/datasources/product/product_local_data_source.dart';
+import 'package:paktani_mobile/data/datasources/product/product_remote_data_source.dart';
+import 'package:paktani_mobile/data/models/product/product_table.dart';
+import 'package:paktani_mobile/domain/entities/Product.dart';
+import 'package:paktani_mobile/domain/entities/product/product_detail.dart';
+import 'package:paktani_mobile/domain/repositories/product_repository.dart';
 import 'package:paktani_mobile/common/exception.dart';
 import 'package:paktani_mobile/common/failure.dart';
 
-class ProductRepositoryImpl implements MovieRepository{
-   final MovieRemoteDataSource remoteDataSource;
-  final MovieLocalDataSource localDataSource;
+class ProductRepositoryImpl implements ProductRepository{
+   final ProductRemoteDataSource remoteDataSource;
+  final ProductLocalDataSource localDataSource;
 
   ProductRepositoryImpl({
     required this.remoteDataSource,
@@ -20,9 +20,9 @@ class ProductRepositoryImpl implements MovieRepository{
   });
 
   @override
-  Future<Either<Failure, List<Movie>>> getNowPlayingMovies() async {
+  Future<Either<Failure, List<Product>>> getNowPlayingproducts() async {
     try {
-      final result = await remoteDataSource.getNowPlayingMovies();
+      final result = await remoteDataSource.getProducts();
       return Right(result.map((model) => model.toEntity()).toList());
     } on ServerException {
       return Left(ServerFailure('Failed to connect to Server'));
@@ -32,9 +32,9 @@ class ProductRepositoryImpl implements MovieRepository{
   }
 
   @override
-  Future<Either<Failure, MovieDetail>> getMovieDetail(int id) async {
+  Future<Either<Failure, ProductDetail>> getproductDetail(int id) async {
     try {
-      final result = await remoteDataSource.getMovieDetail(id);
+      final result = await remoteDataSource.getProductDetail(id);
       return Right(result.toEntity());
     } on ServerException {
       return Left(ServerFailure('Failed to connect to Server'));
@@ -44,9 +44,9 @@ class ProductRepositoryImpl implements MovieRepository{
   }
 
   @override
-  Future<Either<Failure, List<Movie>>> getMovieRecommendations(int id) async {
+  Future<Either<Failure, List<Product>>> getproductRecommendations(int id) async {
     try {
-      final result = await remoteDataSource.getMovieRecommendations(id);
+      final result = await remoteDataSource.getProductRecommendations(id);
       return Right(result.map((model) => model.toEntity()).toList());
     } on ServerException {
       return Left(ServerFailure('Failed to connect to Server'));
@@ -56,9 +56,9 @@ class ProductRepositoryImpl implements MovieRepository{
   }
 
   @override
-  Future<Either<Failure, List<Movie>>> getPopularMovies() async {
+  Future<Either<Failure, List<Product>>> getPopularproducts() async {
     try {
-      final result = await remoteDataSource.getPopularMovies();
+      final result = await remoteDataSource.getPopularProducts();
       return Right(result.map((model) => model.toEntity()).toList());
     } on ServerException {
       return Left(ServerFailure('Failed to connect to Server'));
@@ -68,9 +68,9 @@ class ProductRepositoryImpl implements MovieRepository{
   }
 
   @override
-  Future<Either<Failure, List<Movie>>> getTopRatedMovies() async {
+  Future<Either<Failure, List<Product>>> getTopRatedProducts() async {
     try {
-      final result = await remoteDataSource.getTopRatedMovies();
+      final result = await remoteDataSource.getTopRatedProducts();
       return Right(result.map((model) => model.toEntity()).toList());
     } on ServerException {
       return Left(ServerFailure('Failed to connect to Server'));
@@ -80,9 +80,9 @@ class ProductRepositoryImpl implements MovieRepository{
   }
 
   @override
-  Future<Either<Failure, List<Movie>>> searchMovies(String query) async {
+  Future<Either<Failure, List<Product>>> searchproducts(String query) async {
     try {
-      final result = await remoteDataSource.searchMovies(query);
+      final result = await remoteDataSource.searchProducts(query);
       return Right(result.map((model) => model.toEntity()).toList());
     } on ServerException {
       return Left(ServerFailure('Failed to connect to Server'));
@@ -92,10 +92,10 @@ class ProductRepositoryImpl implements MovieRepository{
   }
 
   @override
-  Future<Either<Failure, String>> saveWatchlist(MovieDetail movie) async {
+  Future<Either<Failure, String>> saveWishlist(ProductDetail Product) async {
     try {
       final result =
-          await localDataSource.insertWatchlist(MovieTable.fromEntity(movie));
+          await localDataSource.insertWishlist(ProductTable.fromEntity(Product));
       return Right(result);
     } on DatabaseException catch (e) {
       return Left(DatabaseFailure(e.message));
@@ -105,10 +105,10 @@ class ProductRepositoryImpl implements MovieRepository{
   }
 
   @override
-  Future<Either<Failure, String>> removeWatchlist(MovieDetail movie) async {
+  Future<Either<Failure, String>> removeWishlist(ProductDetail Product) async {
     try {
       final result =
-          await localDataSource.removeWatchlist(MovieTable.fromEntity(movie));
+          await localDataSource.removeWishlist(ProductTable.fromEntity(Product));
       return Right(result);
     } on DatabaseException catch (e) {
       return Left(DatabaseFailure(e.message));
@@ -116,14 +116,14 @@ class ProductRepositoryImpl implements MovieRepository{
   }
 
   @override
-  Future<bool> isAddedToWatchlist(int id) async {
-    final result = await localDataSource.getMovieById(id);
+  Future<bool> isAddedToWishlist(int id) async {
+    final result = await localDataSource.getProductById(id);
     return result != null;
   }
 
   @override
-  Future<Either<Failure, List<Movie>>> getWatchlistMovies() async {
-    final result = await localDataSource.getWatchlistMovies();
+  Future<Either<Failure, List<Product>>> getWishlistProducts() async {
+    final result = await localDataSource.getWishlistProducts();
     return Right(result.map((data) => data.toEntity()).toList());
   }
 }

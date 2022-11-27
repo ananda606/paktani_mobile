@@ -1,6 +1,6 @@
 import 'package:paktani_mobile/common/state_enum.dart';
-import 'package:paktani_mobile/domain/entities/product.dart';
-import 'package:paktani_mobile/domain/usecases/product/search_products.dart';
+import 'package:paktani_mobile/domain/entities/product/product.dart';
+import 'package:paktani_mobile/domain/usecases/product/search_product.dart';
 import 'package:flutter/foundation.dart';
 
 class ProductSearchNotifier extends ChangeNotifier {

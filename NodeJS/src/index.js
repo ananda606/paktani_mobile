@@ -8,7 +8,18 @@ const {db}= require('./model/dbConnection');
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended:true}));
-
+//read product
+app.get('/api/readProduct',(req,res)=>{
+    const sqlQuery="SELECT * FROM product";
+    db.query(sqlQuery,(err,result)=>{
+        if(err){
+            console.log(err);
+        }else{
+            res.send(result);
+            console.log(result);
+        }
+    });
+});
 //read
 app.get('/api/readData',(req,res)=>{
     const sqlQuery="SELECT * FROM user";
@@ -36,6 +47,25 @@ app.get('/api/readUser/:username',(req,res)=>{
     });
     
 });
+//create product
+app.post('/api/createProduct',(req,res)=>{
+     const productName= req.body.productName;
+     const productDescription= req.body.productDescription;
+     const productImageUrl= req.body.productImageUrl;
+     const sqlQuery= "INSERT INTO product (productName, productDescription, productImageUrl) VALUE (?, ?, ?)";
+ 
+     db.query(sqlQuery, [productName, productDescription, productImageUrl], (err,result)=>{
+         if(err){
+             console.log(err);
+      
+          }else{
+              res.send(result);
+              console.log(result);
+          }
+     });
+     
+ });
+
 //create
 app.post('/api/createUser',(req,res)=>{
    const id= req.body.id;

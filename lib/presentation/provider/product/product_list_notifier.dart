@@ -1,8 +1,8 @@
 
-import 'package:paktani_mobile/domain/entities/product.dart';
-import 'package:paktani_mobile/domain/usecases/product/get_product_detail.dart';
+import 'package:paktani_mobile/domain/entities/product/product.dart';
+import 'package:paktani_mobile/domain/usecases/product/get/get_product_detail.dart';
 import 'package:paktani_mobile/common/state_enum.dart';
-import 'package:paktani_mobile/domain/usecases/product/get_recommendation_product.dart';
+import 'package:paktani_mobile/domain/usecases/product/get/get_recommendation_product.dart';
 
 import 'package:flutter/material.dart';
 import 'package:paktani_mobile/data/models/product/product_model.dart';
@@ -41,13 +41,13 @@ class ProductListNotifier extends ChangeNotifier {
   final GetTopRatedProducts getTopRatedProducts;
 
   Future<void> fetchNowPlayingProducts() async {
-    _nowPlayingState = RequestState.Loading;
+  _productListState = RequestState.Loading;
     notifyListeners();
 
     final result = await getNowPlayingProducts.execute();
     result.fold(
       (failure) {
-        _nowPlayingState = RequestState.Error;
+        _productListState = RequestState.Error;
         _message = failure.message;
         notifyListeners();
       },

@@ -1,11 +1,11 @@
-import 'package:paktani_mobile/domain/entities/product.dart';
-import 'package:paktani_mobile/domain/entities/product_detail.dart';
-import 'package:paktani_mobile/domain/usecases/product/get_product_detail.dart';
-import 'package:paktani_mobile/domain/usecases/product/get_recommendation_product.dart';
+import 'package:paktani_mobile/domain/entities/product/product.dart';
+import 'package:paktani_mobile/domain/entities/product/product_detail.dart';
+import 'package:paktani_mobile/domain/usecases/product/get/get_product_detail.dart';
+import 'package:paktani_mobile/domain/usecases/product/get/get_recommendation_product.dart';
 import 'package:paktani_mobile/common/state_enum.dart';
-import 'package:paktani_mobile/domain/usecases/get_Wishlist_status.dart';
-import 'package:paktani_mobile/domain/usecases/remove_Wishlist.dart';
-import 'package:paktani_mobile/domain/usecases/save_Wishlist.dart';
+import 'package:paktani_mobile/domain/usecases/product/get/get_Wishlist_status.dart';
+import 'package:paktani_mobile/domain/usecases/product/delete/remove_Wishlist.dart';
+import 'package:paktani_mobile/domain/usecases/product/post/save_wishlist_product.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -29,7 +29,7 @@ class ProductDetailNotifier extends ChangeNotifier{
   });
 
   late ProductDetail _Product;
-  ProductDetail get Product => _Product;
+  ProductDetail get product => _Product;
 
   RequestState _ProductState = RequestState.Empty;
   RequestState get ProductState => _ProductState;
@@ -59,7 +59,7 @@ class ProductDetailNotifier extends ChangeNotifier{
       },
       (Product) {
         _recommendationState = RequestState.Loading;
-        _Product = Product;
+        _Product = product;
         notifyListeners();
         recommendationResult.fold(
           (failure) {
@@ -92,7 +92,7 @@ class ProductDetailNotifier extends ChangeNotifier{
       },
     );
 
-    await loadWishlistStatus(Product.id);
+    await loadWishlistStatus(product.id);
   }
 
   Future<void> removeFromWishlist(ProductDetail Product) async {
@@ -107,7 +107,7 @@ class ProductDetailNotifier extends ChangeNotifier{
       },
     );
 
-    await loadWishlistStatus(Product.id);
+    await loadWishlistStatus(product.id);
   }
 
   Future<void> loadWishlistStatus(int id) async {
