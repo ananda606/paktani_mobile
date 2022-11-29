@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: ListView(
                   scrollDirection: Axis.vertical,
                   children: [
-                    Center(
+                    const Center(
                       child: Text(
                         'Register',
                         style: TextStyle(
@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Container(

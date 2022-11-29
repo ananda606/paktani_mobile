@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:paktani_mobile/common/failure.dart';
-import 'package:paktani_mobile/domain/entities/Product.dart';
-import 'package:paktani_mobile/domain/repositories/Product_repository.dart';
+import 'package:paktani_mobile/domain/entities/product/product.dart';
+import 'package:paktani_mobile/domain/repositories/product_repository.dart';
 
 class SearchProducts {
   final ProductRepository repository;

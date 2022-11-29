@@ -3,8 +3,8 @@ import 'package:paktani_mobile/domain/entities/product/product_detail.dart';
 import 'package:paktani_mobile/domain/usecases/product/get/get_product_detail.dart';
 import 'package:paktani_mobile/domain/usecases/product/get/get_recommendation_product.dart';
 import 'package:paktani_mobile/common/state_enum.dart';
-import 'package:paktani_mobile/domain/usecases/product/get/get_Wishlist_status.dart';
-import 'package:paktani_mobile/domain/usecases/product/delete/remove_Wishlist.dart';
+import 'package:paktani_mobile/domain/usecases/product/delete/remove_wishlist.dart';
+import 'package:paktani_mobile/domain/usecases/product/get/get_wishlist_status.dart';
 import 'package:paktani_mobile/domain/usecases/product/post/save_wishlist_product.dart';
 
 import 'package:flutter/material.dart';
@@ -57,7 +57,7 @@ class ProductDetailNotifier extends ChangeNotifier{
         _message = failure.message;
         notifyListeners();
       },
-      (Product) {
+      (product) {
         _recommendationState = RequestState.Loading;
         _Product = product;
         notifyListeners();
@@ -66,9 +66,9 @@ class ProductDetailNotifier extends ChangeNotifier{
             _recommendationState = RequestState.Error;
             _message = failure.message;
           },
-          (Products) {
+          (products) {
             _recommendationState = RequestState.Loaded;
-            _ProductRecommendations = Products;
+            _ProductRecommendations = products;
           },
         );
         _ProductState = RequestState.Loaded;

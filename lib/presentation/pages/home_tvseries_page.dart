@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeTVSeriesPage extends StatefulWidget {
-  static const ROUTE_NAME = '/home_tv_series';
+  static const ROUTE_NAME = '/home_tv_series';  
 
   @override
   State<HomeTVSeriesPage> createState() => _HomeTVSeriesPageState();
@@ -35,13 +35,13 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
     return Scaffold(
       drawer: DrawerApp(pageRoute: HomeTVSeriesPage.ROUTE_NAME),
       appBar: AppBar(
-        title: Text('Ditonton'),
+        title: const Text('Ditonton'),
         actions: [
           IconButton(
             onPressed: () {
               Navigator.pushNamed(context, SearchPageTVSeries.ROUTE_NAME);
             },
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
           )
         ],
       ),
@@ -59,13 +59,13 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
               Consumer<TVSeriesListNotifier>(builder: (context, data, child) {
                 final state = data.onAirState;
                 if (state == RequestState.Loading) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 } else if (state == RequestState.Loaded) {
                   return TVSeriesList(data.onAirTVSeries);
                 } else {
-                  return Text('Failed to fetch data');
+                  return const Text('Failed to fetch data');
                 }
               }),
               _buildSubHeading(
@@ -76,13 +76,13 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
               Consumer<TVSeriesListNotifier>(builder: (context, data, child) {
                 final state = data.popularTVSeriesState;
                 if (state == RequestState.Loading) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 } else if (state == RequestState.Loaded) {
                   return TVSeriesList(data.popularTVSeries);
                 } else {
-                  return Text('Failed');
+                  return const Text('Failed');
                 }
               }),
               _buildSubHeading(
@@ -93,13 +93,13 @@ class _HomeTVSeriesPageState extends State<HomeTVSeriesPage> {
               Consumer<TVSeriesListNotifier>(builder: (context, data, child) {
                 final state = data.topRatedTVSeriesState;
                 if (state == RequestState.Loading) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 } else if (state == RequestState.Loaded) {
                   return TVSeriesList(data.topRatedTVSeries);
                 } else {
-                  return Text('Failed');
+                  return const Text('Failed');
                 }
               }),
             ],
@@ -123,7 +123,7 @@ Row _buildSubHeading({required String title, required Function() onTap}) {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
-            children: [Text('See More'), Icon(Icons.arrow_forward_ios)],
+            children: [const Text('See More'), const Icon(Icons.arrow_forward_ios)],
           ),
         ),
       ),
@@ -155,13 +155,13 @@ class TVSeriesList extends StatelessWidget {
                 );
               },
               child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
+                borderRadius: const BorderRadius.all(Radius.circular(16)),
                 child: CachedNetworkImage(
                   imageUrl: '$BASE_IMAGE_URL${tv.posterPath}',
-                  placeholder: (context, url) => Center(
+                  placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),
                   ),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
             ),

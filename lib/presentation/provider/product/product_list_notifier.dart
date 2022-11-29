@@ -1,16 +1,16 @@
-
 import 'package:paktani_mobile/domain/entities/product/product.dart';
 import 'package:paktani_mobile/domain/usecases/product/get/get_product_detail.dart';
 import 'package:paktani_mobile/common/state_enum.dart';
 import 'package:paktani_mobile/domain/usecases/product/get/get_recommendation_product.dart';
+import 'package:paktani_mobile/domain/usecases/product/get/get_popular_product.dart';
 
 import 'package:flutter/material.dart';
 import 'package:paktani_mobile/data/models/product/product_model.dart';
 import 'package:paktani_mobile/presentation/provider/top_rated_movies_notifier.dart';
 
 class ProductListNotifier extends ChangeNotifier {
-  var _productList = <ProductModel>[];
-  List<ProductModel> get productList => _productList;
+  var _productList = <Product>[];
+  List<Product> get productList => _productList;
   //init request state
   RequestState _productListState = RequestState.Empty;
   RequestState get productListState => _productListState;
@@ -31,20 +31,20 @@ class ProductListNotifier extends ChangeNotifier {
   String get message => _message;
 
   ProductListNotifier({
-    required this.getNowPlayingProducts,
+    required this.getProductDetail,
     required this.getPopularProducts,
-    required this.getTopRatedProducts,
+    //required this.getTopRatedProducts,
   });
 
-  final GetProductDetail getNowPlayingProducts;
+  final GetProductDetail getProductDetail;
   final GetPopularProducts getPopularProducts;
-  final GetTopRatedProducts getTopRatedProducts;
+//  final GetTopRatedProducts getTopRatedProducts;
 
-  Future<void> fetchNowPlayingProducts() async {
-  _productListState = RequestState.Loading;
+  Future<void> fetchAllProducts() async {
+    _productListState = RequestState.Loading;
     notifyListeners();
 
-    final result = await getNowPlayingProducts.execute();
+    final result = await getPopularProducts.execute();
     result.fold(
       (failure) {
         _productListState = RequestState.Error;
@@ -52,8 +52,8 @@ class ProductListNotifier extends ChangeNotifier {
         notifyListeners();
       },
       (ProductsData) {
-        _nowPlayingState = RequestState.Loaded;
-        _nowPlayingProducts = ProductsData;
+        _productListState = RequestState.Loaded;
+        _productList = ProductsData;
         notifyListeners();
       },
     );
@@ -77,7 +77,7 @@ class ProductListNotifier extends ChangeNotifier {
       },
     );
   }
-
+/*
   Future<void> fetchTopRatedProducts() async {
     _topRatedProductsState = RequestState.Loading;
     notifyListeners();
@@ -95,5 +95,5 @@ class ProductListNotifier extends ChangeNotifier {
         notifyListeners();
       },
     );
-  }
+  }*/
 }

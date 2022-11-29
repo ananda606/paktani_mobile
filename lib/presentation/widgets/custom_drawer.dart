@@ -12,7 +12,7 @@ class DrawerApp extends StatelessWidget {
     return Drawer(
       child: Column(
         children: [
-          UserAccountsDrawerHeader(
+          const UserAccountsDrawerHeader(
             currentAccountPicture: CircleAvatar(
                 //  backgroundImage: AssetImage('assets/circle-g.png'),
                 ),
@@ -20,29 +20,29 @@ class DrawerApp extends StatelessWidget {
             accountEmail: Text('user@gmail.com'),
           ),
           ListTile(
-            leading: Icon(Icons.monetization_on),
-            title: Text('Gopay'),
+            leading: const Icon(Icons.monetization_on),
+            title: const Text('Gopay'),
             onTap: () {},
-            trailing: Text('Rp.1.000.000'),
+            trailing: const Text('Rp.1.000.000'),
           ),
           ListTile(
-            leading: Icon(Icons.tv),
-            title: Text('TVSeries'),
+            leading: const Icon(Icons.tv),
+            title: const Text('TVSeries'),
             onTap: () {
               Navigator.pushReplacementNamed(
                   context, HomeTVSeriesPage.ROUTE_NAME);
             },
           ),
           ListTile(
-            leading: Icon(Icons.movie),
-            title: Text('Movies'),
+            leading: const Icon(Icons.movie),
+            title: const Text('Movies'),
             onTap: () {
               Navigator.pushReplacementNamed(context, HomeMoviePage.ROUTE_NAME);
             },
           ),
           ListTile(
-            leading: Icon(Icons.save_alt),
-            title: Text('Watchlist'),
+            leading: const Icon(Icons.save_alt),
+            title: const Text('Watchlist'),
             onTap: () {
               Navigator.pushNamed(context, WatchlistPage.ROUTE_NAME);
             },
@@ -51,8 +51,8 @@ class DrawerApp extends StatelessWidget {
             onTap: () {
               Navigator.pushNamed(context, AboutPage.ROUTE_NAME);
             },
-            leading: Icon(Icons.info_outline),
-            title: Text('About'),
+            leading: const Icon(Icons.info_outline),
+            title: const Text('About'),
           ),
         ],
       ),
