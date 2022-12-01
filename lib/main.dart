@@ -7,6 +7,7 @@ import 'package:paktani_mobile/presentation/pages/home_movie_page.dart';
 import 'package:paktani_mobile/presentation/pages/onair_tvseries_page.dart';
 import 'package:paktani_mobile/presentation/pages/popular_movies_page.dart';
 import 'package:paktani_mobile/presentation/pages/popular_tvseries_page.dart';
+import 'package:paktani_mobile/presentation/pages/product/home_product_page.dart';
 import 'package:paktani_mobile/presentation/pages/register_page.dart';
 import 'package:paktani_mobile/presentation/pages/search_page.dart';
 import 'package:paktani_mobile/presentation/pages/top_rated_movies_page.dart';
@@ -122,6 +123,8 @@ class MyApp extends StatelessWidget {
                 builder: (_) => MoneyPage(),
               );
             //
+            case HomeProductPage.ROUTE_NAME:
+              return MaterialPageRoute(builder: (_) => HomeProductPage());
             case HomeMoviePage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => HomeMoviePage());
             case HomeTVSeriesPage.ROUTE_NAME:
@@ -171,6 +174,7 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => LoginPage());
             case RegisterPage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => RegisterPage());
+            
             case MoneyPage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => MoneyPage());
             default:

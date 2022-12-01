@@ -35,14 +35,14 @@ class ProductCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      movie.productName ?? '-',
+                      movie.productName ,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: kHeading6,
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      movie.productDescription ?? '-',
+                      movie.productDescription ,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),

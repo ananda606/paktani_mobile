@@ -2,9 +2,11 @@ import 'package:paktani_mobile/presentation/pages/home_movie_page.dart';
 import 'package:paktani_mobile/presentation/pages/money_page.dart';
 import 'package:paktani_mobile/presentation/pages/home_tvseries_page.dart';
 import 'package:paktani_mobile/presentation/pages/about_page.dart';
+import 'package:paktani_mobile/presentation/pages/product/home_product_page.dart';
 import 'package:paktani_mobile/presentation/pages/watchlist_page.dart';
 import 'package:flutter/material.dart';
 import 'package:paktani_mobile/common/constants.dart';
+
 class DrawerApp extends StatelessWidget {
   final String pageRoute;
   DrawerApp({required this.pageRoute});
@@ -27,6 +29,14 @@ class DrawerApp extends StatelessWidget {
               Navigator.pushReplacementNamed(context, MoneyPage.ROUTE_NAME);
             },
             trailing: Text('Rp.${value.toString()}'),
+          ),
+          ListTile(
+            leading: const Icon(Icons.production_quantity_limits),
+            title: const Text('Product'),
+            onTap: () {
+              Navigator.pushReplacementNamed(context, HomeProductPage.ROUTE_NAME);
+            },
+            
           ),
           ListTile(
             leading: const Icon(Icons.tv),

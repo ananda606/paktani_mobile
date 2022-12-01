@@ -16,6 +16,9 @@ import 'package:paktani_mobile/domain/repositories/tvseries_repository.dart';
 import 'package:paktani_mobile/domain/usecases/movie/get_movie_detail.dart';
 import 'package:paktani_mobile/domain/usecases/movie/get_movie_recommendations.dart';
 import 'package:paktani_mobile/domain/usecases/movie/get_now_playing_movies.dart';
+import 'package:paktani_mobile/domain/usecases/product/delete/remove_wishlist.dart';
+import 'package:paktani_mobile/domain/usecases/product/get/get_popular_product.dart';
+import 'package:paktani_mobile/domain/usecases/product/get/get_top_rated_product.dart';
 import 'package:paktani_mobile/domain/usecases/tvseries/get_onair_tvseries.dart';
 import 'package:paktani_mobile/domain/usecases/movie/get_popular_movies.dart';
 import 'package:paktani_mobile/domain/usecases/tvseries/get_popular_tvseries.dart';
@@ -145,7 +148,6 @@ void init() {
       getTopRatedTVSeries: locator(),
     ),
   );
-  
 
   locator.registerFactory(
     () => WatchlistMovieNotifier(
@@ -161,10 +163,12 @@ void init() {
   // use case
   //products
   locator.registerLazySingleton(() => GetProductDetail(locator()));
+  locator.registerLazySingleton(() => GetPopularProducts(locator()));
+  locator.registerLazySingleton(() => GetTopRatedProducts(locator()));
+  locator.registerLazySingleton(() => GetWishlistProducts(locator()));
   locator.registerLazySingleton(() => GetProductRecommendations(locator()));
-  locator.registerLazySingleton(
-    () => SaveWishlist(locator()),
-  );
+  locator.registerLazySingleton(() => SaveWishlist(locator()));
+  locator.registerLazySingleton(() => RemoveWishlist(locator()));
 
   //movies
   locator.registerLazySingleton(() => GetNowPlayingMovies(locator()));
@@ -226,12 +230,12 @@ void init() {
       () => TVSeriesLocalDataSourceImpl(databaseHelper: locator()));
 
   // helper
-   locator.registerLazySingleton<DatabaseHelperProduct>(
+  locator.registerLazySingleton<DatabaseHelperProduct>(
       () => DatabaseHelperProduct());
+
   locator.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());
   locator.registerLazySingleton<DatabaseHelperTVSeries>(
       () => DatabaseHelperTVSeries());
- 
 
   // external
   locator.registerLazySingleton(() => http.Client());

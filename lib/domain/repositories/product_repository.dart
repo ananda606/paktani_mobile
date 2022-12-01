@@ -10,8 +10,8 @@ abstract class ProductRepository {
   Future<Either<Failure, ProductDetail>> getProductDetail(int id);
   Future<Either<Failure, List<Product>>> getProductRecommendations(int id);
   Future<Either<Failure, List<Product>>> searchProducts(String query);
-  Future<Either<Failure, String>> saveWishlist(ProductDetail Product);
-  Future<Either<Failure, String>> removeWishlist(ProductDetail Product);
+  Future<Either<Failure, String>> saveWishlist(ProductDetail product);
+  Future<Either<Failure, String>> removeWishlist(ProductDetail product);
   Future<bool> isAddedWishlist(int id);
   Future<Either<Failure, List<Product>>> getWishlistProducts();
 }
