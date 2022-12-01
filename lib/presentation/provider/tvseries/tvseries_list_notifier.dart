@@ -1,8 +1,8 @@
 import 'package:paktani_mobile/common/state_enum.dart';
 import 'package:paktani_mobile/domain/entities/tvseries.dart';
-import 'package:paktani_mobile/domain/usecases/get_onair_tvseries.dart';
-import 'package:paktani_mobile/domain/usecases/get_popular_tvseries.dart';
-import 'package:paktani_mobile/domain/usecases/get_top_rated_tvseries.dart';
+import 'package:paktani_mobile/domain/usecases/tvseries/get_onair_tvseries.dart';
+import 'package:paktani_mobile/domain/usecases/tvseries/get_popular_tvseries.dart';
+import 'package:paktani_mobile/domain/usecases/tvseries/get_top_rated_tvseries.dart';
 import 'package:flutter/foundation.dart';
 
 class TVSeriesListNotifier extends ChangeNotifier {

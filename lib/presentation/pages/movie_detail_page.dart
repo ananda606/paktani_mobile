@@ -3,7 +3,7 @@ import 'package:paktani_mobile/common/constants.dart';
 import 'package:paktani_mobile/domain/entities/genre.dart';
 import 'package:paktani_mobile/domain/entities/movie.dart';
 import 'package:paktani_mobile/domain/entities/movie_detail.dart';
-import 'package:paktani_mobile/presentation/provider/movie_detail_notifier.dart';
+import 'package:paktani_mobile/presentation/provider/movie/movie_detail_notifier.dart';
 import 'package:paktani_mobile/common/state_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';

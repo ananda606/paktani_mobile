@@ -15,7 +15,7 @@ class ProductDetail extends Equatable {
   final String productDescription;
   final int productRating;
   final String productSize;
-  final List<String> imageUrls;
+  final String imageUrls;
 
   @override
   List<Object?> get props => [

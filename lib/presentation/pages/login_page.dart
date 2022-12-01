@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paktani_mobile/presentation/pages/register_page.dart';
 
 class LoginPage extends StatefulWidget {
   static const ROUTE_NAME = '/login_page';
@@ -17,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
+    Future.microtask(() => null);
     // Future.microtask(() => null)
   }
 
@@ -54,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
                       margin: const EdgeInsets.only(left: 30, right: 30),
                       alignment: Alignment.center,
                       width: 80,
-                      height: 80,
+                      height: 60,
                       child: TextFormField(
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -87,7 +89,6 @@ class _LoginPageState extends State<LoginPage> {
                       child: TextFormField(
                         obscureText: _isObscure,
                         obscuringCharacter: '*',
-                        autofocus: true,
                         controller: _passwordController,
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(
@@ -115,7 +116,10 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         const Text('Belum memiliki akun?'),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, '/register_page');
+                          },
                           child: const Text('Daftar'),
                         ),
                       ],

@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:paktani_mobile/common/constants.dart';
-import 'package:paktani_mobile/domain/entities/movie.dart';
-import 'package:paktani_mobile/presentation/pages/movie_detail_page.dart';
+import 'package:paktani_mobile/domain/entities/product/product.dart';
+import 'package:paktani_mobile/presentation/pages/product/product_detail_page.dart';
 import 'package:flutter/material.dart';
 
-class MovieCard extends StatelessWidget {
-  final Movie movie;
+class ProductCard extends StatelessWidget {
+  final Product movie;
 
-  MovieCard(this.movie);
+  ProductCard(this.movie);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class MovieCard extends StatelessWidget {
         onTap: () {
           Navigator.pushNamed(
             context,
-            MovieDetailPage.ROUTE_NAME,
+            ProductDetailPage.ROUTE_NAME,
             arguments: movie.id,
           );
         },
@@ -35,14 +35,14 @@ class MovieCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      movie.title ?? '-',
+                      movie.productName ?? '-',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: kHeading6,
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      movie.overview ?? '-',
+                      movie.productDescription ?? '-',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -57,7 +57,7 @@ class MovieCard extends StatelessWidget {
               ),
               child: ClipRRect(
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
+                  imageUrl: '$BASE_IMAGE_URL${movie.imageUrls}',
                   width: 80,
                   placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),

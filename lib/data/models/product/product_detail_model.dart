@@ -13,7 +13,7 @@ class ProductDetailModel extends Equatable {
   final int id;
   final String productName;
   final String productDescription;
-  final List<String> imageUrls;
+  final String imageUrls;
   final int productRating;
   final String productSize;
 

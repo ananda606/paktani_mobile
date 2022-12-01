@@ -3,14 +3,15 @@ import 'package:paktani_mobile/domain/usecases/product/get/get_product_detail.da
 import 'package:paktani_mobile/common/state_enum.dart';
 import 'package:paktani_mobile/domain/usecases/product/get/get_recommendation_product.dart';
 import 'package:paktani_mobile/domain/usecases/product/get/get_popular_product.dart';
-
 import 'package:flutter/material.dart';
 import 'package:paktani_mobile/data/models/product/product_model.dart';
-import 'package:paktani_mobile/presentation/provider/top_rated_movies_notifier.dart';
+import 'package:paktani_mobile/domain/usecases/product/get/get_top_rated_product.dart';
+import 'package:paktani_mobile/presentation/provider/product/top_rated_product_notifier.dart';
 
 class ProductListNotifier extends ChangeNotifier {
   var _productList = <Product>[];
   List<Product> get productList => _productList;
+
   //init request state
   RequestState _productListState = RequestState.Empty;
   RequestState get productListState => _productListState;
@@ -33,12 +34,12 @@ class ProductListNotifier extends ChangeNotifier {
   ProductListNotifier({
     required this.getProductDetail,
     required this.getPopularProducts,
-    //required this.getTopRatedProducts,
+    required this.getTopRatedProducts,
   });
 
   final GetProductDetail getProductDetail;
   final GetPopularProducts getPopularProducts;
-//  final GetTopRatedProducts getTopRatedProducts;
+  final GetTopRatedProducts getTopRatedProducts;
 
   Future<void> fetchAllProducts() async {
     _productListState = RequestState.Loading;
@@ -77,7 +78,7 @@ class ProductListNotifier extends ChangeNotifier {
       },
     );
   }
-/*
+
   Future<void> fetchTopRatedProducts() async {
     _topRatedProductsState = RequestState.Loading;
     notifyListeners();
@@ -95,5 +96,5 @@ class ProductListNotifier extends ChangeNotifier {
         notifyListeners();
       },
     );
-  }*/
+  }
 }

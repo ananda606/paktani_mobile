@@ -1,11 +1,11 @@
 import 'package:paktani_mobile/common/state_enum.dart';
 import 'package:paktani_mobile/domain/entities/tvseries.dart';
 import 'package:paktani_mobile/domain/entities/tvseries_detail.dart';
-import 'package:paktani_mobile/domain/usecases/get_tvseries_detail.dart';
-import 'package:paktani_mobile/domain/usecases/get_tvseries_recommendations.dart';
-import 'package:paktani_mobile/domain/usecases/get_watchlist_tvseries_status.dart';
-import 'package:paktani_mobile/domain/usecases/remove_watchlist_tvseries.dart';
-import 'package:paktani_mobile/domain/usecases/save_watchlist_tvseries.dart';
+import 'package:paktani_mobile/domain/usecases/tvseries/get_tvseries_detail.dart';
+import 'package:paktani_mobile/domain/usecases/tvseries/get_tvseries_recommendations.dart';
+import 'package:paktani_mobile/domain/usecases/tvseries/get_watchlist_tvseries_status.dart';
+import 'package:paktani_mobile/domain/usecases/tvseries/remove_watchlist_tvseries.dart';
+import 'package:paktani_mobile/domain/usecases/tvseries/save_watchlist_tvseries.dart';
 import 'package:flutter/foundation.dart';
 
 class TVSeriesDetailNotifier extends ChangeNotifier {

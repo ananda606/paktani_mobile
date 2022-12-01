@@ -14,7 +14,7 @@ class Product extends Equatable {
   final String productDescription;
   final int productRating;
   final String productSize;
-  final List<String> imageUrls;
+  final String imageUrls;
 
   Product.productlist({
      required this.id,

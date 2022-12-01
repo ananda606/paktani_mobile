@@ -1,11 +1,11 @@
 import 'package:paktani_mobile/common/state_enum.dart';
-import 'package:paktani_mobile/domain/entities/movie.dart';
-import 'package:paktani_mobile/domain/usecases/get_watchlist_movies.dart';
+import 'package:paktani_mobile/domain/entities/product/product.dart';
+import 'package:paktani_mobile/domain/usecases/product/get/get_wishlist_product.dart';
 import 'package:flutter/foundation.dart';
 
-class WatchlistMovieNotifier extends ChangeNotifier {
-  var _watchlistMovies = <Movie>[];
-  List<Movie> get watchlistMovies => _watchlistMovies;
+class WishlistProductNotifier extends ChangeNotifier {
+  var _watchlistMovies = <Product>[];
+  List<Product> get watchlistMovies => _watchlistMovies;
 
   var _watchlistState = RequestState.Empty;
   RequestState get watchlistState => _watchlistState;
@@ -13,9 +13,9 @@ class WatchlistMovieNotifier extends ChangeNotifier {
   String _message = '';
   String get message => _message;
 
-  WatchlistMovieNotifier({required this.getWatchlistMovies});
+  WishlistProductNotifier({required this.getWatchlistMovies});
 
-  final GetWatchlistMovies getWatchlistMovies;
+  final GetWishlistProducts getWatchlistMovies;
 
   Future<void> fetchWatchlistMovies() async {
     _watchlistState = RequestState.Loading;

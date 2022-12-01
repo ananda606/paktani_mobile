@@ -1,36 +1,34 @@
 import 'package:paktani_mobile/common/state_enum.dart';
 import 'package:paktani_mobile/domain/entities/tvseries.dart';
-import 'package:paktani_mobile/domain/usecases/get_top_rated_tvseries.dart';
+import 'package:paktani_mobile/domain/usecases/tvseries/search_tvseries.dart';
 import 'package:flutter/foundation.dart';
 
-class TopRatedTVSeriesNotifier extends ChangeNotifier {
-  final GetTopRatedTVSeries getTopRatedTVSeries;
-
-  TopRatedTVSeriesNotifier({required this.getTopRatedTVSeries});
+class TVSeriesSearchNotifier extends ChangeNotifier {
+  final SearchTVSeries searchTVSeries;
+  TVSeriesSearchNotifier({required this.searchTVSeries});
 
   RequestState _state = RequestState.Empty;
   RequestState get state => _state;
 
-  List<TVSeries> _tvSeries = [];
-  List<TVSeries> get tvSeries => _tvSeries;
+  List<TVSeries> _searchResult = [];
+  List<TVSeries> get searchResult => _searchResult;
 
   String _message = '';
   String get message => _message;
 
-  Future<void> fetchTopRatedTVSeries() async {
+  Future<void> fetchTVSeriesSearch(String query) async {
     _state = RequestState.Loading;
     notifyListeners();
 
-    final result = await getTopRatedTVSeries.execute();
-
+    final result = await searchTVSeries.execute(query);
     result.fold(
       (failure) {
         _message = failure.message;
         _state = RequestState.Error;
         notifyListeners();
       },
-      (TVSeriesData) {
-        _tvSeries = TVSeriesData;
+      (tvSeriesData) {
+        _searchResult = tvSeriesData;
         _state = RequestState.Loaded;
         notifyListeners();
       },

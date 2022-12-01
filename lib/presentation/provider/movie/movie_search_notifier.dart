@@ -1,36 +1,35 @@
 import 'package:paktani_mobile/common/state_enum.dart';
 import 'package:paktani_mobile/domain/entities/movie.dart';
-import 'package:paktani_mobile/domain/usecases/get_top_rated_movies.dart';
+import 'package:paktani_mobile/domain/usecases/movie/search_movies.dart';
 import 'package:flutter/foundation.dart';
 
-class TopRatedMoviesNotifier extends ChangeNotifier {
-  final GetTopRatedMovies getTopRatedMovies;
+class MovieSearchNotifier extends ChangeNotifier {
+  final SearchMovies searchMovies;
 
-  TopRatedMoviesNotifier({required this.getTopRatedMovies});
+  MovieSearchNotifier({required this.searchMovies});
 
   RequestState _state = RequestState.Empty;
   RequestState get state => _state;
 
-  List<Movie> _movies = [];
-  List<Movie> get movies => _movies;
+  List<Movie> _searchResult = [];
+  List<Movie> get searchResult => _searchResult;
 
   String _message = '';
   String get message => _message;
 
-  Future<void> fetchTopRatedMovies() async {
+  Future<void> fetchMovieSearch(String query) async {
     _state = RequestState.Loading;
     notifyListeners();
 
-    final result = await getTopRatedMovies.execute();
-
+    final result = await searchMovies.execute(query);
     result.fold(
       (failure) {
         _message = failure.message;
         _state = RequestState.Error;
         notifyListeners();
       },
-      (moviesData) {
-        _movies = moviesData;
+      (data) {
+        _searchResult = data;
         _state = RequestState.Loaded;
         notifyListeners();
       },

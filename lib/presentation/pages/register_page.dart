@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  static const ROUTE_NAME = '/login_page';
+class RegisterPage extends StatefulWidget {
+  static const ROUTE_NAME = '/register_page';
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   bool _isObscure = true;
@@ -18,6 +18,14 @@ class _LoginPageState extends State<LoginPage> {
     // Future.microtask(() => null)
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+  }
+
+  @override
   void _togglePasswordView() {
     setState(() {
       _isObscure = !_isObscure;
@@ -114,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                         const Text('Sudah memiliki akun?'),
                         TextButton(
                           onPressed: () {},
-                          child: const Text('Login'),
+                          child: const Text('Register'),
                         ),
                       ],
                     ),

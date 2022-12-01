@@ -1,6 +1,6 @@
 import 'package:paktani_mobile/common/state_enum.dart';
 import 'package:paktani_mobile/domain/entities/movie.dart';
-import 'package:paktani_mobile/domain/usecases/get_watchlist_movies.dart';
+import 'package:paktani_mobile/domain/usecases/movie/get_watchlist_movies.dart';
 import 'package:flutter/foundation.dart';
 
 class WatchlistMovieNotifier extends ChangeNotifier {

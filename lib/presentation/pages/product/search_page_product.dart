@@ -1,18 +1,18 @@
 import 'package:paktani_mobile/common/constants.dart';
 import 'package:paktani_mobile/common/state_enum.dart';
-import 'package:paktani_mobile/presentation/provider/tvseries/tvseries_search_notifier.dart';
-import 'package:paktani_mobile/presentation/widgets/tvseries_card_list.dart';
+import 'package:paktani_mobile/presentation/provider/product/product_search_notifier.dart';
+import 'package:paktani_mobile/presentation/widgets/product_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SearchPageTVSeries extends StatelessWidget {
-  static const ROUTE_NAME = '/search_tvseries';
+class SearchPage extends StatelessWidget {
+  static const ROUTE_NAME = '/search';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Search'),
+        title: const Text('Search'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -21,25 +21,25 @@ class SearchPageTVSeries extends StatelessWidget {
           children: [
             TextField(
               onSubmitted: (query) {
-                Provider.of<TVSeriesSearchNotifier>(context, listen: false)
-                    .fetchTVSeriesSearch(query);
+                Provider.of<ProductSearchNotifier>(context, listen: false)
+                    .fetchProductSearch(query);
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Search title',
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(),
               ),
               textInputAction: TextInputAction.search,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Text(
               'Search Result',
               style: kHeading6,
             ),
-            Consumer<TVSeriesSearchNotifier>(
+            Consumer<ProductSearchNotifier>(
               builder: (context, data, child) {
                 if (data.state == RequestState.Loading) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
                 } else if (data.state == RequestState.Loaded) {
@@ -48,8 +48,8 @@ class SearchPageTVSeries extends StatelessWidget {
                     child: ListView.builder(
                       padding: const EdgeInsets.all(8),
                       itemBuilder: (context, index) {
-                        final tvSeries = data.searchResult[index];
-                        return TVSeriesCard(tvSeries);
+                        final movie = data.searchResult[index];
+                        return ProductCard(movie);
                       },
                       itemCount: result.length,
                     ),

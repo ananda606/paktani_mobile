@@ -1,11 +1,13 @@
 import 'package:paktani_mobile/common/state_enum.dart';
 import 'package:paktani_mobile/domain/entities/tvseries.dart';
-import 'package:paktani_mobile/domain/usecases/get_onair_tvseries.dart';
+import 'package:paktani_mobile/domain/usecases/tvseries/get_top_rated_tvseries.dart';
 import 'package:flutter/foundation.dart';
 
-class OnAirTVSeriesNotifier extends ChangeNotifier {
-  final GetOnAirTVSeries getOnAirTVSeries;
-  OnAirTVSeriesNotifier({required this.getOnAirTVSeries});
+class TopRatedTVSeriesNotifier extends ChangeNotifier {
+  final GetTopRatedTVSeries getTopRatedTVSeries;
+
+  TopRatedTVSeriesNotifier({required this.getTopRatedTVSeries});
+
   RequestState _state = RequestState.Empty;
   RequestState get state => _state;
 
@@ -15,11 +17,11 @@ class OnAirTVSeriesNotifier extends ChangeNotifier {
   String _message = '';
   String get message => _message;
 
-  Future<void> fetchOnAirTVSeries() async {
+  Future<void> fetchTopRatedTVSeries() async {
     _state = RequestState.Loading;
     notifyListeners();
 
-    final result = await getOnAirTVSeries.execute();
+    final result = await getTopRatedTVSeries.execute();
 
     result.fold(
       (failure) {

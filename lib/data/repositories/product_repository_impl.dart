@@ -57,7 +57,7 @@ class ProductRepositoryImpl implements ProductRepository {
   }
 
   @override
-  Future<Either<Failure, List<Product>>> getPopularProducts() async {
+  Future<Either<Failure, List<Product>>> getPopularProduct() async {
     try {
       final result = await remoteDataSource.getPopularProducts();
       return Right(result.map((model) => model.toEntity()).toList());
@@ -67,9 +67,9 @@ class ProductRepositoryImpl implements ProductRepository {
       return Left(ConnectionFailure('Failed to connect to the network'));
     }
   }
-/*
+
   @override
-  Future<Either<Failure, List<Product>>> getTopRatedProducts() async {
+  Future<Either<Failure, List<Product>>> getTopRatedProduct() async {
     try {
       final result = await remoteDataSource.getTopRatedProducts();
       return Right(result.map((model) => model.toEntity()).toList());
@@ -79,7 +79,7 @@ class ProductRepositoryImpl implements ProductRepository {
       return Left(ConnectionFailure('Failed to connect to the network'));
     }
   }
-*/
+
   @override
   Future<Either<Failure, List<Product>>> searchProducts(String query) async {
     try {
@@ -127,6 +127,9 @@ class ProductRepositoryImpl implements ProductRepository {
     final result = await localDataSource.getWishlistProducts();
     return Right(result.map((data) => data.toEntity()).toList());
   }
+  
+  
+
   
 
 

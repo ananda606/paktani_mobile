@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:paktani_mobile/data/models/product/product_model.dart';
+
 import 'package:paktani_mobile/data/models/product/product_table.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -30,9 +30,9 @@ class DatabaseHelperProduct {
     await db.execute('''
     CREATE TABLE  $_tblWishlist (
         id INTEGER PRIMARY KEY,
-        title TEXT,
-        overview TEXT,
-        posterPath TEXT
+        productName TEXT,
+        productDescription TEXT,
+        productImageUrls TEXT
       );
       ''');
   }

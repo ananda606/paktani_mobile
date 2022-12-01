@@ -1,5 +1,5 @@
 import 'package:paktani_mobile/common/state_enum.dart';
-import 'package:paktani_mobile/presentation/provider/popular_tvseries_notifier.dart';
+import 'package:paktani_mobile/presentation/provider/tvseries/popular_tvseries_notifier.dart';
 import 'package:paktani_mobile/presentation/widgets/tvseries_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

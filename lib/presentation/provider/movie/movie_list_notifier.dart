@@ -1,8 +1,8 @@
 import 'package:paktani_mobile/domain/entities/movie.dart';
-import 'package:paktani_mobile/domain/usecases/get_now_playing_movies.dart';
+import 'package:paktani_mobile/domain/usecases/movie/get_now_playing_movies.dart';
 import 'package:paktani_mobile/common/state_enum.dart';
-import 'package:paktani_mobile/domain/usecases/get_popular_movies.dart';
-import 'package:paktani_mobile/domain/usecases/get_top_rated_movies.dart';
+import 'package:paktani_mobile/domain/usecases/movie/get_popular_movies.dart';
+import 'package:paktani_mobile/domain/usecases/movie/get_top_rated_movies.dart';
 import 'package:flutter/material.dart';
 
 class MovieListNotifier extends ChangeNotifier {

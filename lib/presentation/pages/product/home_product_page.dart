@@ -1,37 +1,39 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:paktani_mobile/common/constants.dart';
-import 'package:paktani_mobile/domain/entities/movie.dart';
-import 'package:paktani_mobile/presentation/pages/movie_detail_page.dart';
-import 'package:paktani_mobile/presentation/pages/popular_movies_page.dart';
+import 'package:paktani_mobile/domain/entities/product/product.dart';
+import 'package:paktani_mobile/presentation/pages/product/product_detail_page.dart';
+import 'package:paktani_mobile/presentation/pages/product/popular_product_page.dart';
 import 'package:paktani_mobile/presentation/pages/search_page.dart';
-import 'package:paktani_mobile/presentation/pages/top_rated_movies_page.dart';
-import 'package:paktani_mobile/presentation/provider/movie/movie_list_notifier.dart';
+import 'package:paktani_mobile/presentation/pages/product/top_rated_product_page.dart';
+import 'package:paktani_mobile/presentation/provider/product/product_list_notifier.dart';
 import 'package:paktani_mobile/common/state_enum.dart';
 import 'package:paktani_mobile/presentation/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomeMoviePage extends StatefulWidget {
-  static const ROUTE_NAME = '/home_movie';
+import '../../provider/product/product_list_notifier.dart';
+
+class HomeProductPage extends StatefulWidget {
+  static const ROUTE_NAME = '/home_product';
   @override
-  _HomeMoviePageState createState() => _HomeMoviePageState();
+  _HomeProductPageState createState() => _HomeProductPageState();
 }
 
-class _HomeMoviePageState extends State<HomeMoviePage> {
+class _HomeProductPageState extends State<HomeProductPage> {
   @override
   void initState() {
     super.initState();
     Future.microtask(
-        () => Provider.of<MovieListNotifier>(context, listen: false)
-          ..fetchNowPlayingMovies()
-          ..fetchPopularMovies()
-          ..fetchTopRatedMovies());
+        () => Provider.of<ProductListNotifier>(context, listen: false)
+          ..fetchAllProducts()
+          ..fetchPopularProducts()
+          ..fetchTopRatedProducts());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DrawerApp(pageRoute: HomeMoviePage.ROUTE_NAME),
+      drawer: DrawerApp(pageRoute: HomeProductPage.ROUTE_NAME),
       appBar: AppBar(
         title: Text('PakTani'),
         actions: [
@@ -50,51 +52,51 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Now Playing',
+                'Our Product',
                 style: kHeading6,
               ),
-              Consumer<MovieListNotifier>(builder: (context, data, child) {
-                final state = data.nowPlayingState;
+              Consumer<ProductListNotifier>(builder: (context, data, child) {
+                final state = data.productListState;
                 if (state == RequestState.Loading) {
                   return Center(
                     child: CircularProgressIndicator(),
                   );
                 } else if (state == RequestState.Loaded) {
-                  return MovieList(data.nowPlayingMovies);
+                  return ProductList(data.productList);
                 } else {
                   return Text('Failed');
                 }
               }),
               _buildSubHeading(
                 title: 'Popular',
-                onTap: () =>
-                    Navigator.pushNamed(context, PopularMoviesPage.ROUTE_NAME),
+                onTap: () => Navigator.pushNamed(
+                    context, PopularProductsPage.ROUTE_NAME),
               ),
-              Consumer<MovieListNotifier>(builder: (context, data, child) {
-                final state = data.popularMoviesState;
+              Consumer<ProductListNotifier>(builder: (context, data, child) {
+                final state = data.popularProductsState;
                 if (state == RequestState.Loading) {
                   return Center(
                     child: CircularProgressIndicator(),
                   );
                 } else if (state == RequestState.Loaded) {
-                  return MovieList(data.popularMovies);
+                  return ProductList(data.popularProducts);
                 } else {
                   return Text('Failed');
                 }
               }),
               _buildSubHeading(
                 title: 'Top Rated',
-                onTap: () =>
-                    Navigator.pushNamed(context, TopRatedMoviesPage.ROUTE_NAME),
+                onTap: () => Navigator.pushNamed(
+                    context, TopRatedProductsPage.ROUTE_NAME),
               ),
-              Consumer<MovieListNotifier>(builder: (context, data, child) {
-                final state = data.topRatedMoviesState;
+              Consumer<ProductListNotifier>(builder: (context, data, child) {
+                final state = data.topRatedProductsState;
                 if (state == RequestState.Loading) {
                   return Center(
                     child: CircularProgressIndicator(),
                   );
                 } else if (state == RequestState.Loaded) {
-                  return MovieGridList(data.topRatedMovies);
+                  return ProductGridList(data.topRatedProducts);
                 } else {
                   return Text('Failed');
                 }
@@ -128,9 +130,9 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
   }
 }
 
-class MovieGridList extends StatelessWidget {
-  final List<Movie> movies;
-  MovieGridList(this.movies);
+class ProductGridList extends StatelessWidget {
+  final List<Product> movies;
+  ProductGridList(this.movies);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -142,18 +144,16 @@ class MovieGridList extends StatelessWidget {
         itemBuilder: (context, index) {
           final movie = movies[index];
           return Container(
-          
             padding: const EdgeInsets.all(8),
             child: InkWell(
               onTap: () {
                 Navigator.pushNamed(
                   context,
-                  MovieDetailPage.ROUTE_NAME,
+                  ProductDetailPage.ROUTE_NAME,
                   arguments: movie.id,
                 );
               },
               child: Column(
-                
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -164,7 +164,7 @@ class MovieGridList extends StatelessWidget {
                       width: 200,
                       child: CachedNetworkImage(
                         fit: BoxFit.cover,
-                        imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
+                        imageUrl: '$BASE_IMAGE_URL${movie.imageUrls}',
                         placeholder: (context, url) => Center(
                           child: CircularProgressIndicator(),
                         ),
@@ -173,28 +173,30 @@ class MovieGridList extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    movie.title.toString(),
+                    movie.productName.toString(),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),
                   SafeArea(
                     child: Row(mainAxisSize: MainAxisSize.min, children: [
-                      Icon(Icons.location_on, size: 20,),
+                      Icon(
+                        Icons.location_on,
+                        size: 20,
+                      ),
                       Text(
-                        movie.releaseDate.toString(),
+                        movie.productDescription.toString(),
                         softWrap: true,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
                     ]),
                   ),
-               
-                Text(
-                  movie.overview.toString(),
-                  softWrap: true,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
+                  Text(
+                    movie.productRating.toString(),
+                    softWrap: true,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
                 ],
               ),
             ),
@@ -206,10 +208,10 @@ class MovieGridList extends StatelessWidget {
   }
 }
 
-class MovieList extends StatelessWidget {
-  final List<Movie> movies;
+class ProductList extends StatelessWidget {
+  final List<Product> movies;
 
-  MovieList(this.movies);
+  ProductList(this.movies);
 
   @override
   Widget build(BuildContext context) {
@@ -225,14 +227,14 @@ class MovieList extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(
                   context,
-                  MovieDetailPage.ROUTE_NAME,
+                  ProductDetailPage.ROUTE_NAME,
                   arguments: movie.id,
                 );
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(16)),
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
+                  imageUrl: '$BASE_IMAGE_URL${movie.imageUrls}',
                   placeholder: (context, url) => Center(
                     child: CircularProgressIndicator(),
                   ),

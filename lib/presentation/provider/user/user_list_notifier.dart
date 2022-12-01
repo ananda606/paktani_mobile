@@ -12,6 +12,7 @@ class ProductListNotifier extends ChangeNotifier {
   
   var _productList = <Product>[];
   List<Product> get productList => _productList;
+  
   //init request state
   RequestState _productListState = RequestState.Empty;
   RequestState get productListState => _productListState;

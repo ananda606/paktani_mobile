@@ -5,7 +5,7 @@ import 'package:paktani_mobile/presentation/pages/popular_tvseries_page.dart';
 import 'package:paktani_mobile/presentation/pages/top_rated_tvseries_page.dart';
 import 'package:paktani_mobile/presentation/pages/search_page_tvseries.dart';
 import 'package:paktani_mobile/presentation/pages/tvseries_detail_page.dart';
-import 'package:paktani_mobile/presentation/provider/tvseries_list_notifier.dart';
+import 'package:paktani_mobile/presentation/provider/tvseries/tvseries_list_notifier.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:paktani_mobile/common/constants.dart';
 import 'package:paktani_mobile/presentation/widgets/custom_drawer.dart';

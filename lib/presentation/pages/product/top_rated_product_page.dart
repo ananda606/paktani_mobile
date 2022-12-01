@@ -1,34 +1,34 @@
 import 'package:paktani_mobile/common/state_enum.dart';
-import 'package:paktani_mobile/presentation/provider/tvseries/onair_tvseries_notifier.dart';
-import 'package:paktani_mobile/presentation/widgets/tvseries_card_list.dart';
+import 'package:paktani_mobile/presentation/provider/product/top_rated_product_notifier.dart';
+import 'package:paktani_mobile/presentation/widgets/product_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class OnAirTVSeriesPage extends StatefulWidget {
-  static const ROUTE_NAME = '/onair_tv_series';
+class TopRatedProductsPage extends StatefulWidget {
+  static const ROUTE_NAME = '/top-rated-product';
 
   @override
-  State<OnAirTVSeriesPage> createState() => _OnAirTVSeriesPageState();
+  _TopRatedProductsPageState createState() => _TopRatedProductsPageState();
 }
 
-class _OnAirTVSeriesPageState extends State<OnAirTVSeriesPage> {
+class _TopRatedProductsPageState extends State<TopRatedProductsPage> {
   @override
   void initState() {
     super.initState();
     Future.microtask(() =>
-        Provider.of<OnAirTVSeriesNotifier>(context, listen: false)
-            .fetchOnAirTVSeries());
+        Provider.of<TopRatedProductsNotifier>(context, listen: false)
+            .fetchTopRatedProducts());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('On Air TV Series'),
+        title: Text('Top Rated Products'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<OnAirTVSeriesNotifier>(
+        child: Consumer<TopRatedProductsNotifier>(
           builder: (context, data, child) {
             if (data.state == RequestState.Loading) {
               return Center(
@@ -37,10 +37,10 @@ class _OnAirTVSeriesPageState extends State<OnAirTVSeriesPage> {
             } else if (data.state == RequestState.Loaded) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final tv = data.tvSeries[index];
-                  return TVSeriesCard(tv);
+                  final movie = data.movies[index];
+                  return ProductCard(movie);
                 },
-                itemCount: data.tvSeries.length,
+                itemCount: data.movies.length,
               );
             } else {
               return Center(

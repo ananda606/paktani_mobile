@@ -1,6 +1,6 @@
 import 'package:paktani_mobile/common/state_enum.dart';
 import 'package:paktani_mobile/domain/entities/tvseries.dart';
-import 'package:paktani_mobile/domain/usecases/get_watchlist_tvseries.dart';
+import 'package:paktani_mobile/domain/usecases/tvseries/get_watchlist_tvseries.dart';
 import 'package:flutter/foundation.dart';
 
 class WatchlistTVSeriesNotifier extends ChangeNotifier {

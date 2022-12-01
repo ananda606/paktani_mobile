@@ -1,27 +1,27 @@
 import 'package:paktani_mobile/common/state_enum.dart';
-import 'package:paktani_mobile/domain/entities/movie.dart';
-import 'package:paktani_mobile/domain/usecases/get_popular_movies.dart';
+import 'package:paktani_mobile/domain/entities/product/product.dart';
+import 'package:paktani_mobile/domain/usecases/product/get/get_popular_product.dart';
 import 'package:flutter/foundation.dart';
 
-class PopularMoviesNotifier extends ChangeNotifier {
-  final GetPopularMovies getPopularMovies;
+class PopularProductsNotifier extends ChangeNotifier {
+  final GetPopularProducts getPopularProducts;
 
-  PopularMoviesNotifier(this.getPopularMovies);
+  PopularProductsNotifier(this.getPopularProducts);
 
   RequestState _state = RequestState.Empty;
   RequestState get state => _state;
 
-  List<Movie> _movies = [];
-  List<Movie> get movies => _movies;
+  List<Product> _movies = [];
+  List<Product> get movies => _movies;
 
   String _message = '';
   String get message => _message;
 
-  Future<void> fetchPopularMovies() async {
+  Future<void> fetchPopularProducts() async {
     _state = RequestState.Loading;
     notifyListeners();
 
-    final result = await getPopularMovies.execute();
+    final result = await getPopularProducts.execute();
 
     result.fold(
       (failure) {

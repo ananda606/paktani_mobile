@@ -1,11 +1,11 @@
 import 'package:paktani_mobile/domain/entities/movie.dart';
 import 'package:paktani_mobile/domain/entities/movie_detail.dart';
-import 'package:paktani_mobile/domain/usecases/get_movie_detail.dart';
-import 'package:paktani_mobile/domain/usecases/get_movie_recommendations.dart';
+import 'package:paktani_mobile/domain/usecases/movie/get_movie_detail.dart';
+import 'package:paktani_mobile/domain/usecases/movie/get_movie_recommendations.dart';
 import 'package:paktani_mobile/common/state_enum.dart';
-import 'package:paktani_mobile/domain/usecases/get_watchlist_status.dart';
-import 'package:paktani_mobile/domain/usecases/remove_watchlist.dart';
-import 'package:paktani_mobile/domain/usecases/save_watchlist.dart';
+import 'package:paktani_mobile/domain/usecases/movie/get_watchlist_status.dart';
+import 'package:paktani_mobile/domain/usecases/movie/remove_watchlist.dart';
+import 'package:paktani_mobile/domain/usecases/movie/save_watchlist.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

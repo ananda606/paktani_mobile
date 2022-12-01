@@ -16,7 +16,8 @@ class ProductModel extends Equatable {
   final String productDescription;
   final int productRating;
   final String productSize;
-  final List<String> imageUrls;
+  final String imageUrls;
+  
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json['id'],
         productName: json['productName'],
@@ -35,12 +36,12 @@ class ProductModel extends Equatable {
       };
   Product toEntity() {
     return Product(
-      id: id,
-      productName: productName,
-      productDescription: productDescription,
-      productRating: productRating,
-      productSize: productSize,
-      imageUrls: imageUrls,
+      id: this.id,
+      productName: this.productName,
+      productDescription: this.productDescription,
+      productRating: this.productRating,
+      productSize: this.productSize,
+      imageUrls: this.imageUrls,
     );
   }
 

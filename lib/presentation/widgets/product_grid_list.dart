@@ -1,19 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:paktani_mobile/common/constants.dart';
 //import 'package:paktani_mobile/domain/entities/movie.dart';
-import 'package:paktani_mobile/presentation/pages/movie_detail_page.dart';
+//import 'package:paktani_mobile/presentation/pages/movie_detail_page.dart';
 //import 'package:paktani_mobile/presentation/pages/popular_movies_page.dart';
 //import 'package:paktani_mobile/presentation/pages/search_page.dart';
 //import 'package:paktani_mobile/presentation/pages/top_rated_movies_page.dart';
 //import 'package:paktani_mobile/presentation/provider/movie_list_notifier.dart';
 //import 'package:paktani_mobile/common/state_enum.dart';
+import 'package:paktani_mobile/presentation/pages/product/product_detail_page.dart';
+
 //import 'package:paktani_mobile/presentation/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
-import 'package:paktani_mobile/domain/entities/movie.dart';
+//import 'package:paktani_mobile/domain/entities/movie.dart';
 import 'package:paktani_mobile/domain/entities/product/product.dart';
 class ProductGridList extends StatelessWidget {
-  static const ROUTE_NAME = '/home_movie';
-  final List<Movie> movie;
+  static const ROUTE_NAME = '/home_product';
+  final List<Product> movie;
   ProductGridList(this.movie);
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class ProductGridList extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(
                   context,
-                  MovieDetailPage.ROUTE_NAME,
+                  ProductDetailPage.ROUTE_NAME,
                   arguments: product.id,
                 );
               },
@@ -48,7 +50,7 @@ class ProductGridList extends StatelessWidget {
                       width: 200,
                       child: CachedNetworkImage(
                         fit: BoxFit.cover,
-                        imageUrl: '$BASE_IMAGE_URL${product.posterPath}',
+                        imageUrl: '$BASE_IMAGE_URL${product.imageUrls}',
                         placeholder: (context, url) => Center(
                           child: CircularProgressIndicator(),
                         ),
@@ -57,7 +59,7 @@ class ProductGridList extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    product.title.toString(),
+                    product.productName.toString(),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),
@@ -65,7 +67,7 @@ class ProductGridList extends StatelessWidget {
                     child: Row(mainAxisSize: MainAxisSize.min, children: [
                       Icon(Icons.location_on, size: 20,),
                       Text(
-                        product.releaseDate.toString(),
+                        product.productDescription.toString(),
                         softWrap: true,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
@@ -74,7 +76,7 @@ class ProductGridList extends StatelessWidget {
                   ),
                
                 Text(
-                  product.overview.toString(),
+                  product.productRating.toString(),
                   softWrap: true,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
