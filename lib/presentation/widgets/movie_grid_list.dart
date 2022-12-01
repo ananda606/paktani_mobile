@@ -4,69 +4,79 @@ import 'package:paktani_mobile/domain/entities/movie.dart';
 import 'package:paktani_mobile/presentation/pages/movie_detail_page.dart';
 import 'package:flutter/material.dart';
 
-class MovieGrid extends StatelessWidget {
-  final Movie movie;
-  MovieGrid(this.movie);
+class MovieGridList extends StatelessWidget {
+  final List<Movie> movies;
+  MovieGridList(this.movies);
   @override
-Widget build(BuildContext context) {
-   return Container(
-      margin: const EdgeInsets.symmetric(vertical: 4),
-      child: InkWell(
-        onTap: () {
-          Navigator.pushNamed(
-            context,
-            MovieDetailPage.ROUTE_NAME,
-            arguments: movie.id,
+  Widget build(BuildContext context) {
+    return Container(
+      height: 500,
+      child: GridView.builder(
+        gridDelegate:
+            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        scrollDirection: Axis.vertical,
+        itemBuilder: (context, index) {
+          final movie = movies[index];
+          return Container(
+          
+            padding: const EdgeInsets.all(8),
+            child: InkWell(
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  MovieDetailPage.ROUTE_NAME,
+                  arguments: movie.id,
+                );
+              },
+              child: Column(
+                
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 100,
+                      width: 200,
+                      child: CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
+                        placeholder: (context, url) => Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
+                    ),
+                  ),
+                  Text(
+                    movie.title.toString(),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                  SafeArea(
+                    child: Row(mainAxisSize: MainAxisSize.min, children: [
+                      Icon(Icons.location_on, size: 20,),
+                      Text(
+                        movie.releaseDate.toString(),
+                        softWrap: true,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    ]),
+                  ),
+               
+                Text(
+                  movie.overview.toString(),
+                  softWrap: true,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                ],
+              ),
+            ),
           );
         },
-        child: Stack(
-          alignment: Alignment.bottomLeft,
-          children: [
-            Card(
-              child: Container(
-                margin: const EdgeInsets.only(
-                  left: 16 + 80 + 16,
-                  bottom: 8,
-                  right: 8,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      movie.title ?? '-',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: kHeading6,
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      movie.overview ?? '-',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(
-                left: 16,
-                bottom: 16,
-              ),
-              child: ClipRRect(
-                child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
-                  width: 80,
-                  placeholder: (context, url) => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                ),
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
-              ),
-            ),
-          ],
-        ),
+        itemCount: movies.length,
       ),
     );
   }

@@ -1,18 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:paktani_mobile/common/constants.dart';
-//import 'package:paktani_mobile/domain/entities/movie.dart';
-//import 'package:paktani_mobile/presentation/pages/movie_detail_page.dart';
-//import 'package:paktani_mobile/presentation/pages/popular_movies_page.dart';
-//import 'package:paktani_mobile/presentation/pages/search_page.dart';
-//import 'package:paktani_mobile/presentation/pages/top_rated_movies_page.dart';
-//import 'package:paktani_mobile/presentation/provider/movie_list_notifier.dart';
-//import 'package:paktani_mobile/common/state_enum.dart';
 import 'package:paktani_mobile/presentation/pages/product/product_detail_page.dart';
-
-//import 'package:paktani_mobile/presentation/widgets/custom_drawer.dart';
-import 'package:flutter/material.dart';
-//import 'package:paktani_mobile/domain/entities/movie.dart';
 import 'package:paktani_mobile/domain/entities/product/product.dart';
+import 'package:flutter/material.dart';
+
 class ProductGridList extends StatelessWidget {
   static const ROUTE_NAME = '/home_product';
   final List<Product> movie;
