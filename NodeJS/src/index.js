@@ -12,6 +12,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 //read product
 app.get('/api/readProduct',(req,res)=>{
     const sqlQuery="SELECT * FROM product";
+ 
     db.query(sqlQuery,(err,result)=>{
         if(err){
             console.log(err);

@@ -18,8 +18,8 @@ abstract class ProductRemoteDataSource {
 }
 
 class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
-  static final BASE_URL = 'localhost:3001/';
-  static final API_KEY='';
+  static final BASE_URL = 'localhost:3001';
+  static final API_KEY = '';
   final http.Client client;
   ProductRemoteDataSourceImpl({required this.client});
   @override
@@ -46,7 +46,7 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
 
   @override
   Future<List<ProductModel>> getProductRecommendations(int id) async {
-    final response = await client.get(Uri.parse('$BASE_URL/api/$id'));
+    final response = await client.get(Uri.parse('$BASE_URL/api/:$id'));
 
     if (response.statusCode == 200) {
       return ProductResponse.fromJson(json.decode(response.body)).productList;
@@ -57,7 +57,7 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
 
   @override
   Future<List<ProductModel>> getPopularProducts() async {
-    final response = await client.get(Uri.parse('$BASE_URL/'));
+    final response = await client.get(Uri.parse('$BASE_URL/api/readProduct'));
 
     if (response.statusCode == 200) {
       return ProductResponse.fromJson(json.decode(response.body)).productList;
@@ -68,7 +68,7 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
 
   @override
   Future<List<ProductModel>> getTopRatedProducts() async {
-    final response = await client.get(Uri.parse('$BASE_URL/'));
+    final response = await client.get(Uri.parse('$BASE_URL/api/readProduct'));
 
     if (response.statusCode == 200) {
       return ProductResponse.fromJson(json.decode(response.body)).productList;
@@ -79,7 +79,8 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
 
   @override
   Future<List<ProductModel>> searchProducts(String query) async {
-    final response = await client.get(Uri.parse('$BASE_URL/&query=$query'));
+    final response =
+        await client.get(Uri.parse('$BASE_URL/api/readProductByName/?=$query'));
 
     if (response.statusCode == 200) {
       return ProductResponse.fromJson(json.decode(response.body)).productList;
@@ -87,6 +88,4 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
       throw ServerException();
     }
   }
-  
-
 }

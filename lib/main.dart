@@ -8,6 +8,7 @@ import 'package:paktani_mobile/presentation/pages/onair_tvseries_page.dart';
 import 'package:paktani_mobile/presentation/pages/popular_movies_page.dart';
 import 'package:paktani_mobile/presentation/pages/popular_tvseries_page.dart';
 import 'package:paktani_mobile/presentation/pages/product/home_product_page.dart';
+import 'package:paktani_mobile/presentation/pages/product/popular_product_page.dart';
 import 'package:paktani_mobile/presentation/pages/register_page.dart';
 import 'package:paktani_mobile/presentation/pages/search_page.dart';
 import 'package:paktani_mobile/presentation/pages/top_rated_movies_page.dart';
@@ -21,6 +22,10 @@ import 'package:paktani_mobile/presentation/pages/watchlist_tvseries_page.dart';
 import 'package:paktani_mobile/presentation/provider/movie/movie_detail_notifier.dart';
 import 'package:paktani_mobile/presentation/provider/movie/movie_list_notifier.dart';
 import 'package:paktani_mobile/presentation/provider/movie/movie_search_notifier.dart';
+import 'package:paktani_mobile/presentation/provider/product/popular_product_notifier.dart';
+import 'package:paktani_mobile/presentation/provider/product/product_search_notifier.dart';
+import 'package:paktani_mobile/presentation/provider/product/top_rated_product_notifier.dart';
+import 'package:paktani_mobile/presentation/provider/product/wishlist_product_notifier.dart';
 import 'package:paktani_mobile/presentation/provider/tvseries/onair_tvseries_notifier.dart';
 import 'package:paktani_mobile/presentation/provider/movie/popular_movies_notifier.dart';
 import 'package:paktani_mobile/presentation/provider/tvseries/popular_tvseries_notifier.dart';
@@ -38,6 +43,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:paktani_mobile/injection.dart' as di;
 import 'package:paktani_mobile/presentation/pages/login_page.dart';
+import 'package:paktani_mobile/presentation/test_page.dart';
 
 void main() {
   di.init();
@@ -51,6 +57,16 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => di.locator<ProductListNotifier>(),
+        ),
+        ChangeNotifierProvider(
+            create: (_) => di.locator<ProductSearchNotifier>()),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<PopularProductsNotifier>(),
+        ),
+        ChangeNotifierProvider(
+            create: (_) => di.locator<WishlistProductNotifier>()),
+        ChangeNotifierProvider(
+          create: (_) => di.locator<TopRatedProductsNotifier>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<ProductDetailNotifier>(),
@@ -104,13 +120,15 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'PakTani',
+        /*
         theme: ThemeData.dark().copyWith(
           colorScheme: kColorScheme,
           primaryColor: kRichBlack,
           scaffoldBackgroundColor: kRichBlack,
           textTheme: kTextTheme,
         ),
-        home: HomeMoviePage(),
+        */
+        home: TestPage(),
         //home: LoginPage(),
         //home: MoneyPage(),
         debugShowCheckedModeBanner: false,
@@ -132,11 +150,15 @@ class MyApp extends StatelessWidget {
             case OnAirTVSeriesPage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => OnAirTVSeriesPage());
             //
+            case PopularProductsPage.ROUTE_NAME:
+              return CupertinoPageRoute(builder: (_) => PopularProductsPage());
             case PopularMoviesPage.ROUTE_NAME:
               return CupertinoPageRoute(builder: (_) => PopularMoviesPage());
             case PopularTVSeriesPage.ROUTE_NAME:
               return CupertinoPageRoute(builder: (_) => PopularTVSeriesPage());
+
             //
+
             case TopRatedMoviesPage.ROUTE_NAME:
               return CupertinoPageRoute(builder: (_) => TopRatedMoviesPage());
             case TopRatedTVSeriesPage.ROUTE_NAME:
@@ -174,7 +196,7 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => LoginPage());
             case RegisterPage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => RegisterPage());
-            
+
             case MoneyPage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => MoneyPage());
             default:

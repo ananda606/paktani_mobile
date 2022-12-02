@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 import '../../provider/product/product_detail_notifier.dart';
 
 class ProductDetailPage extends StatefulWidget {
-  static const ROUTE_NAME = '/detail';
+  static const ROUTE_NAME = '/product_detail';
 
   final int id;
   ProductDetailPage({required this.id});
@@ -25,13 +25,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() {
-      Provider.of<ProductDetailNotifier>(context, listen: false)
-          .fetchProductDetail(widget.id);
-
-      Provider.of<ProductDetailNotifier>(context, listen: false)
-          .loadWishlistStatus(widget.id);
-    });
+    Future.microtask(() =>
+        Provider.of<ProductDetailNotifier>(context, listen: false)
+            .fetchProductDetail(widget.id));
   }
 
   @override
