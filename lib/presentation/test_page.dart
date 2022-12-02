@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
@@ -37,7 +38,6 @@ class TestPage extends StatefulWidget {
 }
 
 class _TestPageState extends State<TestPage> {
- 
   List<Product>? productList;
   void getProductFromApi() async {
     ProductApi.getProduct().then((value) => setState(() {
@@ -60,13 +60,11 @@ class _TestPageState extends State<TestPage> {
           itemCount: productList?.length ?? 0,
           itemBuilder: (context, index) {
             return ListTile(
-              title: Text(productList![index].id.toString()),
-              subtitle: Text(productList![index].productDescription),
-              leading: CircleAvatar(
-                backgroundImage:
-                    NetworkImage(productList![index].productImageUrl),
-              ),
-            );
+                title: Text(productList![index].id.toString()),
+                subtitle: Text(productList![index].productDescription),
+                leading: Container(
+                  child: Image.network(productList![index].productImageUrl),
+                ));
           }),
     ));
   }
