@@ -4,9 +4,9 @@ import 'package:paktani_mobile/domain/api/product_api.dart';
 import 'package:paktani_mobile/presentation/pages/product/product_detail_page.dart';
 import 'package:paktani_mobile/presentation/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
 import 'package:paktani_mobile/domain/model/product_model.dart';
-import 'package:http/http.dart';
+
 
 class HomeProductPage extends StatefulWidget {
   static const ROUTE_NAME = '/home_product';

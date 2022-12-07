@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:paktani_mobile/domain/api/user_api.dart';
+import 'package:paktani_mobile/domain/model/user_model.dart';
 
 class LoginPage extends StatefulWidget {
   static const ROUTE_NAME = '/login_page';
@@ -42,6 +44,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    UserApi userApi = UserApi();
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -140,12 +143,41 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(30, 8, 30, 0),
-              child: ElevatedButton(
-                child: const Text('Login'),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/home_movie');
-                },
-              ),
+              child: FutureBuilder(
+                  future: userApi.getLoginUser(_emailController.text.toString(),
+                      _passwordController.text.toString()),
+                  builder: (context, snapshot) {
+                    List<UserModel>? user = snapshot.data;
+                    // UserModel userModel=UserModel(email: _emailController.text.toString(), password: _passwordController.text.toString(), username: username, userAddress: userAddress, userPhoneNumber: userPhoneNumber)
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text('error'),
+                      );
+                    } else if (snapshot.hasData) {
+                      
+                      return ElevatedButton(
+                        child: const Text('Login'),
+                        onPressed: () {
+                          if (user == null) {
+                            print('$user');
+                          } else {
+                            Navigator.pushNamed(context, '/home_movie');
+                          }
+                        },
+                      );
+                    } else {
+                       return ElevatedButton(
+                        child: const Text('Login'),
+                        onPressed: () {
+                          if (user == null) {
+                            print('$user');
+                          } else {
+                            Navigator.pushNamed(context, '/home_movie');
+                          }
+                        },
+                      );
+                    }
+                  }),
             ),
           ],
         ),

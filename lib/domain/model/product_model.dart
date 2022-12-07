@@ -35,12 +35,12 @@ class ProductsModel {
       'productRating':productRating,
     };
   }
-
+/*
   @override
   String toString() {
     return 'ProductModel{id: $id, name: $productName, productDescription: $productDescription, productImageUrl: $productImageUrl}';
   }
-}
+*/}
 
 List<ProductsModel> productFromJson(String jsonData) {
   final data = json.decode(jsonData);

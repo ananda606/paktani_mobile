@@ -135,9 +135,6 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => LoginPage());
             case RegisterPage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => RegisterPage());
-
-            case MoneyPage.ROUTE_NAME:
-              return MaterialPageRoute(builder: (_) => MoneyPage());
             default:
               return MaterialPageRoute(builder: (_) {
                 return Scaffold(

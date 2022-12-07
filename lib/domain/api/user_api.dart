@@ -12,11 +12,19 @@ class UserApi {
       return null;
     }
   }
-  
-  Future<bool> createProduct(UserModel data) async {
-    final response = await client.post(Uri.parse("$url/createProduct"),
-        body: userToJson(data),
-        headers: {"content-type": "application/json"});
+
+  Future<List<UserModel>?> getLoginUser(String email,String password) async {
+    final response = await client.get(Uri.parse("$url/login/$email/$password"));
+    if (response.statusCode == 200) {
+      return userFromJson(response.body);
+    } else {
+      return null;
+    }
+  }
+
+  Future<bool> createUser(UserModel data) async {
+    final response = await client.post(Uri.parse("$url/createUser"),
+        body: userToJson(data), headers: {"content-type": "application/json"});
     if (response.statusCode == 201) {
       return true;
     } else {
@@ -36,9 +44,10 @@ class UserApi {
       return false;
     }
   }
+
   Future<bool> deleteProfile(int id) async {
     final response = await client.delete(
-      Uri.parse("$url/api/deleteProductById/$id") ,
+      Uri.parse("$url/api/deleteProductById/$id"),
       headers: {"content-type": "application/json"},
     );
     if (response.statusCode == 200) {
