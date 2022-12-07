@@ -1,17 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:paktani_mobile/common/constants.dart';
-import 'package:paktani_mobile/domain/entities/product/product.dart';
+import 'package:paktani_mobile/domain/api/product_api.dart';
 import 'package:paktani_mobile/presentation/pages/product/product_detail_page.dart';
-import 'package:paktani_mobile/presentation/pages/product/popular_product_page.dart';
-import 'package:paktani_mobile/presentation/pages/search_page.dart';
-import 'package:paktani_mobile/presentation/pages/product/top_rated_product_page.dart';
-import 'package:paktani_mobile/presentation/provider/product/product_list_notifier.dart';
-import 'package:paktani_mobile/common/state_enum.dart';
 import 'package:paktani_mobile/presentation/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../provider/product/product_list_notifier.dart';
+import 'package:paktani_mobile/domain/model/product_model.dart';
+import 'package:http/http.dart';
 
 class HomeProductPage extends StatefulWidget {
   static const ROUTE_NAME = '/home_product';
@@ -20,14 +15,11 @@ class HomeProductPage extends StatefulWidget {
 }
 
 class _HomeProductPageState extends State<HomeProductPage> {
+  ProductApi productApi = new ProductApi();
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-        () => Provider.of<ProductListNotifier>(context, listen: false)
-          ..fetchAllProducts()
-          ..fetchPopularProducts()
-          ..fetchTopRatedProducts());
+    productApi = ProductApi();
   }
 
   @override
@@ -37,72 +29,61 @@ class _HomeProductPageState extends State<HomeProductPage> {
       appBar: AppBar(
         title: Text('PakTani'),
         actions: [
+          /*
           IconButton(
+            
             onPressed: () {
               Navigator.pushNamed(context, SearchPage.ROUTE_NAME);
             },
             icon: Icon(Icons.search),
-          )
+          )*/
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Our Product',
-                style: kHeading6,
-              ),
-              Consumer<ProductListNotifier>(builder: (context, data, child) {
-                final state = data.productListState;
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.Loaded) {
-                  return ProductList(data.productList);
-                } else {
-                  return Text('Failed');
-                }
-              }),
-              _buildSubHeading(
-                title: 'Popular',
-                onTap: () => Navigator.pushNamed(
-                    context, PopularProductsPage.ROUTE_NAME),
-              ),
-              Consumer<ProductListNotifier>(builder: (context, data, child) {
-                final state = data.popularProductsState;
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.Loaded) {
-                  return ProductList(data.popularProducts);
-                } else {
-                  return Text('Failed');
-                }
-              }),
-              _buildSubHeading(
-                title: 'Top Rated',
-                onTap: () => Navigator.pushNamed(
-                    context, TopRatedProductsPage.ROUTE_NAME),
-              ),
-              Consumer<ProductListNotifier>(builder: (context, data, child) {
-                final state = data.topRatedProductsState;
-                if (state == RequestState.Loading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state == RequestState.Loaded) {
-                  return ProductGridList(data.topRatedProducts);
-                } else {
-                  return Text('Failed');
-                }
-              }),
-            ],
-          ),
+      body: SafeArea(
+        child: FutureBuilder(
+          future: productApi.getProduct(),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text('something wrong!'),
+              );
+            } else if (snapshot.hasData) {
+              List<ProductsModel>? products = snapshot.data;
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                       Text(
+                        'horizontal',
+                        style: kHeading6,
+                      ),
+                      _buildSubHeading(title: 'see more', onTap: (){}),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ProductList(products!),
+                      ),
+                      Text(
+                        'Our Product',
+                        style: kHeading6,
+                      ),
+                      _buildSubHeading(title: 'see more', onTap: (){}),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ProductGridList(products),
+                      ),
+                     
+                    ],
+                  ),
+                ),
+              );
+            } else {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
         ),
       ),
     );
@@ -131,8 +112,8 @@ class _HomeProductPageState extends State<HomeProductPage> {
 }
 
 class ProductGridList extends StatelessWidget {
-  final List<Product> movies;
-  ProductGridList(this.movies);
+  final List<ProductsModel> products;
+  ProductGridList(this.products);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -142,7 +123,7 @@ class ProductGridList extends StatelessWidget {
             SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
-          final movie = movies[index];
+          final product = products[index];
           return Container(
             padding: const EdgeInsets.all(8),
             child: InkWell(
@@ -150,12 +131,13 @@ class ProductGridList extends StatelessWidget {
                 Navigator.pushNamed(
                   context,
                   ProductDetailPage.ROUTE_NAME,
-                  arguments: movie.id,
+                  arguments: product.id,
                 );
               },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -164,18 +146,21 @@ class ProductGridList extends StatelessWidget {
                       width: 200,
                       child: CachedNetworkImage(
                         fit: BoxFit.cover,
-                        imageUrl: '$BASE_IMAGE_URL${movie.imageUrls}',
+                        imageUrl:'${product.productImageUrl}',
                         placeholder: (context, url) => Center(
                           child: CircularProgressIndicator(),
                         ),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        errorWidget: (context, url, error) =>
+                            Icon(Icons.no_photography_outlined),
                       ),
                     ),
                   ),
-                  Text(
-                    movie.productName.toString(),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
+                  Flexible(
+                    child: Text(
+                      product.productDescription.toString(),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
                   ),
                   SafeArea(
                     child: Row(mainAxisSize: MainAxisSize.min, children: [
@@ -183,16 +168,18 @@ class ProductGridList extends StatelessWidget {
                         Icons.location_on,
                         size: 20,
                       ),
-                      Text(
-                        movie.productDescription.toString(),
-                        softWrap: true,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
+                      Flexible(
+                        child: Text(
+                          product.productDescription.toString(),
+                          softWrap: true,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
                       ),
                     ]),
                   ),
                   Text(
-                    movie.productRating.toString(),
+                    product.productName.toString(),
                     softWrap: true,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
@@ -202,16 +189,16 @@ class ProductGridList extends StatelessWidget {
             ),
           );
         },
-        itemCount: movies.length,
+        itemCount: products.length,
       ),
     );
   }
 }
 
 class ProductList extends StatelessWidget {
-  final List<Product> movies;
+  final List<ProductsModel> products;
 
-  ProductList(this.movies);
+  ProductList(this.products);
 
   @override
   Widget build(BuildContext context) {
@@ -220,31 +207,29 @@ class ProductList extends StatelessWidget {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          final movie = movies[index];
-          return Container(
-            padding: const EdgeInsets.all(8),
-            child: InkWell(
-              onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  ProductDetailPage.ROUTE_NAME,
-                  arguments: movie.id,
-                );
-              },
-              child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
-                child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${movie.imageUrls}',
-                  placeholder: (context, url) => Center(
-                    child: CircularProgressIndicator(),
+          final product = products[index];
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              child: InkWell(
+                onTap: () {},
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(16)),
+                  child: CachedNetworkImage(
+                    imageUrl: '',
+                    placeholder: (context, url) => Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    errorWidget: (context, url, error) =>
+                        Icon(Icons.no_photography_outlined),
                   ),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
               ),
             ),
           );
         },
-        itemCount: movies.length,
+        itemCount: products.length,
       ),
     );
   }

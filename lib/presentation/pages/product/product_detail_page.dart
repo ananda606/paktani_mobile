@@ -1,18 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:paktani_mobile/common/constants.dart';
-import 'package:paktani_mobile/domain/entities/genre.dart';
-import 'package:paktani_mobile/domain/entities/product/product.dart';
-import 'package:paktani_mobile/domain/entities/product/product_detail.dart';
-import 'package:paktani_mobile/presentation/provider/product/product_detail_notifier.dart';
-import 'package:paktani_mobile/common/state_enum.dart';
+import 'package:paktani_mobile/domain/model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:provider/provider.dart';
-
-import '../../provider/product/product_detail_notifier.dart';
+import 'package:paktani_mobile/domain/api/product_api.dart';
 
 class ProductDetailPage extends StatefulWidget {
-  static const ROUTE_NAME = '/product_detail';
+  static const ROUTE_NAME = '/detail';
 
   final int id;
   ProductDetailPage({required this.id});
@@ -22,47 +16,45 @@ class ProductDetailPage extends StatefulWidget {
 }
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
+  ProductApi productApi = new ProductApi();
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<ProductDetailNotifier>(context, listen: false)
-            .fetchProductDetail(widget.id));
+    productApi = ProductApi();
+    productApi.getProductById(widget.id);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Consumer<ProductDetailNotifier>(
-        builder: (context, provider, child) {
-          if (provider.ProductState == RequestState.Loading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (provider.ProductState == RequestState.Loaded) {
-            final movie = provider.product;
-            return SafeArea(
-              child: DetailContent(
-                movie,
-                provider.ProductRecommendations,
-                provider.isAddedToWishlist,
-              ),
-            );
-          } else {
-            return Text(provider.message);
-          }
-        },
-      ),
-    );
+        body: FutureBuilder(
+            future: productApi.getProductById(widget.id),
+            builder: ((context, snapshot) {
+              print(widget.id);
+              print(productApi.getProductById(widget.id));
+              if (snapshot.hasError) {
+                return Center(child: Text('something wrong!'));
+              } else if (snapshot.hasData) {
+                late List<ProductsModel>? products = snapshot.data;
+                bool isAddedWishlist = false;
+                return SafeArea(child: DetailContent(products!));
+                //return Center(child: Text('${products![0].productName}'));
+              } else {
+                return CircularProgressIndicator();
+              }
+            })));
   }
 }
 
 class DetailContent extends StatelessWidget {
-  final ProductDetail movie;
-  final List<Product> recommendations;
-  final bool isAddedWatchlist;
+  final List<ProductsModel> movie;
 
-  DetailContent(this.movie, this.recommendations, this.isAddedWatchlist);
+  //final List<ProductsModel> recommendations;
+  //final bool isAddedWatchlist;
+
+  DetailContent(
+    this.movie,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +62,8 @@ class DetailContent extends StatelessWidget {
     return Stack(
       children: [
         CachedNetworkImage(
-          imageUrl: 'https://image.tmdb.org/t/p/w500${movie.imageUrls}',
+          //imageUrl: '${movie[0].productImageUrl}',
+          imageUrl:'https://i.guim.co.uk/img/media/63de40b99577af9b867a9c57555a432632ba760b/0_266_5616_3370/master/5616.jpg?width=620&quality=45&dpr=2&s=none',
           width: screenWidth,
           placeholder: (context, url) => const Center(
             child: CircularProgressIndicator(),
@@ -101,34 +94,35 @@ class DetailContent extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              movie.productName,
+                              movie[0].productName,
                               style: kHeading5,
                             ),
                             ElevatedButton(
                               onPressed: () async {
+                                /*
                                 if (!isAddedWatchlist) {
                                   await Provider.of<ProductDetailNotifier>(
                                           context,
                                           listen: false)
-                                      .addWishlist(movie);
+                                      .addWatchlist(movie);
                                 } else {
                                   await Provider.of<ProductDetailNotifier>(
                                           context,
                                           listen: false)
-                                      .removeFromWishlist(movie);
+                                      .removeFromWatchlist(movie);
                                 }
 
                                 final message =
                                     Provider.of<ProductDetailNotifier>(context,
                                             listen: false)
-                                        .WishlistMessage;
+                                        .watchlistMessage;
 
                                 if (message ==
                                         ProductDetailNotifier
-                                            .wishlistAddSuccessMessage ||
+                                            .watchlistAddSuccessMessage ||
                                     message ==
                                         ProductDetailNotifier
-                                            .wishlistRemoveSuccessMessage) {
+                                            .watchlistRemoveSuccessMessage) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(content: Text(message)));
                                 } else {
@@ -139,29 +133,23 @@ class DetailContent extends StatelessWidget {
                                           content: Text(message),
                                         );
                                       });
-                                }
+                                }*/
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
+                                  /*
                                   isAddedWatchlist
                                       ? const Icon(Icons.check)
                                       : const Icon(Icons.add),
-                                  const Text('Watchlist'),
+                                  const Text('Watchlist'),*/
                                 ],
                               ),
-                            ),
-                            /*
-                            Text(
-                              _showGenres(movie),
-                            ),
-                            Text(
-                              _showDuration(movie.runtime),
                             ),
                             Row(
                               children: [
                                 RatingBarIndicator(
-                                  rating: movie.voteAverage / 2,
+                                  rating: movie[0].productRating ?? 0,
                                   itemCount: 5,
                                   itemBuilder: (context, index) => const Icon(
                                     Icons.star,
@@ -169,22 +157,24 @@ class DetailContent extends StatelessWidget {
                                   ),
                                   itemSize: 24,
                                 ),
-                                Text('${movie.voteAverage}')
+                                Text('${movie[0].productRating}')
                               ],
-                            ),*/
+                            ),
                             const SizedBox(height: 16),
                             Text(
                               'Overview',
                               style: kHeading6,
                             ),
                             Text(
-                              movie.productDescription,
+                              movie[0].productDescription,
                             ),
                             const SizedBox(height: 16),
                             Text(
                               'Recommendations',
                               style: kHeading6,
                             ),
+
+                            /*
                             Consumer<ProductDetailNotifier>(
                               builder: (context, data, child) {
                                 if (data.recommendationState ==
@@ -214,13 +204,12 @@ class DetailContent extends StatelessWidget {
                                               );
                                             },
                                             child: ClipRRect(
-                                              borderRadius:
-                                                  const BorderRadius.all(
+                                              borderRadius: const BorderRadius.all(
                                                 Radius.circular(8),
                                               ),
                                               child: CachedNetworkImage(
                                                 imageUrl:
-                                                    'https://image.tmdb.org/t/p/w500${movie.imageUrls}',
+                                                    'https://image.tmdb.org/t/p/w500${movie.posterPath}',
                                                 placeholder: (context, url) =>
                                                     const Center(
                                                   child:
@@ -241,7 +230,7 @@ class DetailContent extends StatelessWidget {
                                   return Container();
                                 }
                               },
-                            ),
+                            ),*/
                           ],
                         ),
                       ),
@@ -279,29 +268,4 @@ class DetailContent extends StatelessWidget {
       ],
     );
   }
-/*
-  String _showGenres(List<Genre> genres) {
-    String result = '';
-    for (var genre in genres) {
-      result += genre.name + ', ';
-    }
-
-    if (result.isEmpty) {
-      return result;
-    }
-
-    return result.substring(0, result.length - 2);
-  }
-
-  String _showDuration(int runtime) {
-    final int hours = runtime ~/ 60;
-    final int minutes = runtime % 60;
-
-    if (hours > 0) {
-      return '${hours}h ${minutes}m';
-    } else {
-      return '${minutes}m';
-    }
-  }
-  */
 }

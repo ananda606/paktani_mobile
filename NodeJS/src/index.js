@@ -3,6 +3,8 @@ const bodyParser= require('body-parser');
 const cors= require('cors');
 const app= express();
 const {db}= require('./model/dbConnection');
+const multer= require('multer');
+
 
 const serverPort= 3001;
 app.use(cors());
@@ -17,14 +19,18 @@ app.get('/api/readProduct',(req,res)=>{
         if(err){
             console.log(err);
         }else{
-            res.send(result);
+            //res.status(200).json({success:true, results:result});
+            //res.send(result);
+            //res.jsonp(result);
+          res.status(200).json({result});
+       
             console.log(result);
         }   
     });
 });
 //read product by id
-app.get('/api/readProductById/',(req,res)=>{
-    const id=req.body.id;
+app.get('/api/readProductById/:id',(req,res)=>{
+    const id=req.params.id;
     
     const sqlQuery="SELECT * FROM product WHERE id = ?";
     db.query(sqlQuery, id, (err,result)=>{
@@ -37,9 +43,9 @@ app.get('/api/readProductById/',(req,res)=>{
     });
 });
 //read product by name
-app.get('/api/readProductByName/',(req,res)=>{
+app.get('/api/readProductByName/:productName',(req,res)=>{
   
-    const productName= req.body.productName
+    const productName= req.params.productName
     const sqlQuery="SELECT * FROM product WHERE productName = ?";
     db.query(sqlQuery, productName, (err,result)=>{
         if(err){
@@ -52,25 +58,32 @@ app.get('/api/readProductByName/',(req,res)=>{
 });
 //create product
 app.post('/api/createProduct',(req,res)=>{
+    const id= req.body.id;
     const productName= req.body.productName;
+    const productLocation=req.body.productLocation;
     const productDescription= req.body.productDescription;
     const productImageUrl= req.body.productImageUrl;
-    const sqlQuery= "INSERT INTO product (productName, productDescription, productImageUrl) VALUE (?, ?, ?)";
+    const producRating= req.body.producRating;
+    const sqlQuery= "INSERT INTO product (id, productName,productLocation, productDescription, productImageUrl,productRating) VALUE (?, ?, ?, ? , ?, ?)";
 
-    db.query(sqlQuery, [productName, productDescription, productImageUrl], (err,result)=>{
+    db.query(sqlQuery, [id,productName,productLocation, productDescription, productImageUrl,producRating], (err,result)=>{
         if(err){
             console.log(err);
      
          }else{
-             res.send(result);
-             console.log(result);
+            if(res.statusCode==201){
+                res.send(true);
+            }
+            else{
+                res.send(false);
+            }
          }
     });
     
 });
 //update product
-app.put('/api/updateProduct/',(req,res)=>{
-    const idproduct = req.body.id;
+app.put('/api/updateProductById/:id',(req,res)=>{
+    const idproduct = req.params.id;
     const productName= req.body.productName;
     const productDescription= req.body.productDescription;
     const productImageUrl= req.body.productImageUrl;;
@@ -81,14 +94,15 @@ app.put('/api/updateProduct/',(req,res)=>{
             console.log(err);
      
          }else{
-             res.send(result);
-             console.log(result);
+            
+           res.send(result);
+          
          }
     });
    });
 //delete
-app.delete('/api/deleteProduct',(req,res)=>{
-    const idproduct = req.body.id;
+app.delete('/api/deleteProduct/:id',(req,res)=>{
+    const idproduct = req.params.id;
 
     const sqlQuery= "DELETE FROM product WHERE id = ? ";
 
@@ -97,7 +111,7 @@ app.delete('/api/deleteProduct',(req,res)=>{
             console.log(err);
      
          }else{
-             res.send(result);
+            res.send(result);
              console.log(result);
          }
     });
@@ -131,15 +145,47 @@ app.get('/api/readUserByUsername',(req,res)=>{
     });
     
 });
+//belum implementasi
+
+app.get('/api/login/',(req,res)=>{
+    const email= req.body.email;
+    const password= req.body.password;
+    const sqlQuery= "SELECT * FROM user WHERE email = ? AND password = ?";
+    if(email && password){
+    db.query(sqlQuery, [email,password], (err,result)=>{
+        if(err){
+            throw error;
+            
+     
+         }else{
+            if(result.length>0){
+              
+             res.send(true); 
+             }else{
+             res.send(false);
+            
+             }
+          
+         }
+    });
+}
+    else{
+        res.send(false);
+    }
+    
+});
 
 //create
 app.post('/api/createUser',(req,res)=>{
-   const id= req.body.id;
+   
     const username= req.body.username;
     const password= req.body.password;
-    const sqlQuery= "INSERT INTO user (username, password) VALUE (?,? )";
+    const email= req.body.email;
+    const userAddress= req.body.userAddress;
+    const userPhoneNumber= req.body.userPhoneNumber;
+    const sqlQuery= "INSERT INTO user (email, password, username, userAddress, userPhoneNumber) VALUE (?, ?, ?, ?, ? )";
 
-    db.query(sqlQuery, [username, password], (err,result)=>{
+    db.query(sqlQuery, [email, password,username, userAddress,userPhoneNumber], (err,result)=>{
         if(err){
             console.log(err);
      
@@ -170,16 +216,16 @@ app.put('/api/updateUserById/',(req,res)=>{
     });
 
 //delete
-app.delete('/api/deleteUserById',(req,res)=>{
-    const id = req.body.iduser;
+app.delete('/api/deleteUserById/:iduser',(req,res)=>{
+    const id = req.params.iduser;
 
     const sqlQuery= "DELETE FROM user  WHERE iduser = ? ";
 
     db.query(sqlQuery, id, (err,result)=>{
         if(err){
             console.log(err);
-     
          }else{
+            
              res.send(result);
              console.log(result);
          }

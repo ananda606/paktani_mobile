@@ -1,5 +1,6 @@
 import 'package:paktani_mobile/common/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:paktani_mobile/presentation/pages/product/home_product_page.dart';
 
 class MoneyPage extends StatefulWidget {
   static const ROUTE_NAME = '/money';
@@ -9,7 +10,17 @@ class MoneyPage extends StatefulWidget {
 }
 
 class _MoneyPageState extends State<MoneyPage> {
-  
+  int value = 0;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,8 +91,9 @@ class _MoneyPageState extends State<MoneyPage> {
           ),
           SafeArea(
             child: IconButton(
-              onPressed:()=>Navigator.pop(context),
-              icon: Icon(Icons.close),
+              onPressed: () => Navigator.popAndPushNamed(
+                  context, HomeProductPage.ROUTE_NAME),
+              icon: Icon(Icons.arrow_back),
             ),
           )
         ],

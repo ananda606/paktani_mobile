@@ -1,6 +1,5 @@
 import 'package:paktani_mobile/common/constants.dart';
 import 'package:paktani_mobile/presentation/pages/watchlist_movies_page.dart';
-import 'package:paktani_mobile/presentation/pages/watchlist_tvseries_page.dart';
 import 'package:flutter/material.dart';
 
 class WatchlistPage extends StatelessWidget {
@@ -30,7 +29,7 @@ class WatchlistPage extends StatelessWidget {
         },
         body: TabBarView(
           children: <Widget>[
-            WatchlistTVSeriesPage(),
+           
             WatchlistMoviesPage(),
           ],
         ),

@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:paktani_mobile/common/constants.dart';
 import 'package:paktani_mobile/domain/entities/product/product.dart';
-import 'package:paktani_mobile/presentation/pages/product/product_detail_page.dart';
 import 'package:flutter/material.dart';
+import 'package:paktani_mobile/domain/model/product_model.dart';
 
 class ProductCard extends StatelessWidget {
-  final Product movie;
+  final ProductsModel? movie;
 
   ProductCard(this.movie);
 
@@ -15,11 +15,7 @@ class ProductCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(
-            context,
-            ProductDetailPage.ROUTE_NAME,
-            arguments: movie.id,
-          );
+          
         },
         child: Stack(
           alignment: Alignment.bottomLeft,
@@ -35,14 +31,14 @@ class ProductCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      movie.productName ,
+                      movie!.productName ,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: kHeading6,
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      movie.productDescription ,
+                      movie!.productDescription ,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -57,7 +53,7 @@ class ProductCard extends StatelessWidget {
               ),
               child: ClipRRect(
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${movie.imageUrls}',
+                  imageUrl: '$BASE_IMAGE_URL${movie!.productImageUrl}',
                   width: 80,
                   placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),
