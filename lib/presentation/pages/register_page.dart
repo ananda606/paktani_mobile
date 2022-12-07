@@ -220,8 +220,20 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: ElevatedButton(
                   child: const Text('Register'),
                   onPressed: () {
-                    userApi.createUser(userModel);
-                    Navigator.pushNamed(context, LoginPage.ROUTE_NAME);
+                    print(_emailController.text);
+
+                    if (_emailController.text.isNotEmpty &&
+                        _passwordController.text.isNotEmpty &&
+                        _usernameController.text.isNotEmpty &&
+                        _userAddressController.text.isNotEmpty &&
+                        _userPhoneNumberController.text.isNotEmpty) {
+                      userApi.createUser(userModel);
+                      Navigator.pushNamed(context, LoginPage.ROUTE_NAME);
+                    } else {
+                      AlertDialog(
+                        title: Text('data tidak lengkap'),
+                      );
+                    }
                   },
                 ),
               ),

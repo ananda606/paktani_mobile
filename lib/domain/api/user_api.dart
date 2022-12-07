@@ -13,7 +13,7 @@ class UserApi {
     }
   }
 
-  Future<List<UserModel>?> getLoginUser(String email,String password) async {
+  Future<List<UserModel>?> getLoginUser(String email, String password) async {
     final response = await client.get(Uri.parse("$url/login/$email/$password"));
     if (response.statusCode == 200) {
       return userFromJson(response.body);
@@ -26,6 +26,7 @@ class UserApi {
     final response = await client.post(Uri.parse("$url/createUser"),
         body: userToJson(data), headers: {"content-type": "application/json"});
     if (response.statusCode == 201) {
+      
       return true;
     } else {
       return false;
