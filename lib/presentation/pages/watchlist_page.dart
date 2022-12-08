@@ -16,7 +16,7 @@ class WatchlistPage extends StatelessWidget {
         headerSliverBuilder: (BuildContext context, bool innerBox) {
           return <Widget>[
             new SliverAppBar(
-              title: Text('Watchlist'),
+              title: const Text('Watchlist'),
               bottom: TabBar(
                 indicatorColor: kPrussianBlue,
                 tabs: [
@@ -39,7 +39,7 @@ class WatchlistPage extends StatelessWidget {
 
   Widget _tabBarWatchlist(String title, IconData iconData) {
     return Padding(
-      padding: EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(10.0),
       child: Center(
         child: Icon(iconData),
       ),

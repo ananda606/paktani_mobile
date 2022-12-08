@@ -41,7 +41,7 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
         child: Consumer<WatchlistMovieNotifier>(
           builder: (context, data, child) {
             if (data.watchlistState == RequestState.Loading) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             } else if (data.watchlistState == RequestState.Loaded) {
@@ -54,7 +54,7 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
               );
             } else {
               return Center(
-                key: Key('error_message'),
+                key: const Key('error_message'),
                 child: Text(data.message),
               );
             }

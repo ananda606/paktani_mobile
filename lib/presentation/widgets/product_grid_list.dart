@@ -1,6 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:paktani_mobile/common/constants.dart';
-import 'package:paktani_mobile/domain/entities/product/product.dart';
 import 'package:flutter/material.dart';
 import 'package:paktani_mobile/domain/model/product_model.dart';
 import 'package:paktani_mobile/presentation/pages/product/product_detail_page.dart';
@@ -8,14 +6,14 @@ import 'package:paktani_mobile/presentation/pages/product/product_detail_page.da
 class ProductGridList extends StatelessWidget {
   static const ROUTE_NAME = '/home_product';
   final List<ProductsModel> movie;
-  ProductGridList(this.movie);
+  const ProductGridList(this.movie);
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 500,
       child: GridView.builder(
         gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
           final product = movie[index];
@@ -35,7 +33,7 @@ class ProductGridList extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
+                    child: SizedBox(
                       height: 100,
                       width: 200,
                       child: CachedNetworkImage(
@@ -43,7 +41,7 @@ class ProductGridList extends StatelessWidget {
                         imageUrl:
                             'https://i.guim.co.uk/img/media/63de40b99577af9b867a9c57555a432632ba760b/0_266_5616_3370/master/5616.jpg?width=620&quality=45&dpr=2&s=none',
                        
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        errorWidget: (context, url, error) => const Icon(Icons.error),
                       ),
                     ),
                   ),
@@ -54,7 +52,7 @@ class ProductGridList extends StatelessWidget {
                   ),
                   SafeArea(
                     child: Row(mainAxisSize: MainAxisSize.min, children: [
-                      Icon(
+                      const Icon(
                         Icons.location_on,
                         size: 20,
                       ),

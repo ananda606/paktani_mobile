@@ -1,16 +1,41 @@
 const express= require('express');
-const bodyParser= require('body-parser');
 const cors= require('cors');
 const app= express();
 const {db}= require('./model/dbConnection');
-const multer= require('multer');
-
-
 const serverPort= 3001;
 app.use(cors());
 app.use(express.json());
-app.use(bodyParser.urlencoded({extended:true}));
+const path=require('path');
+const multer= require('multer');
+const storage= multer.diskStorage({
+    destination:'./src/image/',
+    filename:(req,file,cb)=>{
+        return cb(null,`${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
+    }
+});
+const upload = multer({
+    storage:storage,
+    fileFilter:function(req,file,cb){
+        if(!file.originalname.match()){
+            req.fileValidationError='image file only';
+            return cb(new Error('only image'),false);
+        }
+        cb(null,true);
+    }
+}).array('picture');
 
+//post images
+app.post('/uploadImage',upload,(req,res)=>{
+    const sqlQuery= "INSERT INTO image (image) VALUE (?)";
+console.log(req.files[0].path);
+console.log(req.files);
+//res.statusCode(201).json({result:req.files});
+//res.send(req.files.originalname);
+var paths=req.files[0].path;
+
+res.send(paths);
+
+});
 //read product
 app.get('/api/readProduct',(req,res)=>{
     const sqlQuery="SELECT * FROM product";

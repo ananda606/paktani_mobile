@@ -9,11 +9,11 @@ class MovieGridList extends StatelessWidget {
   MovieGridList(this.movies);
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 500,
       child: GridView.builder(
         gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
           final movie = movies[index];
@@ -35,16 +35,16 @@ class MovieGridList extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
+                    child: SizedBox(
                       height: 100,
                       width: 200,
                       child: CachedNetworkImage(
                         fit: BoxFit.cover,
                         imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
-                        placeholder: (context, url) => Center(
+                        placeholder: (context, url) => const Center(
                           child: CircularProgressIndicator(),
                         ),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        errorWidget: (context, url, error) => const Icon(Icons.error),
                       ),
                     ),
                   ),
@@ -55,7 +55,7 @@ class MovieGridList extends StatelessWidget {
                   ),
                   SafeArea(
                     child: Row(mainAxisSize: MainAxisSize.min, children: [
-                      Icon(Icons.location_on, size: 20,),
+                      const Icon(Icons.location_on, size: 20,),
                       Text(
                         movie.releaseDate.toString(),
                         softWrap: true,

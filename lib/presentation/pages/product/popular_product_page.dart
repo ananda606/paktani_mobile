@@ -1,11 +1,8 @@
-import 'package:paktani_mobile/common/state_enum.dart';
 import 'package:paktani_mobile/domain/api/product_api.dart';
 import 'package:paktani_mobile/domain/model/product_model.dart';
 
-import 'package:paktani_mobile/presentation/widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:paktani_mobile/presentation/widgets/product_card_list.dart';
-import 'package:provider/provider.dart';
 
 class PopularProductsPage extends StatefulWidget {
   static const ROUTE_NAME = '/popular-movie';
@@ -33,7 +30,7 @@ class _PopularProductsPageState extends State<PopularProductsPage> {
             future: productApi.getProduct(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
-                return Center(
+                return const Center(
                   child: Text('something wrong'),
                 );
               }
@@ -48,8 +45,8 @@ class _PopularProductsPageState extends State<PopularProductsPage> {
                       itemCount:1,
                     ));
               } else {
-                return Center(
-                  key: const Key('error_message'),
+                return const Center(
+                  key: Key('error_message'),
                   child: Text('errpr'),
                 );
               }

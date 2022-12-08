@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:paktani_mobile/common/constants.dart';
-import 'package:paktani_mobile/domain/entities/product/product.dart';
 import 'package:flutter/material.dart';
 import 'package:paktani_mobile/domain/model/product_model.dart';
 

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 class AboutPage extends StatelessWidget {
   static const ROUTE_NAME = '/about';
 
+  const AboutPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +16,7 @@ class AboutPage extends StatelessWidget {
               Expanded(
                 child: Container(
                   color: kOxfordBlue,
-                  child: Center(
+                  child: const Center(
                     child: Text('PakTani'),
                   ),
                 ),
@@ -23,7 +25,7 @@ class AboutPage extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(32.0),
                   color: kDavysGrey,
-                  child: Text(
+                  child: const Text(
                     'PakTani merupakan aplikasi yang dibuat untuk membantu petani dalam menjual dan mendapatkan produk pertanian',
                     style: TextStyle(color: Colors.white, fontSize: 16),
                     textAlign: TextAlign.justify,
@@ -35,7 +37,7 @@ class AboutPage extends StatelessWidget {
           SafeArea(
             child: IconButton(
               onPressed: () => Navigator.pop(context),
-              icon: Icon(Icons.close),
+              icon: const Icon(Icons.close),
             ),
           )
         ],

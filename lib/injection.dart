@@ -62,7 +62,7 @@ void init() {
       getTopRatedMovies: locator(),
     ),
   );
-  ;
+  
 
   locator.registerFactory(
     () => WatchlistMovieNotifier(

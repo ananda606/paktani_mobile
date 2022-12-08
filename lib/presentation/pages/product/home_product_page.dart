@@ -10,12 +10,14 @@ import 'package:paktani_mobile/domain/model/product_model.dart';
 
 class HomeProductPage extends StatefulWidget {
   static const ROUTE_NAME = '/home_product';
+
+  const HomeProductPage({super.key});
   @override
   _HomeProductPageState createState() => _HomeProductPageState();
 }
 
 class _HomeProductPageState extends State<HomeProductPage> {
-  ProductApi productApi = new ProductApi();
+  ProductApi productApi = ProductApi();
   @override
   void initState() {
     super.initState();
@@ -27,8 +29,8 @@ class _HomeProductPageState extends State<HomeProductPage> {
     return Scaffold(
       drawer: DrawerApp(pageRoute: HomeProductPage.ROUTE_NAME),
       appBar: AppBar(
-        title: Text('PakTani'),
-        actions: [
+        title: const Text('PakTani'),
+        actions: const [
           /*
           IconButton(
             
@@ -44,7 +46,7 @@ class _HomeProductPageState extends State<HomeProductPage> {
           future: productApi.getProduct(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return Center(
+              return const Center(
                 child: Text('something wrong!'),
               );
             } else if (snapshot.hasData) {
@@ -79,7 +81,7 @@ class _HomeProductPageState extends State<HomeProductPage> {
                 ),
               );
             } else {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             }
@@ -102,7 +104,7 @@ class _HomeProductPageState extends State<HomeProductPage> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              children: [Text('See More'), Icon(Icons.arrow_forward_ios)],
+              children: const [Text('See More'), Icon(Icons.arrow_forward_ios)],
             ),
           ),
         ),
@@ -116,11 +118,11 @@ class ProductGridList extends StatelessWidget {
   ProductGridList(this.products);
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 500,
       child: GridView.builder(
         gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
           final product = products[index];
@@ -141,17 +143,17 @@ class ProductGridList extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Container(
+                    child: SizedBox(
                       height: 100,
                       width: 200,
                       child: CachedNetworkImage(
                         fit: BoxFit.cover,
-                        imageUrl:'${product.productImageUrl}',
-                        placeholder: (context, url) => Center(
+                        imageUrl:product.productImageUrl,
+                        placeholder: (context, url) => const Center(
                           child: CircularProgressIndicator(),
                         ),
                         errorWidget: (context, url, error) =>
-                            Icon(Icons.no_photography_outlined),
+                            const Icon(Icons.no_photography_outlined),
                       ),
                     ),
                   ),
@@ -164,7 +166,7 @@ class ProductGridList extends StatelessWidget {
                   ),
                   SafeArea(
                     child: Row(mainAxisSize: MainAxisSize.min, children: [
-                      Icon(
+                      const Icon(
                         Icons.location_on,
                         size: 20,
                       ),
@@ -202,7 +204,7 @@ class ProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 200,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -215,14 +217,14 @@ class ProductList extends StatelessWidget {
               child: InkWell(
                 onTap: () {},
                 child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
+                  borderRadius: const BorderRadius.all(Radius.circular(16)),
                   child: CachedNetworkImage(
                     imageUrl: '',
-                    placeholder: (context, url) => Center(
+                    placeholder: (context, url) => const Center(
                       child: CircularProgressIndicator(),
                     ),
                     errorWidget: (context, url, error) =>
-                        Icon(Icons.no_photography_outlined),
+                        const Icon(Icons.no_photography_outlined),
                   ),
                 ),
               ),

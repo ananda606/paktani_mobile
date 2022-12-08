@@ -25,14 +25,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:paktani_mobile/injection.dart' as di;
 import 'package:paktani_mobile/presentation/pages/login_page.dart';
-import 'package:paktani_mobile/presentation/test_page.dart';
 
 void main() {
   di.init();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -83,7 +84,7 @@ class MyApp extends StatelessWidget {
         //home: HomeProductPage(),
         //home:FormAddScreen(),
         //home: TestPage(),
-        home: LoginPage(),
+        home: const LoginPage(),
         //home: MoneyPage(),
         debugShowCheckedModeBanner: false,
         navigatorObservers: [routeObserver],
@@ -124,7 +125,7 @@ class MyApp extends StatelessWidget {
               return CupertinoPageRoute(builder: (_) => SearchPage());
               //
             case WatchlistPage.ROUTE_NAME:
-              return MaterialPageRoute(builder: (_) => WatchlistPage());
+              return MaterialPageRoute(builder: (_) => const WatchlistPage());
             case WatchlistMoviesPage.ROUTE_NAME:
               return MaterialPageRoute(builder: (_) => WatchlistMoviesPage());
                 //
@@ -132,12 +133,12 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => AboutPage());
             //
             case LoginPage.ROUTE_NAME:
-              return MaterialPageRoute(builder: (_) => LoginPage());
+              return MaterialPageRoute(builder: (_) => const LoginPage());
             case RegisterPage.ROUTE_NAME:
-              return MaterialPageRoute(builder: (_) => RegisterPage());
+              return MaterialPageRoute(builder: (_) => const RegisterPage());
             default:
               return MaterialPageRoute(builder: (_) {
-                return Scaffold(
+                return const Scaffold(
                   body: Center(
                     child: Text('Page not found :('),
                   ),

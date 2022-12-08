@@ -39,16 +39,16 @@ class _MoneyPageState extends State<MoneyPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.monetization_on),
-                            SizedBox(
+                            const Icon(Icons.monetization_on),
+                            const SizedBox(
                               width: 20,
                             ),
-                            Text('Money'),
+                            const Text('Money'),
                           ],
                         ),
                         Text(
                           'Rp.${value.toString()}',
-                          style: TextStyle(fontSize: 40),
+                          style: const TextStyle(fontSize: 40),
                         ),
                       ],
                     ),
@@ -68,7 +68,7 @@ class _MoneyPageState extends State<MoneyPage> {
                             value += 10000;
                           });
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.add,
                         ),
                       ),
@@ -78,7 +78,7 @@ class _MoneyPageState extends State<MoneyPage> {
                             value -= 1000;
                           });
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.remove,
                         ),
                       ),
@@ -93,7 +93,7 @@ class _MoneyPageState extends State<MoneyPage> {
             child: IconButton(
               onPressed: () => Navigator.popAndPushNamed(
                   context, HomeProductPage.ROUTE_NAME),
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
             ),
           )
         ],

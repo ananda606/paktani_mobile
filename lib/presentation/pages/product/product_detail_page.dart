@@ -30,17 +30,15 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         body: FutureBuilder(
             future: productApi.getProductById(widget.id),
             builder: ((context, snapshot) {
-              print(widget.id);
-              print(productApi.getProductById(widget.id));
               if (snapshot.hasError) {
-                return Center(child: Text('something wrong!'));
+                return const Center(child: Text('something wrong!'));
               } else if (snapshot.hasData) {
                 late List<ProductsModel>? products = snapshot.data;
                 bool isAddedWishlist = false;
                 return SafeArea(child: DetailContent(products!));
                 //return Center(child: Text('${products![0].productName}'));
               } else {
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               }
             })));
   }

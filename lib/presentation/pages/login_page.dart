@@ -14,28 +14,23 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   bool _isObscure = true;
-  late FocusNode _emailFocusNode = FocusNode();
-  late FocusNode _passFocusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    _emailFocusNode = new FocusNode();
-    _passFocusNode = new FocusNode();
+   
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _emailFocusNode.dispose();
-    _passFocusNode.dispose();
+   
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
-  @override
   void _togglePasswordView() {
     setState(() {
       _isObscure = !_isObscure;
@@ -78,10 +73,9 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 enabled: true,
                 onFieldSubmitted: (val) {
-                  _emailFocusNode.unfocus();
-                  FocusScope.of(context).requestFocus(_emailFocusNode);
+                  
                 },
-                focusNode: _emailFocusNode,
+                
                 cursorColor: Colors.blue,
                 controller: _emailController,
                 decoration: const InputDecoration(
@@ -101,11 +95,10 @@ class _LoginPageState extends State<LoginPage> {
               alignment: Alignment.center,
               child: TextFormField(
                 enabled: true,
-                focusNode: _passFocusNode,
+               
                 obscureText: _isObscure,
                 onFieldSubmitted: ((value) {
-                  _passFocusNode.unfocus();
-                  FocusScope.of(context).requestFocus(_passFocusNode);
+                
                 }),
                 obscuringCharacter: '*',
                 controller: _passwordController,
@@ -150,7 +143,7 @@ class _LoginPageState extends State<LoginPage> {
                     List<UserModel>? user = snapshot.data;
                     // UserModel userModel=UserModel(email: _emailController.text.toString(), password: _passwordController.text.toString(), username: username, userAddress: userAddress, userPhoneNumber: userPhoneNumber)
                     if (snapshot.hasError) {
-                      return Center(
+                      return const Center(
                         child: Text('error'),
                       );
                     } else if (snapshot.hasData) {
@@ -159,7 +152,6 @@ class _LoginPageState extends State<LoginPage> {
                         child: const Text('Login'),
                         onPressed: () {
                           if (user == null) {
-                            print('$user');
                           } else {
                             Navigator.pushNamed(context, '/home_movie');
                           }
@@ -170,7 +162,6 @@ class _LoginPageState extends State<LoginPage> {
                         child: const Text('Login'),
                         onPressed: () {
                           if (user == null) {
-                            print('$user');
                           } else {
                             Navigator.pushNamed(context, '/home_movie');
                           }

@@ -1,11 +1,8 @@
 import 'dart:convert';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:paktani_mobile/presentation/pages/product/home_product_page.dart';
 
 class Product {
   int? id;
@@ -107,21 +104,21 @@ class FormAddScreen extends StatefulWidget {
 
 class _FormAddScreenState extends State<FormAddScreen> {
   bool _isLoading = false;
-  ProductApi _apiService = ProductApi();
+  final ProductApi _apiService = ProductApi();
   bool _isFieldNameValid = false;
   bool _isFieldEmailValid = false;
   bool _isFieldAgeValid = false;
-  TextEditingController _productNameController = TextEditingController();
-  TextEditingController _productDescriptionController = TextEditingController();
-  TextEditingController _productImageUrlController = TextEditingController();
+  final TextEditingController _productNameController = TextEditingController();
+  final TextEditingController _productDescriptionController = TextEditingController();
+  final TextEditingController _productImageUrlController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
      // key: _scaffoldState,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
-        title: Text(
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: const Text(
           "Form Add",
           style: TextStyle(color: Colors.white),
         ),
@@ -140,10 +137,7 @@ class _FormAddScreenState extends State<FormAddScreen> {
                   padding: const EdgeInsets.only(top: 8.0),
                   child: ElevatedButton(
                     onPressed: () {
-                      if (_isFieldNameValid == null ||
-                          _isFieldEmailValid == null ||
-                          _isFieldAgeValid == null ||
-                          !_isFieldNameValid ||
+                      if (!_isFieldNameValid ||
                           !_isFieldEmailValid ||
                           !_isFieldAgeValid) {
                        // _scaffoldState.currentState;
@@ -169,7 +163,7 @@ class _FormAddScreenState extends State<FormAddScreen> {
                     },
                     child: Text(
                       "Submit".toUpperCase(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                     ),
@@ -181,14 +175,14 @@ class _FormAddScreenState extends State<FormAddScreen> {
           _isLoading
               ? Stack(
                   children: <Widget>[
-                    Opacity(
+                    const Opacity(
                       opacity: 0.3,
                       child: ModalBarrier(
                         dismissible: false,
                         color: Colors.grey,
                       ),
                     ),
-                    Center(
+                    const Center(
                       child: CircularProgressIndicator(),
                     ),
                   ],
@@ -205,7 +199,7 @@ class _FormAddScreenState extends State<FormAddScreen> {
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         labelText: "Full name",
-        errorText: _isFieldNameValid == null || _isFieldNameValid
+        errorText: _isFieldNameValid
             ? null
             : "Full name is required",
       ),
@@ -224,7 +218,7 @@ class _FormAddScreenState extends State<FormAddScreen> {
       keyboardType: TextInputType.emailAddress,
       decoration: InputDecoration(
         labelText: "Email",
-        errorText: _isFieldEmailValid == null || _isFieldEmailValid
+        errorText: _isFieldEmailValid
             ? null
             : "Email is required",
       ),
@@ -243,7 +237,7 @@ class _FormAddScreenState extends State<FormAddScreen> {
       keyboardType: TextInputType.url,
       decoration: InputDecoration(
         labelText: "imageurl",
-        errorText: _isFieldAgeValid == null || _isFieldAgeValid
+        errorText: _isFieldAgeValid
             ? null
             : "url required",
       ),
@@ -265,7 +259,7 @@ class TestPage extends StatefulWidget {
 }
 
 class _TestPageState extends State<TestPage> {
-  ProductApi productApi = new ProductApi();
+  ProductApi productApi = ProductApi();
   @override
   void initState() {
     super.initState();
@@ -274,13 +268,14 @@ class _TestPageState extends State<TestPage> {
 
   @override
   Widget build(BuildContext context) {
+    // ignore: avoid_print
     ProductApi().getProduct().then(((value) => print("value: $value")));
     return SafeArea(
         child: FutureBuilder(
       future: productApi.getProduct(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          return Center(child: Text('something wrong'));
+          return const Center(child: Text('something wrong'));
         } else if (snapshot.connectionState == ConnectionState.done) {
           List<Product>? product = snapshot.data;
           return Padding(
@@ -312,7 +307,7 @@ class _TestPageState extends State<TestPage> {
             ),
           );
         } else {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }

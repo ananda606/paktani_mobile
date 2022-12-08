@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:paktani_mobile/domain/api/user_api.dart';
-import 'package:paktani_mobile/domain/model/product_model.dart';
 import 'package:paktani_mobile/domain/model/user_model.dart';
 import 'package:paktani_mobile/presentation/pages/login_page.dart';
-import 'package:paktani_mobile/presentation/test_page.dart';
 
 class RegisterPage extends StatefulWidget {
   static const ROUTE_NAME = '/register_page';
+
+  const RegisterPage({super.key});
   @override
   State<RegisterPage> createState() => _RegisterPageState();
 }
@@ -18,7 +18,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController _userAddressController = TextEditingController();
   TextEditingController _userPhoneNumberController = TextEditingController();
   bool _isObscure = true;
-  UserApi _productApi = UserApi();
+
   @override
   void initState() {
     super.initState();
@@ -39,7 +39,6 @@ class _RegisterPageState extends State<RegisterPage> {
     _userPhoneNumberController.dispose();
   }
 
-  @override
   void _togglePasswordView() {
     setState(() {
       _isObscure = !_isObscure;
@@ -220,7 +219,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: ElevatedButton(
                   child: const Text('Register'),
                   onPressed: () {
-                    print(_emailController.text);
 
                     if (_emailController.text.isNotEmpty &&
                         _passwordController.text.isNotEmpty &&
@@ -230,7 +228,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       userApi.createUser(userModel);
                       Navigator.pushNamed(context, LoginPage.ROUTE_NAME);
                     } else {
-                      AlertDialog(
+                      const AlertDialog(
                         title: Text('data tidak lengkap'),
                       );
                     }
