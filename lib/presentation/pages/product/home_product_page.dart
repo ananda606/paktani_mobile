@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:paktani_mobile/common/constants.dart';
 import 'package:paktani_mobile/domain/api/product_api.dart';
 import 'package:paktani_mobile/presentation/pages/product/product_detail_page.dart';
+import 'package:paktani_mobile/presentation/pages/product/search_product_page.dart';
 import 'package:paktani_mobile/presentation/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:paktani_mobile/domain/model/product_model.dart';
@@ -9,7 +10,9 @@ import 'package:paktani_mobile/domain/model/product_model.dart';
 class HomeProductPage extends StatefulWidget {
   static const ROUTE_NAME = '/home_product';
 
-   HomeProductPage({super.key, });
+  HomeProductPage({
+    super.key,
+  });
   @override
   _HomeProductPageState createState() => _HomeProductPageState();
 }
@@ -30,7 +33,13 @@ class _HomeProductPageState extends State<HomeProductPage> {
         title: const Text('PakTani'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushReplacementNamed(
+                context,
+                SearchProductPage.ROUTE_NAME,
+              
+              );
+            },
             icon: Icon(Icons.search),
           )
         ],
@@ -40,8 +49,8 @@ class _HomeProductPageState extends State<HomeProductPage> {
           future: productApi.getProduct(),
           builder: (context, snapshot) {
             if (snapshot.hasError) {
-              return const Center(
-                child: Text('something wrong!'),
+              return Center(
+                child: Text('${snapshot.error.toString()}'),
               );
             } else if (snapshot.hasData) {
               List<ProductsModel>? products = snapshot.data;
@@ -97,7 +106,7 @@ class _HomeProductPageState extends State<HomeProductPage> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              children: const [ Icon(Icons.arrow_forward_ios)],
+              children: const [Icon(Icons.arrow_forward_ios)],
             ),
           ),
         ),
@@ -139,7 +148,8 @@ class ProductGridList extends StatelessWidget {
                     child: SizedBox(
                       height: 100,
                       width: 200,
-                      child: CachedNetworkImage(
+                      child: Image.asset('${product.productImageUrl}'),
+                      /*CachedNetworkImage(
                         fit: BoxFit.cover,
                         imageUrl: product.productImageUrl,
                         placeholder: (context, url) => const Center(
@@ -147,7 +157,7 @@ class ProductGridList extends StatelessWidget {
                         ),
                         errorWidget: (context, url, error) =>
                             const Icon(Icons.no_photography_outlined),
-                      ),
+                      ),*/
                     ),
                   ),
                   Flexible(
@@ -208,17 +218,24 @@ class ProductList extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(8),
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    ProductDetailPage.ROUTE_NAME,
+                    arguments: product.id,
+                  );
+                },
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(16)),
-                  child: CachedNetworkImage(
+                  child: Image.asset(
+                      '${product.productImageUrl}'), /*CachedNetworkImage(
                     imageUrl: '',
                     placeholder: (context, url) => const Center(
                       child: CircularProgressIndicator(),
                     ),
                     errorWidget: (context, url, error) =>
                         const Icon(Icons.no_photography_outlined),
-                  ),
+                  ),*/
                 ),
               ),
             ),

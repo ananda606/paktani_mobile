@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_string_escapes
+
 import 'package:paktani_mobile/presentation/pages/about_page.dart';
 import 'package:paktani_mobile/presentation/pages/product/home_product_page.dart';
 import 'package:paktani_mobile/presentation/pages/money_page.dart';
@@ -25,11 +27,12 @@ class DrawerApp extends StatelessWidget {
                 return Text('something wrong');
               } else if (snapshot.hasData) {
                 return UserAccountsDrawerHeader(
-                  currentAccountPicture: CircleAvatar(
-                      //  backgroundImage: AssetImage('assets/circle-g.png'),
-                      ),
-                  accountName: Text('${user?[0].username.toString()}'),
-                  accountEmail: Text('${user?[0].email.toString()}'),
+                  currentAccountPicture: Icon(
+                    Icons.person,
+                    color: Colors.black,
+                  ),
+                  accountName: Text('${user?[0].email.toString()}'),
+                  accountEmail: Text('${user?[0].username.toString()}'),
                 );
               } else {
                 return Text('empty');

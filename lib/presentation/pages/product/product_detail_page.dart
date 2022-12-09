@@ -59,6 +59,8 @@ class DetailContent extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     return Stack(
       children: [
+        Image.asset('${product[0].productImageUrl}'),
+        /*
         CachedNetworkImage(
           //imageUrl: '${product[0].productImageUrl}',
           imageUrl:'',
@@ -67,7 +69,7 @@ class DetailContent extends StatelessWidget {
             child: CircularProgressIndicator(),
           ),
           errorWidget: (context, url, error) => const Icon(Icons.error),
-        ),
+        ),*/
         Container(
           margin: const EdgeInsets.only(top: 48 + 8),
           child: DraggableScrollableSheet(
@@ -95,55 +97,6 @@ class DetailContent extends StatelessWidget {
                               product[0].productName,
                               style: kHeading5,
                             ),
-                            ElevatedButton(
-                              onPressed: () async {
-                                /*
-                                if (!isAddedWatchlist) {
-                                  await Provider.of<ProductDetailNotifier>(
-                                          context,
-                                          listen: false)
-                                      .addWatchlist(product);
-                                } else {
-                                  await Provider.of<ProductDetailNotifier>(
-                                          context,
-                                          listen: false)
-                                      .removeFromWatchlist(product);
-                                }
-
-                                final message =
-                                    Provider.of<ProductDetailNotifier>(context,
-                                            listen: false)
-                                        .watchlistMessage;
-
-                                if (message ==
-                                        ProductDetailNotifier
-                                            .watchlistAddSuccessMessage ||
-                                    message ==
-                                        ProductDetailNotifier
-                                            .watchlistRemoveSuccessMessage) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text(message)));
-                                } else {
-                                  showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          content: Text(message),
-                                        );
-                                      });
-                                }*/
-                              },
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  /*
-                                  isAddedWatchlist
-                                      ? const Icon(Icons.check)
-                                      : const Icon(Icons.add),
-                                  const Text('Watchlist'),*/
-                                ],
-                              ),
-                            ),
                             Row(
                               children: [
                                 RatingBarIndicator(
@@ -160,7 +113,7 @@ class DetailContent extends StatelessWidget {
                             ),
                             const SizedBox(height: 16),
                             Text(
-                              'Overview',
+                              'Description',
                               style: kHeading6,
                             ),
                             Text(
@@ -168,67 +121,55 @@ class DetailContent extends StatelessWidget {
                             ),
                             const SizedBox(height: 16),
                             Text(
+                              'Price',
+                              style: kHeading6,
+                            ),
+                            Text(
+                              'Rp. ${product[0].productPrice.toString()}',
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
                               'Recommendations',
                               style: kHeading6,
                             ),
-
-                            /*
-                            Consumer<ProductDetailNotifier>(
-                              builder: (context, data, child) {
-                                if (data.recommendationState ==
-                                    RequestState.Loading) {
-                                  return const Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                } else if (data.recommendationState ==
-                                    RequestState.Error) {
-                                  return Text(data.message);
-                                } else if (data.recommendationState ==
-                                    RequestState.Loaded) {
-                                  return Container(
-                                    height: 150,
-                                    child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      itemBuilder: (context, index) {
-                                        final product = recommendations[index];
-                                        return Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: InkWell(
-                                            onTap: () {
-                                              Navigator.pushReplacementNamed(
-                                                context,
-                                                ProductDetailPage.ROUTE_NAME,
-                                                arguments: product.id,
-                                              );
+                            ElevatedButton(
+                              onPressed: () async {
+                                showDialog(
+                                    context: context,
+                                    builder: ((context) {
+                                      return AlertDialog(
+                                        title: Text('Pembelian berhasil'),
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text('${product[0].productName}'),
+                                            Text(
+                                                'Description:\n${product[0].productDescription}'),
+                                            Text(
+                                                'Location:\n${product[0].productLocation}'),
+                                            Text(
+                                                'Price:\nRp. ${product[0].productPrice}'),
+                                          ],
+                                        ),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
                                             },
-                                            child: ClipRRect(
-                                              borderRadius: const BorderRadius.all(
-                                                Radius.circular(8),
-                                              ),
-                                              child: CachedNetworkImage(
-                                                imageUrl:
-                                                    'https://image.tmdb.org/t/p/w500${product.posterPath}',
-                                                placeholder: (context, url) =>
-                                                    const Center(
-                                                  child:
-                                                      CircularProgressIndicator(),
-                                                ),
-                                                errorWidget:
-                                                    (context, url, error) =>
-                                                        const Icon(Icons.error),
-                                              ),
+                                            child: Container(
+                                              child: Text('ok'),
                                             ),
                                           ),
-                                        );
-                                      },
-                                      itemCount: recommendations.length,
-                                    ),
-                                  );
-                                } else {
-                                  return Container();
-                                }
+                                        ],
+                                      );
+                                    }));
                               },
-                            ),*/
+                              child: Text('Beli'),
+                            ),
                           ],
                         ),
                       ),
