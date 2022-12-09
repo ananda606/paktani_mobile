@@ -45,13 +45,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 }
 
 class DetailContent extends StatelessWidget {
-  final List<ProductsModel> movie;
+  final List<ProductsModel> product;
 
   //final List<ProductsModel> recommendations;
   //final bool isAddedWatchlist;
 
   DetailContent(
-    this.movie,
+    this.product,
   );
 
   @override
@@ -60,8 +60,8 @@ class DetailContent extends StatelessWidget {
     return Stack(
       children: [
         CachedNetworkImage(
-          //imageUrl: '${movie[0].productImageUrl}',
-          imageUrl:'https://i.guim.co.uk/img/media/63de40b99577af9b867a9c57555a432632ba760b/0_266_5616_3370/master/5616.jpg?width=620&quality=45&dpr=2&s=none',
+          //imageUrl: '${product[0].productImageUrl}',
+          imageUrl:'',
           width: screenWidth,
           placeholder: (context, url) => const Center(
             child: CircularProgressIndicator(),
@@ -92,7 +92,7 @@ class DetailContent extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              movie[0].productName,
+                              product[0].productName,
                               style: kHeading5,
                             ),
                             ElevatedButton(
@@ -102,12 +102,12 @@ class DetailContent extends StatelessWidget {
                                   await Provider.of<ProductDetailNotifier>(
                                           context,
                                           listen: false)
-                                      .addWatchlist(movie);
+                                      .addWatchlist(product);
                                 } else {
                                   await Provider.of<ProductDetailNotifier>(
                                           context,
                                           listen: false)
-                                      .removeFromWatchlist(movie);
+                                      .removeFromWatchlist(product);
                                 }
 
                                 final message =
@@ -147,7 +147,7 @@ class DetailContent extends StatelessWidget {
                             Row(
                               children: [
                                 RatingBarIndicator(
-                                  rating: movie[0].productRating ?? 0,
+                                  rating: product[0].productRating ?? 0,
                                   itemCount: 5,
                                   itemBuilder: (context, index) => const Icon(
                                     Icons.star,
@@ -155,7 +155,7 @@ class DetailContent extends StatelessWidget {
                                   ),
                                   itemSize: 24,
                                 ),
-                                Text('${movie[0].productRating}')
+                                Text('${product[0].productRating}')
                               ],
                             ),
                             const SizedBox(height: 16),
@@ -164,7 +164,7 @@ class DetailContent extends StatelessWidget {
                               style: kHeading6,
                             ),
                             Text(
-                              movie[0].productDescription,
+                              product[0].productDescription,
                             ),
                             const SizedBox(height: 16),
                             Text(
@@ -190,7 +190,7 @@ class DetailContent extends StatelessWidget {
                                     child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
                                       itemBuilder: (context, index) {
-                                        final movie = recommendations[index];
+                                        final product = recommendations[index];
                                         return Padding(
                                           padding: const EdgeInsets.all(4.0),
                                           child: InkWell(
@@ -198,7 +198,7 @@ class DetailContent extends StatelessWidget {
                                               Navigator.pushReplacementNamed(
                                                 context,
                                                 ProductDetailPage.ROUTE_NAME,
-                                                arguments: movie.id,
+                                                arguments: product.id,
                                               );
                                             },
                                             child: ClipRRect(
@@ -207,7 +207,7 @@ class DetailContent extends StatelessWidget {
                                               ),
                                               child: CachedNetworkImage(
                                                 imageUrl:
-                                                    'https://image.tmdb.org/t/p/w500${movie.posterPath}',
+                                                    'https://image.tmdb.org/t/p/w500${product.posterPath}',
                                                 placeholder: (context, url) =>
                                                     const Center(
                                                   child:

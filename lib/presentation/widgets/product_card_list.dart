@@ -6,7 +6,7 @@ import 'package:paktani_mobile/domain/model/product_model.dart';
 class ProductCard extends StatelessWidget {
   final ProductsModel? movie;
 
-  ProductCard(this.movie);
+  const ProductCard(this.movie, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +51,7 @@ class ProductCard extends StatelessWidget {
                 bottom: 16,
               ),
               child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
                 child: CachedNetworkImage(
                   imageUrl: '$BASE_IMAGE_URL${movie!.productImageUrl}',
                   width: 80,
@@ -59,7 +60,6 @@ class ProductCard extends StatelessWidget {
                   ),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
               ),
             ),
           ],

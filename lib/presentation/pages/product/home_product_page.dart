@@ -4,14 +4,12 @@ import 'package:paktani_mobile/domain/api/product_api.dart';
 import 'package:paktani_mobile/presentation/pages/product/product_detail_page.dart';
 import 'package:paktani_mobile/presentation/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
-
 import 'package:paktani_mobile/domain/model/product_model.dart';
-
 
 class HomeProductPage extends StatefulWidget {
   static const ROUTE_NAME = '/home_product';
 
-  const HomeProductPage({super.key});
+   HomeProductPage({super.key, });
   @override
   _HomeProductPageState createState() => _HomeProductPageState();
 }
@@ -30,15 +28,11 @@ class _HomeProductPageState extends State<HomeProductPage> {
       drawer: DrawerApp(pageRoute: HomeProductPage.ROUTE_NAME),
       appBar: AppBar(
         title: const Text('PakTani'),
-        actions: const [
-          /*
+        actions: [
           IconButton(
-            
-            onPressed: () {
-              Navigator.pushNamed(context, SearchPage.ROUTE_NAME);
-            },
+            onPressed: () {},
             icon: Icon(Icons.search),
-          )*/
+          )
         ],
       ),
       body: SafeArea(
@@ -57,11 +51,11 @@ class _HomeProductPageState extends State<HomeProductPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                       Text(
+                      Text(
                         'horizontal',
                         style: kHeading6,
                       ),
-                      _buildSubHeading(title: 'see more', onTap: (){}),
+                      _buildSubHeading(title: 'see more', onTap: () {}),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ProductList(products!),
@@ -70,12 +64,11 @@ class _HomeProductPageState extends State<HomeProductPage> {
                         'Our Product',
                         style: kHeading6,
                       ),
-                      _buildSubHeading(title: 'see more', onTap: (){}),
+                      _buildSubHeading(title: 'see more', onTap: () {}),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ProductGridList(products),
                       ),
-                     
                     ],
                   ),
                 ),
@@ -104,7 +97,7 @@ class _HomeProductPageState extends State<HomeProductPage> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              children: const [Text('See More'), Icon(Icons.arrow_forward_ios)],
+              children: const [ Icon(Icons.arrow_forward_ios)],
             ),
           ),
         ),
@@ -148,7 +141,7 @@ class ProductGridList extends StatelessWidget {
                       width: 200,
                       child: CachedNetworkImage(
                         fit: BoxFit.cover,
-                        imageUrl:product.productImageUrl,
+                        imageUrl: product.productImageUrl,
                         placeholder: (context, url) => const Center(
                           child: CircularProgressIndicator(),
                         ),

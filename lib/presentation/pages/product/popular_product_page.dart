@@ -47,7 +47,7 @@ class _PopularProductsPageState extends State<PopularProductsPage> {
               } else {
                 return const Center(
                   key: Key('error_message'),
-                  child: Text('errpr'),
+                  child: Text('error'),
                 );
               }
             }),

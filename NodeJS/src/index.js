@@ -156,6 +156,20 @@ app.get('/api/readUser',(req,res)=>{
     });
 });
 
+app.get('/api/readUserById/:id',(req,res)=>{
+    const iduser= req.params.iduser;
+    const sqlQuery= "SELECT * FROM user WHERE iduser = ?";
+    db.query(sqlQuery, iduser, (err,result)=>{
+        if(err){
+            console.log(err);
+     
+         }else{
+             res.send(result);
+             console.log(result);
+         }
+    });
+    
+});
 app.get('/api/readUserByUsername',(req,res)=>{
     const username= req.body.username;
     const sqlQuery= "SELECT * FROM user WHERE username = ?";
@@ -170,35 +184,7 @@ app.get('/api/readUserByUsername',(req,res)=>{
     });
     
 });
-//belum implementasi
-/**app.get('/api/login/',(req,res)=>{
-    const email= req.body.email;
-    const password= req.body.password;
-    const sqlQuery= "SELECT * FROM user WHERE email = ? AND password = ?";
-    if(email && password){
-    db.query(sqlQuery, [email,password], (err,result)=>{
-        if(err){
-            throw error;
-            
-     
-         }else{
-            if(result.length>0){
-              
-             res.send(result); 
-             console.log(result);
-             }else{
-             res.send(false);
-            
-             }
-          
-         }
-    });
-}
-    else{
-        res.send(false);
-    }
-    
-}); */
+
 app.get('/api/login/:email/:password',(req,res)=>{
     const email= req.params.email;
     const password= req.params.password;
@@ -211,7 +197,6 @@ app.get('/api/login/:email/:password',(req,res)=>{
      
          }else{
             if(result.length>0){
-              
              res.send(result); 
              console.log(result);
              }else{
@@ -236,6 +221,7 @@ app.post('/api/createUser',(req,res)=>{
     const email= req.body.email;
     const userAddress= req.body.userAddress;
     const userPhoneNumber= req.body.userPhoneNumber;
+  
     const sqlQuery= "INSERT INTO user (email, password, username, userAddress, userPhoneNumber) VALUE (?, ?, ?, ?, ? )";
 if(username!=null&&password!=null&&email!=null&&userAddress!=null&&userPhoneNumber!=null){
     db.query(sqlQuery, [email, password,username, userAddress,userPhoneNumber], (err,result)=>{

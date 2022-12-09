@@ -18,14 +18,13 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-   
+
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
   }
 
   @override
   void dispose() {
-   
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -72,10 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                   }
                 },
                 enabled: true,
-                onFieldSubmitted: (val) {
-                  
-                },
-                
+                onFieldSubmitted: (val) {},
                 cursorColor: Colors.blue,
                 controller: _emailController,
                 decoration: const InputDecoration(
@@ -95,11 +91,8 @@ class _LoginPageState extends State<LoginPage> {
               alignment: Alignment.center,
               child: TextFormField(
                 enabled: true,
-               
                 obscureText: _isObscure,
-                onFieldSubmitted: ((value) {
-                
-                }),
+                onFieldSubmitted: ((value) {}),
                 obscuringCharacter: '*',
                 controller: _passwordController,
                 decoration: InputDecoration(
@@ -143,27 +136,26 @@ class _LoginPageState extends State<LoginPage> {
                     List<UserModel>? user = snapshot.data;
                     // UserModel userModel=UserModel(email: _emailController.text.toString(), password: _passwordController.text.toString(), username: username, userAddress: userAddress, userPhoneNumber: userPhoneNumber)
                     if (snapshot.hasError) {
-                      return const Center(
-                        child: Text('error'),
+                      return Center(
+                        child: Text(snapshot.error.toString()),
                       );
                     } else if (snapshot.hasData) {
-                      
+                      return ElevatedButton(
+                        child:  Text('Login'),
+                        onPressed: () {
+                          if (user == null) {
+                          } else {
+                            Navigator.pushNamed(context, '/home_product');
+                          }
+                        },
+                      );
+                    } else {
                       return ElevatedButton(
                         child: const Text('Login'),
                         onPressed: () {
                           if (user == null) {
                           } else {
-                            Navigator.pushNamed(context, '/home_movie');
-                          }
-                        },
-                      );
-                    } else {
-                       return ElevatedButton(
-                        child: const Text('Login'),
-                        onPressed: () {
-                          if (user == null) {
-                          } else {
-                            Navigator.pushNamed(context, '/home_movie');
+                            Navigator.pushNamed(context, '/home_product');
                           }
                         },
                       );

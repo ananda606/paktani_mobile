@@ -6,7 +6,7 @@ import 'package:paktani_mobile/presentation/pages/product/product_detail_page.da
 class ProductGridList extends StatelessWidget {
   static const ROUTE_NAME = '/home_product';
   final List<ProductsModel> movie;
-  const ProductGridList(this.movie);
+  const ProductGridList(this.movie, {super.key});
   @override
   Widget build(BuildContext context) {
     return SizedBox(

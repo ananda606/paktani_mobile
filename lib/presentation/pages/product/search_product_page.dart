@@ -1,18 +1,15 @@
-import 'package:paktani_mobile/common/constants.dart';
-import 'package:paktani_mobile/common/state_enum.dart';
-import 'package:paktani_mobile/presentation/provider/movie/movie_search_notifier.dart';
-import 'package:paktani_mobile/presentation/widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:paktani_mobile/common/constants.dart';
 
-class SearchPage extends StatelessWidget {
-  static const ROUTE_NAME = '/search';
+class SearchProductPage extends StatelessWidget {
+  static const ROUTE_NAME = '/search_page';
+  const SearchProductPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Search'),
+        title: Text('Search'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -21,8 +18,9 @@ class SearchPage extends StatelessWidget {
           children: [
             TextField(
               onSubmitted: (query) {
+                /*
                 Provider.of<MovieSearchNotifier>(context, listen: false)
-                    .fetchMovieSearch(query);
+                    .fetchMovieSearch(query);*/
               },
               decoration: const InputDecoration(
                 hintText: 'Search title',
@@ -36,6 +34,7 @@ class SearchPage extends StatelessWidget {
               'Search Result',
               style: kHeading6,
             ),
+            /*
             Consumer<MovieSearchNotifier>(
               builder: (context, data, child) {
                 if (data.state == RequestState.Loading) {
@@ -61,7 +60,8 @@ class SearchPage extends StatelessWidget {
                 }
               },
             ),
-          ],
+         */
+         ],
         ),
       ),
     );

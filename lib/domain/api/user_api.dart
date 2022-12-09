@@ -12,7 +12,14 @@ class UserApi {
       return null;
     }
   }
-
+  Future<List<UserModel>?> getUserId(int id) async {
+    final response = await client.get(Uri.parse("$url/readProductById/$id"));
+    if (response.statusCode == 200) {
+      return userFromJson(response.body);
+    } else {
+      return null;
+    }
+  }
   Future<List<UserModel>?> getLoginUser(String email, String password) async {
     final response = await client.get(Uri.parse("$url/login/$email/$password"));
     if (response.statusCode == 200) {
@@ -33,7 +40,7 @@ class UserApi {
     }
   }
 
-  Future<bool> updateProfile(UserModel data) async {
+  Future<bool> updateUser(UserModel data) async {
     final response = await client.put(
       Uri.parse("$url/api/updateProductById/${data.iduser}"),
       headers: {"content-type": "application/json"},
@@ -46,7 +53,7 @@ class UserApi {
     }
   }
 
-  Future<bool> deleteProfile(int id) async {
+  Future<bool> deleteUser(int id) async {
     final response = await client.delete(
       Uri.parse("$url/api/deleteProductById/$id"),
       headers: {"content-type": "application/json"},

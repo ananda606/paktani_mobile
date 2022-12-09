@@ -31,12 +31,12 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   void dispose() {
-    super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     _usernameController.dispose();
     _userAddressController.dispose();
     _userPhoneNumberController.dispose();
+    super.dispose();
   }
 
   void _togglePasswordView() {
@@ -219,7 +219,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: ElevatedButton(
                   child: const Text('Register'),
                   onPressed: () {
-
                     if (_emailController.text.isNotEmpty &&
                         _passwordController.text.isNotEmpty &&
                         _usernameController.text.isNotEmpty &&

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 class ProductsModel {
   int id;
   String productName;
@@ -8,6 +7,8 @@ class ProductsModel {
   double? productRating;
   String productDescription;
   String productImageUrl;
+  double? productPrice;
+
   ProductsModel({
     required this.id,
     required this.productName,
@@ -15,24 +16,28 @@ class ProductsModel {
     required this.productDescription,
     required this.productImageUrl,
     this.productRating,
+    this.productPrice,
   });
   factory ProductsModel.fromJson(Map<String, dynamic> map) {
     return ProductsModel(
-        id: map['id'],
-        productName: map['productName'],
-        productLocation: map['productLocation'],
-        productDescription: map['productDescription'],
-        productImageUrl: map['productImageUrl'],
-        productRating: map['productRating'],);
+      id: map['id'],
+      productName: map['productName'],
+      productLocation: map['productLocation'],
+      productDescription: map['productDescription'],
+      productImageUrl: map['productImageUrl'],
+      productRating: map['productRating'],
+      productPrice: map['productPrice'],
+    );
   }
   Map<String, dynamic> toJson() {
     return {
       'id': id,
       'productName': productName,
-      'productLocation':productLocation,
+      'productLocation': productLocation,
       'productDescription': productDescription,
       'productImageUrl': productImageUrl,
-      'productRating':productRating,
+      'productRating': productRating,
+      'productPrice':productPrice,
     };
   }
 /*
@@ -40,7 +45,8 @@ class ProductsModel {
   String toString() {
     return 'ProductModel{id: $id, name: $productName, productDescription: $productDescription, productImageUrl: $productImageUrl}';
   }
-*/}
+*/
+}
 
 List<ProductsModel> productFromJson(String jsonData) {
   final data = json.decode(jsonData);
