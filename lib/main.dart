@@ -29,9 +29,8 @@ class MyApp extends StatelessWidget {
       ),
 
     //home: HomeProductPage(),
-      //home: FormAddScreen(),
-      //home: TestPage(),
-      home: LoginPage(),
+    home:SearchProductPage(),
+   //   home: LoginPage(),
       //home: MoneyPage(),
       debugShowCheckedModeBanner: false,
       navigatorObservers: [routeObserver],

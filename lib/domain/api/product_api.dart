@@ -22,8 +22,8 @@ class ProductApi {
       return null;
     }
   }
-  Future<List<ProductsModel>?> getProductByUsernamePassword(String username, String password) async {
-    final response = await client.get(Uri.parse("$url/readProductById/$username&&$password"));
+  Future<List<ProductsModel>?> getProductByName(String productName) async {
+    final response = await client.get(Uri.parse("$url/readProductByName/$productName"));
     if (response.statusCode == 200) {
       return productFromJson(response.body);
     } else {
