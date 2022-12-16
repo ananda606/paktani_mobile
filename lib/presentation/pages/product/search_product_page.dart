@@ -46,9 +46,6 @@ class _SearchProductPageState extends State<SearchProductPage> {
             children: [
               TextField(
                 controller: _searchQuery,
-                onSubmitted: (query) {
-                  setState(() {});
-                },
                 decoration: const InputDecoration(
                   hintText: 'Search title',
                   prefixIcon: Icon(Icons.search),
