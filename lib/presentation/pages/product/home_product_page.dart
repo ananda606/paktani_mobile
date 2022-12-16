@@ -28,7 +28,9 @@ class _HomeProductPageState extends State<HomeProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DrawerApp(pageRoute: HomeProductPage.ROUTE_NAME,),
+      drawer: DrawerApp(
+        pageRoute: HomeProductPage.ROUTE_NAME,
+      ),
       appBar: AppBar(
         title: const Text('PakTani'),
         actions: [
@@ -37,7 +39,6 @@ class _HomeProductPageState extends State<HomeProductPage> {
               Navigator.pushReplacementNamed(
                 context,
                 SearchProductPage.ROUTE_NAME,
-              
               );
             },
             icon: Icon(Icons.search),
@@ -64,16 +65,17 @@ class _HomeProductPageState extends State<HomeProductPage> {
                         'Our Best Product',
                         style: kHeading6,
                       ),
-                      
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ProductList(products!),
+                      ),
+                      SizedBox(
+                        height: 80,
                       ),
                       Text(
                         'Our Product',
                         style: kHeading6,
                       ),
-                     
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ProductGridList(products),
@@ -149,15 +151,6 @@ class ProductGridList extends StatelessWidget {
                       height: 100,
                       width: 200,
                       child: Image.asset('${product.productImageUrl}'),
-                      /*CachedNetworkImage(
-                        fit: BoxFit.cover,
-                        imageUrl: product.productImageUrl,
-                        placeholder: (context, url) => const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.no_photography_outlined),
-                      ),*/
                     ),
                   ),
                   Flexible(
@@ -227,15 +220,7 @@ class ProductList extends StatelessWidget {
                 },
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(16)),
-                  child: Image.asset(
-                      '${product.productImageUrl}'), /*CachedNetworkImage(
-                    imageUrl: '',
-                    placeholder: (context, url) => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.no_photography_outlined),
-                  ),*/
+                  child: Image.asset('${product.productImageUrl}'),
                 ),
               ),
             ),

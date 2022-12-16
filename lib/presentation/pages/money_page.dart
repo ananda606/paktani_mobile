@@ -88,6 +88,12 @@ class _MoneyPageState extends State<MoneyPage> {
                 ),
               ],
             ),
+            SafeArea(
+              child: IconButton(
+                onPressed: () => Navigator.popAndPushNamed(context,HomeProductPage.ROUTE_NAME),
+                icon: const Icon(Icons.close),
+              ),
+            )
           ]),
         ));
   }

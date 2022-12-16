@@ -4,6 +4,7 @@ import 'package:paktani_mobile/domain/model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:paktani_mobile/domain/api/product_api.dart';
+import 'package:paktani_mobile/presentation/pages/product/home_product_page.dart';
 
 class ProductDetailPage extends StatefulWidget {
   static const ROUTE_NAME = '/detail';
@@ -36,7 +37,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 late List<ProductsModel>? products = snapshot.data;
                 bool isAddedWishlist = false;
                 return SafeArea(child: DetailContent(products!));
-                //return Center(child: Text('${products![0].productName}'));
               } else {
                 return const CircularProgressIndicator();
               }
@@ -47,29 +47,17 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
 class DetailContent extends StatelessWidget {
   final List<ProductsModel> product;
 
-  //final List<ProductsModel> recommendations;
-  //final bool isAddedWatchlist;
-
   DetailContent(
     this.product,
   );
 
   @override
   Widget build(BuildContext context) {
+    ProductApi productApi = ProductApi();
     final screenWidth = MediaQuery.of(context).size.width;
     return Stack(
       children: [
         Image.asset('${product[0].productImageUrl}'),
-        /*
-        CachedNetworkImage(
-          //imageUrl: '${product[0].productImageUrl}',
-          imageUrl:'',
-          width: screenWidth,
-          placeholder: (context, url) => const Center(
-            child: CircularProgressIndicator(),
-          ),
-          errorWidget: (context, url, error) => const Icon(Icons.error),
-        ),*/
         Container(
           margin: const EdgeInsets.only(top: 48 + 8),
           child: DraggableScrollableSheet(
@@ -112,6 +100,16 @@ class DetailContent extends StatelessWidget {
                               ],
                             ),
                             const SizedBox(height: 16),
+                            Row(
+                              children: [
+                                Icon(Icons.location_on,),
+                                SizedBox(width: 10,),
+                                Text(
+                                  product[0].productDescription,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
                             Text(
                               'Description',
                               style: kHeading6,
@@ -128,10 +126,6 @@ class DetailContent extends StatelessWidget {
                               'Rp. ${product[0].productPrice.toString()}',
                             ),
                             const SizedBox(height: 16),
-                            Text(
-                              'Recommendations',
-                              style: kHeading6,
-                            ),
                             ElevatedButton(
                               onPressed: () async {
                                 showDialog(
@@ -170,6 +164,26 @@ class DetailContent extends StatelessWidget {
                               },
                               child: Text('Beli'),
                             ),
+                            Text(
+                              'Recommendations',
+                              style: kHeading6,
+                            ),
+                            FutureBuilder(
+                                future: productApi.getProduct(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    List<ProductsModel>? productslist =
+                                        snapshot.data;
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ProductList(productslist!),
+                                    );
+                                  } else {
+                                    return Center(
+                                      child: Text('empty'),
+                                    );
+                                  }
+                                }),
                           ],
                         ),
                       ),
