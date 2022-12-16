@@ -28,8 +28,8 @@ class MyApp extends StatelessWidget {
         textTheme: kTextTheme,
       ),
 
-    //home: HomeProductPage(),
-    home:SearchProductPage(),
+    home: HomeProductPage(),
+   // home:SearchProductPage(),
    //   home: LoginPage(),
       //home: MoneyPage(),
       debugShowCheckedModeBanner: false,

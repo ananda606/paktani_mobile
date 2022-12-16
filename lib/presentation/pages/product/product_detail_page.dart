@@ -105,7 +105,7 @@ class DetailContent extends StatelessWidget {
                                 Icon(Icons.location_on,),
                                 SizedBox(width: 10,),
                                 Text(
-                                  product[0].productDescription,
+                                  product[0].productLocation,
                                 ),
                               ],
                             ),

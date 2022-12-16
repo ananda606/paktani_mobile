@@ -82,6 +82,23 @@ class _MoneyPageState extends State<MoneyPage> {
                           setState(() {
                             value = int.parse(_topupController.text);
                           });
+                          showDialog(
+                              context: context,
+                              builder: ((context) {
+                                return AlertDialog(
+                                  title: Text('TopUp berhasil'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Container(
+                                        child: Text('ok'),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              }));
                         },
                         child: Text('Top up')),
                   ],
@@ -90,7 +107,8 @@ class _MoneyPageState extends State<MoneyPage> {
             ),
             SafeArea(
               child: IconButton(
-                onPressed: () => Navigator.popAndPushNamed(context,HomeProductPage.ROUTE_NAME),
+                onPressed: () => Navigator.popAndPushNamed(
+                    context, HomeProductPage.ROUTE_NAME),
                 icon: const Icon(Icons.close),
               ),
             )

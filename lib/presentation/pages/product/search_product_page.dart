@@ -46,22 +46,28 @@ class _SearchProductPageState extends State<SearchProductPage> {
             children: [
               TextField(
                 controller: _searchQuery,
+                onTap: () {
+                  setState(() {
+                    productApi.getProductByName(_searchQuery.text);
+                  });
+                },
                 decoration: const InputDecoration(
                   hintText: 'Search title',
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: Icon(
+                    Icons.search,
+                  ),
                   border: OutlineInputBorder(),
                 ),
                 textInputAction: TextInputAction.search,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 40),
               Text(
                 'Search Result',
                 style: kHeading6,
               ),
               FutureBuilder(
-                  future:
-                      productApi.getProductByName(_searchQuery.text.toString()),
-                  builder: ((context, snapshot) {
+                  future: productApi.getProductByName(_searchQuery.text),
+                  builder: (context, snapshot) {
                     final List<ProductsModel>? products;
                     products = snapshot.data;
                     if (snapshot.hasError) {
@@ -86,7 +92,7 @@ class _SearchProductPageState extends State<SearchProductPage> {
                     } else {
                       return SizedBox();
                     }
-                  })),
+                  }),
             ],
           ),
         ),

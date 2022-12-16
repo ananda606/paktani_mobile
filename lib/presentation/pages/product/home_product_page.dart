@@ -155,7 +155,7 @@ class ProductGridList extends StatelessWidget {
                   ),
                   Flexible(
                     child: Text(
-                      product.productDescription.toString(),
+                      product.productName.toString(),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
@@ -168,7 +168,7 @@ class ProductGridList extends StatelessWidget {
                       ),
                       Flexible(
                         child: Text(
-                          product.productDescription.toString(),
+                          product.productLocation.toString(),
                           softWrap: true,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
@@ -177,7 +177,7 @@ class ProductGridList extends StatelessWidget {
                     ]),
                   ),
                   Text(
-                    product.productName.toString(),
+                    'Rp. ${product.productPrice.toString()}',
                     softWrap: true,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
