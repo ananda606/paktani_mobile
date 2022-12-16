@@ -5,8 +5,8 @@ import 'package:paktani_mobile/presentation/pages/product/product_detail_page.da
 
 class ProductGridList extends StatelessWidget {
   static const ROUTE_NAME = '/home_product';
-  final List<ProductsModel> movie;
-  const ProductGridList(this.movie, {super.key});
+  final List<ProductsModel> product;
+  const ProductGridList(this.product, {super.key});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -16,7 +16,7 @@ class ProductGridList extends StatelessWidget {
             const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
-          final product = movie[index];
+          final products = product[index];
           return Container(
             padding: const EdgeInsets.all(8),
             child: InkWell(
@@ -24,7 +24,7 @@ class ProductGridList extends StatelessWidget {
                 Navigator.pushNamed(
                   context,
                   ProductDetailPage.ROUTE_NAME,
-                  arguments: product.id,
+                  arguments: products.id,
                 );
               },
               child: Column(
@@ -46,7 +46,7 @@ class ProductGridList extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    product.productName.toString(),
+                    products.productName.toString(),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),
@@ -57,7 +57,7 @@ class ProductGridList extends StatelessWidget {
                         size: 20,
                       ),
                       Text(
-                        product.productDescription.toString(),
+                        products.productDescription.toString(),
                         softWrap: true,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
@@ -65,7 +65,7 @@ class ProductGridList extends StatelessWidget {
                     ]),
                   ),
                   Text(
-                    product.productRating.toString(),
+                    products.productRating.toString(),
                     softWrap: true,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
@@ -75,7 +75,7 @@ class ProductGridList extends StatelessWidget {
             ),
           );
         },
-        itemCount: movie.length,
+        itemCount: product.length,
       ),
     );
   }

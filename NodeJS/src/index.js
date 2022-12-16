@@ -4,6 +4,8 @@ const app= express();
 const {db}= require('./model/dbConnection');
 const serverPort= 3001;
 app.use(cors());
+app.use(express.urlencoded({ extended: true}));
+
 app.use(express.json());
 const path=require('path');
 const multer= require('multer');
@@ -82,21 +84,22 @@ app.get('/api/readProductByName/:productName',(req,res)=>{
     });
 });
 //create product
-app.post('/api/createProduct',(req,res)=>{
+app.post('/api/createProduct', async (req,res)=>{
     const id= req.body.id;
     const productName= req.body.productName;
     const productLocation=req.body.productLocation;
     const productDescription= req.body.productDescription;
     const productImageUrl= req.body.productImageUrl;
     const producRating= req.body.producRating;
-    const sqlQuery= "INSERT INTO product (id, productName,productLocation, productDescription, productImageUrl,productRating) VALUE (?, ?, ?, ? , ?, ?)";
+    const productPrice=req.body.productPrice;
+    const sqlQuery= "INSERT INTO product (id, productName,productLocation, productDescription, productImageUrl,productRating,productPrice) VALUE (?, ?, ?, ? , ?, ?, ?)";
 
-    db.query(sqlQuery, [id,productName,productLocation, productDescription, productImageUrl,producRating], (err,result)=>{
+    db.query(sqlQuery, [id,productName,productLocation, productDescription, productImageUrl,producRating,productPrice], (err,result)=>{
         if(err){
             console.log(err);
      
          }else{
-            if(res.statusCode==201){
+            if(res.statusCode==200){
                 res.send(true);
             }
             else{
@@ -193,14 +196,12 @@ app.get('/api/login/:email/:password',(req,res)=>{
     db.query(sqlQuery, [email,password], (err,result)=>{
         if(err){
             throw error;
-            
-     
          }else{
             if(result.length>0){
              res.send(result); 
              console.log(result);
              }else{
-             res.send(false);
+             res.send(result);
             
              }
           
@@ -229,7 +230,7 @@ if(username!=null&&password!=null&&email!=null&&userAddress!=null&&userPhoneNumb
             console.log(err);
      
          }else{
-            res.status(201);
+            res.status(201).send(result);
             console.log(result);
          }
     });
@@ -274,7 +275,24 @@ app.delete('/api/deleteUserById/:iduser',(req,res)=>{
     });
      
  });
+ //money
+//update
+app.put('/api/topUp/',(req,res)=>{
+    const id = req.params.idMoney;
+    const amount= req.body.amount;
+   
+    const sqlQuery= "UPDATE user SET amount = ? WHERE idMoney = ? ";
 
+    db.query(sqlQuery, [ amount,id,], (err,result)=>{
+        if(err){
+            console.log(err);
+     
+         }else{
+             res.send(result);
+             console.log(result);
+         }
+    });
+   });
 app.listen(serverPort,()=>{
 console.log(`localhost:${serverPort}/api/`);
 });

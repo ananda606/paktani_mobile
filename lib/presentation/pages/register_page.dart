@@ -29,16 +29,6 @@ class _RegisterPageState extends State<RegisterPage> {
     _userPhoneNumberController = TextEditingController();
   }
 
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    _usernameController.dispose();
-    _userAddressController.dispose();
-    _userPhoneNumberController.dispose();
-    super.dispose();
-  }
-
   void _togglePasswordView() {
     setState(() {
       _isObscure = !_isObscure;
@@ -49,12 +39,13 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     UserApi userApi = UserApi();
     UserModel userModel = UserModel(
-      email: _emailController.text.toString(),
-      username: _usernameController.text.toString(),
-      password: _passwordController.text.toString(),
-      userAddress: _userAddressController.text.toString(),
-      userPhoneNumber: _userPhoneNumberController.text.toString(),
+      email: _emailController.text,
+      username: _usernameController.text,
+      password: _passwordController.text,
+      userAddress: _userAddressController.text,
+      userPhoneNumber: _userPhoneNumberController.text,
     );
+    
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -225,6 +216,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         _userAddressController.text.isNotEmpty &&
                         _userPhoneNumberController.text.isNotEmpty) {
                       userApi.createUser(userModel);
+                      print(userModel);
                       Navigator.pushNamed(context, LoginPage.ROUTE_NAME);
                     } else {
                       const AlertDialog(
@@ -237,5 +229,15 @@ class _RegisterPageState extends State<RegisterPage> {
             ],
           ),
         ));
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _usernameController.dispose();
+    _userAddressController.dispose();
+    _userPhoneNumberController.dispose();
+    super.dispose();
   }
 }

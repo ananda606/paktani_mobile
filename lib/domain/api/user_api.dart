@@ -32,7 +32,7 @@ class UserApi {
   Future<bool> createUser(UserModel data) async {
     final response = await client.post(Uri.parse("$url/createUser"),
         body: userToJson(data), headers: {"content-type": "application/json"});
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       
       return true;
     } else {

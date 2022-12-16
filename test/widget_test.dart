@@ -9,11 +9,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:paktani_mobile/main.dart';
+import 'package:paktani_mobile/presentation/pages/product/home_product_page.dart';
+import 'package:paktani_mobile/presentation/widgets/custom_drawer.dart';
 
 void main() {
+  testWidgets('testing home product page', (WidgetTester tester) async {
+    await tester.pumpWidget(HomeProductPage());
+    expect(find.byWidget(Icon(Icons.search)), findsOneWidget);
+    await tester.tap(find.byIcon(Icons.search));
+    
+
+  });
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget( MyApp());
+    await tester.pumpWidget(MyApp());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

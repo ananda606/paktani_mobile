@@ -28,7 +28,7 @@ class _HomeProductPageState extends State<HomeProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: DrawerApp(pageRoute: HomeProductPage.ROUTE_NAME),
+      drawer: DrawerApp(pageRoute: HomeProductPage.ROUTE_NAME,),
       appBar: AppBar(
         title: const Text('PakTani'),
         actions: [
@@ -61,10 +61,10 @@ class _HomeProductPageState extends State<HomeProductPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'horizontal',
+                        'Our Best Product',
                         style: kHeading6,
                       ),
-                      _buildSubHeading(title: 'see more', onTap: () {}),
+                      
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ProductList(products!),
@@ -73,7 +73,7 @@ class _HomeProductPageState extends State<HomeProductPage> {
                         'Our Product',
                         style: kHeading6,
                       ),
-                      _buildSubHeading(title: 'see more', onTap: () {}),
+                     
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: ProductGridList(products),

@@ -28,9 +28,7 @@ class SearchProductPage extends StatelessWidget {
           children: [
             TextField(
               onSubmitted: (query) {
-                /*
-                Provider.of<MovieSearchNotifier>(context, listen: false)
-                    .fetchMovieSearch(query);*/
+              
               },
               decoration: const InputDecoration(
                 hintText: 'Search title',
@@ -44,33 +42,7 @@ class SearchProductPage extends StatelessWidget {
               'Search Result',
               style: kHeading6,
             ),
-            /*
-            Consumer<MovieSearchNotifier>(
-              builder: (context, data, child) {
-                if (data.state == RequestState.Loading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (data.state == RequestState.Loaded) {
-                  final result = data.searchResult;
-                  return Expanded(
-                    child: ListView.builder(
-                      padding: const EdgeInsets.all(8),
-                      itemBuilder: (context, index) {
-                        final movie = data.searchResult[index];
-                        return MovieCard(movie);
-                      },
-                      itemCount: result.length,
-                    ),
-                  );
-                } else {
-                  return Expanded(
-                    child: Container(),
-                  );
-                }
-              },
-            ),
-         */
+          
           ],
         ),
       ),

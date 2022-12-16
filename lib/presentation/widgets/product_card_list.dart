@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:paktani_mobile/domain/model/product_model.dart';
 
 class ProductCard extends StatelessWidget {
-  final ProductsModel? movie;
+  final ProductsModel? product;
 
-  const ProductCard(this.movie, {super.key});
+  const ProductCard(this.product, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +30,14 @@ class ProductCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      movie!.productName ,
+                      product!.productName ,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: kHeading6,
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      movie!.productDescription ,
+                      product!.productDescription ,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -53,7 +53,7 @@ class ProductCard extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(8)),
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${movie!.productImageUrl}',
+                  imageUrl: '$BASE_IMAGE_URL${product!.productImageUrl}',
                   width: 80,
                   placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),

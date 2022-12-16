@@ -30,7 +30,7 @@ class _MoneyPageState extends State<MoneyPage> {
   @override
   Widget build(BuildContext context) {
     UserApi userApi = UserApi();
-    //UserModel userModel = UserModel(email: 'ananda',password: 'password');
+   
     return Scaffold(
       body: Stack(
         children: [

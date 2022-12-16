@@ -7,8 +7,6 @@ import 'package:paktani_mobile/presentation/pages/product/product_detail_page.da
 import 'package:paktani_mobile/presentation/pages/register_page.dart';
 import 'package:paktani_mobile/presentation/pages/money_page.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:paktani_mobile/injection.dart' as di;
 import 'package:paktani_mobile/presentation/pages/login_page.dart';
 
 void main() {
@@ -30,10 +28,10 @@ class MyApp extends StatelessWidget {
         textTheme: kTextTheme,
       ),
 
-      home: HomeProductPage(),
-      //home:FormAddScreen(),
+    //home: HomeProductPage(),
+      //home: FormAddScreen(),
       //home: TestPage(),
-      //home:  LoginPage(),
+      home: LoginPage(),
       //home: MoneyPage(),
       debugShowCheckedModeBanner: false,
       navigatorObservers: [routeObserver],
