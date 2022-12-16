@@ -1,7 +1,9 @@
 import 'package:flutter/services.dart';
 import 'package:paktani_mobile/common/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:paktani_mobile/domain/api/money_api.dart';
 import 'package:paktani_mobile/domain/api/user_api.dart';
+import 'package:paktani_mobile/domain/model/money_model.dart';
 import 'package:paktani_mobile/domain/model/user_model.dart';
 import 'package:paktani_mobile/presentation/pages/product/home_product_page.dart';
 
@@ -14,6 +16,7 @@ class MoneyPage extends StatefulWidget {
 
 class _MoneyPageState extends State<MoneyPage> {
   TextEditingController _topupController = TextEditingController();
+
   int value = 0;
   @override
   void initState() {
@@ -29,68 +32,63 @@ class _MoneyPageState extends State<MoneyPage> {
 
   @override
   Widget build(BuildContext context) {
-    UserApi userApi = UserApi();
-   
     return Scaffold(
-      body: Stack(
-        children: [
-          FutureBuilder(
-              future: userApi.getUser(),
-              builder: (context, snapshot) {
-                List<UserModel>? userModelList = snapshot.data;
-
-                return Column(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        color: kOxfordBlue,
-                        child: Center(
-                          child: Column(
+        drawer: AppBar(
+          title: Text('TopUp'),
+          automaticallyImplyLeading: false,
+        ),
+        body: Container(
+          child: Stack(children: [
+            Column(
+              children: [
+                Expanded(
+                  child: Container(
+                    color: kOxfordBlue,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(Icons.monetization_on),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  const Text('Money'),
-                                ],
+                              const Icon(Icons.monetization_on),
+                              const SizedBox(
+                                width: 20,
                               ),
-                              userModelList?[0].email == null
-                                  ? Text('Rp.0')
-                                  : Text(
-                                      'Rp.${userModelList?[0].email}',
-                                      style: const TextStyle(fontSize: 40),
-                                    ),
+                              const Text('Money'),
                             ],
                           ),
-                        ),
+                          Text('Rp.$value'),
+                        ],
                       ),
                     ),
-                    FutureBuilder(
-                        future: userApi.getUser(),
-                        builder: (context, snapshot) {
-                          return TextButton(
-                              onPressed: () {
-                                setState(() {});
-                              },
-                              child: Text('Top up'));
-                        }),
+                  ),
+                ),
+                Column(
+                  children: [
+                    TextFormField(
+                      cursorColor: Colors.blue,
+                      controller: _topupController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        labelText: 'amount',
+                      ),
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          setState(() {
+                            value = int.parse(_topupController.text);
+                          });
+                        },
+                        child: Text('Top up')),
                   ],
-                );
-              }),
-          SafeArea(
-            child: IconButton(
-              onPressed: () => Navigator.popAndPushNamed(
-                  context, HomeProductPage.ROUTE_NAME),
-              icon: const Icon(Icons.arrow_back),
+                ),
+              ],
             ),
-          )
-        ],
-      ),
-    );
+          ]),
+        ));
   }
 }

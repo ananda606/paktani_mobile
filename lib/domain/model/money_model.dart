@@ -1,14 +1,14 @@
 import 'dart:convert';
 
 class MoneyModel {
-  int? idMoney;
+  int idMoney;
   int amount;
   MoneyModel({
-    this.idMoney,
+   required this.idMoney,
     required this.amount,
   });
   factory MoneyModel.fromJson(Map<String, dynamic> map) {
-    return MoneyModel(amount: map['amount']);
+    return MoneyModel(idMoney: 1 ,amount: map['amount']);
   }
   Map<String, dynamic> toJson() {
     return {

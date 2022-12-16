@@ -44,6 +44,7 @@ class _RegisterPageState extends State<RegisterPage> {
       password: _passwordController.text,
       userAddress: _userAddressController.text,
       userPhoneNumber: _userPhoneNumberController.text,
+    
     );
     
     return Scaffold(

@@ -93,8 +93,7 @@ class _LoginPageState extends State<LoginPage> {
               child: TextFormField(
                 enabled: true,
                 obscureText: _isObscure,
-                onFieldSubmitted: ((value) {}),
-                obscuringCharacter: '*',
+              
                 controller: _passwordController,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(
