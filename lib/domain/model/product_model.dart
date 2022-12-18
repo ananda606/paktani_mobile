@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 class ProductsModel {
-  int id;
+  int? id;
   String productName;
   String productLocation;
   double? productRating;
@@ -10,7 +10,7 @@ class ProductsModel {
   double? productPrice;
 
   ProductsModel({
-    required this.id,
+    this.id,
     required this.productName,
     required this.productLocation,
     required this.productDescription,

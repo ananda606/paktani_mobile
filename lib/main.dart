@@ -8,6 +8,7 @@ import 'package:paktani_mobile/presentation/pages/register_page.dart';
 import 'package:paktani_mobile/presentation/pages/money_page.dart';
 import 'package:flutter/material.dart';
 import 'package:paktani_mobile/presentation/pages/login_page.dart';
+import 'package:paktani_mobile/presentation/pages/shop/home_shop_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,11 +28,11 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: kRichBlack,
         textTheme: kTextTheme,
       ),
-
-    home: HomeProductPage(),
-   // home:SearchProductPage(),
-   //   home: LoginPage(),
+      //home: HomeProductPage(),
+      //home: SearchProductPage(),
+      //home: LoginPage(),
       //home: MoneyPage(),
+      home: RegisterPage(),
       debugShowCheckedModeBanner: false,
       navigatorObservers: [routeObserver],
       onGenerateRoute: (RouteSettings settings) {
@@ -42,6 +43,8 @@ class MyApp extends StatelessWidget {
               builder: (_) => MoneyPage(),
             );
           //
+          case HomeShopPage.ROUTE_NAME:
+            return MaterialPageRoute(builder: (_) => HomeShopPage());
           case HomeProductPage.ROUTE_NAME:
             return MaterialPageRoute(builder: (_) => HomeProductPage());
           case SearchProductPage.ROUTE_NAME:

@@ -6,10 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:paktani_mobile/domain/api/user_api.dart';
 import 'package:paktani_mobile/domain/model/user_model.dart';
 
-class DrawerApp extends StatelessWidget {
+class DrawerApp extends StatefulWidget {
   final String pageRoute;
   DrawerApp({required this.pageRoute, });
 
+  @override
+  State<DrawerApp> createState() => _DrawerAppState();
+}
+
+class _DrawerAppState extends State<DrawerApp> {
   @override
   Widget build(BuildContext context) {
     UserApi userApi = UserApi();

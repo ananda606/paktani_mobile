@@ -12,21 +12,24 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _usernameController = TextEditingController();
-  TextEditingController _userAddressController = TextEditingController();
-  TextEditingController _userPhoneNumberController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _userAddressController = TextEditingController();
+  final TextEditingController _userPhoneNumberController =
+      TextEditingController();
   bool _isObscure = true;
-
+  
+  final UserApi _userApi = UserApi();
+  late UserModel userModel;
   @override
   void initState() {
     super.initState();
-    _emailController = TextEditingController();
-    _passwordController = TextEditingController();
-    _usernameController = TextEditingController();
-    _userAddressController = TextEditingController();
-    _userPhoneNumberController = TextEditingController();
+    _emailController;
+    _passwordController;
+    _usernameController;
+    _userAddressController;
+    _userPhoneNumberController;
   }
 
   void _togglePasswordView() {
@@ -37,16 +40,6 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    UserApi userApi = UserApi();
-    UserModel userModel = UserModel(
-      email: _emailController.text,
-      username: _usernameController.text,
-      password: _passwordController.text,
-      userAddress: _userAddressController.text,
-      userPhoneNumber: _userPhoneNumberController.text,
-    
-    );
-    
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -70,17 +63,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 alignment: Alignment.center,
                 width: 80,
                 height: 50,
-                child: TextFormField(
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "must not empty";
-                    } else {
-                      return null;
-                    }
-                  },
+                child: TextField(
+                  enabled: true,
                   cursorColor: Colors.blue,
                   controller: _emailController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
@@ -95,12 +82,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 height: 50,
                 width: 80,
                 alignment: Alignment.center,
-                child: TextFormField(
+                child: TextField(
                   obscureText: _isObscure,
                   obscuringCharacter: '*',
                   controller: _passwordController,
                   decoration: InputDecoration(
-                    border: const OutlineInputBorder(
+                    border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
                     labelText: 'Password',
@@ -119,17 +106,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 alignment: Alignment.center,
                 width: 80,
                 height: 50,
-                child: TextFormField(
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "must not empty";
-                    } else {
-                      return null;
-                    }
-                  },
+                child: TextField(
+                 
                   cursorColor: Colors.blue,
                   controller: _usernameController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
@@ -144,17 +125,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 alignment: Alignment.center,
                 width: 80,
                 height: 50,
-                child: TextFormField(
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "must not empty";
-                    } else {
-                      return null;
-                    }
-                  },
+                child: TextField(
+                 
                   cursorColor: Colors.blue,
                   controller: _userAddressController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
@@ -169,17 +144,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 alignment: Alignment.center,
                 width: 80,
                 height: 50,
-                child: TextFormField(
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "must not empty";
-                    } else {
-                      return null;
-                    }
-                  },
+                child: TextField(
+                  
                   cursorColor: Colors.blue,
                   controller: _userPhoneNumberController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
@@ -211,12 +180,27 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: ElevatedButton(
                   child: const Text('Register'),
                   onPressed: () {
+                    String email = _emailController.text.toString();
+                    String username = _usernameController.text.toString();
+                    String password = _passwordController.text.toString();
+                    String userAddress = _userAddressController.text.toString();
+                    String userPhoneNumber =
+                        _userPhoneNumberController.text.toString();
+
                     if (_emailController.text.isNotEmpty &&
                         _passwordController.text.isNotEmpty &&
                         _usernameController.text.isNotEmpty &&
                         _userAddressController.text.isNotEmpty &&
                         _userPhoneNumberController.text.isNotEmpty) {
-                      userApi.createUser(userModel);
+                      UserModel userModel = UserModel(
+                        email: email,
+                        username: username,
+                        password: password,
+                        userAddress: userAddress,
+                        userPhoneNumber: userPhoneNumber,
+                      );
+                      _userApi.createUser(userModel);
+
                       print(userModel);
                       Navigator.pushNamed(context, LoginPage.ROUTE_NAME);
                     } else {
