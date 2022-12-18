@@ -7,7 +7,7 @@ class ProductsModel {
   double? productRating;
   String productDescription;
   String productImageUrl;
-  double? productPrice;
+  int? productPrice;
 
   ProductsModel({
     this.id,
@@ -40,12 +40,12 @@ class ProductsModel {
       'productPrice':productPrice,
     };
   }
-/*
+
   @override
   String toString() {
     return 'ProductModel{id: $id, name: $productName, productDescription: $productDescription, productImageUrl: $productImageUrl}';
   }
-*/
+
 }
 
 List<ProductsModel> productFromJson(String jsonData) {
