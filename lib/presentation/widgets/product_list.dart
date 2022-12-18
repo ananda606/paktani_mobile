@@ -29,7 +29,14 @@ class ProductList extends StatelessWidget {
                 },
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(16)),
-                  child: Image.asset('${product.productImageUrl}'),
+                  child: Image.asset(
+                    '${product.productImageUrl}',
+                    errorBuilder: (context, error, stackTrace) {
+                      return Icon(
+                        Icons.hourglass_empty,
+                      );
+                    },
+                  ),
                 ),
               ),
             ),

@@ -1,7 +1,6 @@
 
 import 'package:paktani_mobile/common/constants.dart';
 import 'package:paktani_mobile/domain/api/product_api.dart';
-
 import 'package:paktani_mobile/presentation/pages/product/search_product_page.dart';
 import 'package:paktani_mobile/presentation/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';

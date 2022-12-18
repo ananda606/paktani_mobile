@@ -1,11 +1,10 @@
 import 'package:paktani_mobile/domain/api/product_api.dart';
 import 'package:paktani_mobile/domain/model/product_model.dart';
-
 import 'package:flutter/material.dart';
 import 'package:paktani_mobile/presentation/widgets/product_card_list.dart';
 
 class PopularProductsPage extends StatefulWidget {
-  static const ROUTE_NAME = '/popular-movie';
+  static const ROUTE_NAME = '/popular_product';
 
   @override
   _PopularProductsPageState createState() => _PopularProductsPageState();
@@ -27,7 +26,7 @@ class _PopularProductsPageState extends State<PopularProductsPage> {
       ),
       body: SafeArea(
         child: FutureBuilder(
-            future: productApi.getProduct(),
+            future: productApi.getPopularProduct(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return const Center(

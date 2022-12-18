@@ -55,6 +55,30 @@ app.get('/api/readProduct',(req,res)=>{
         }   
     });
 });
+app.get('/api/readPopularProduct/',(req,res)=>{
+    
+    const sqlQuery="SELECT * FROM product ORDER BY productRating DESC";
+    db.query(sqlQuery,(err,result)=>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            res.send(result);
+        }
+    });
+});
+app.get('/api/readPriceProduct/',(req,res)=>{
+    
+    const sqlQuery="SELECT * FROM product ORDER BY productPrice DESC";
+    db.query(sqlQuery,(err,result)=>{
+        if(err){
+            console.log(err);
+        }
+        else{
+            res.send(result);
+        }
+    });
+});
 //read product by id
 app.get('/api/readProductById/:id',(req,res)=>{
     const id=req.params.id;
@@ -257,7 +281,20 @@ app.put('/api/updateUserById/',(req,res)=>{
           }
      });
     });
-
+app.put('/api/topUpUserById/:id',(req,res)=>{
+    const id = req.params.iduser;
+    const userMoney=req.body.userMoney;
+    const sqlQuery= "UPDATE user SET userMoney = ? WHERE iduser = ? ";
+        db.query(sqlQuery, [ userMoney,id,], (err,result)=>{
+            if(err){
+                console.log(err);
+         
+             }else{
+                 res.send(result);
+                 console.log(result);
+             }
+        });
+       });
 //delete
 app.delete('/api/deleteUserById/:iduser',(req,res)=>{
     const id = req.params.iduser;

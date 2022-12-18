@@ -13,6 +13,14 @@ class ProductApi {
       return null;
     }
   }
+   Future<List<ProductsModel>?> getPopularProduct() async {
+    final response = await client.get(Uri.parse("$url/readPopularProduct"));
+    if (response.statusCode == 200) {
+      return productFromJson(response.body);
+    } else {
+      return null;
+    }
+  }
 
   Future<List<ProductsModel>?> getProductById(int id) async {
     final response = await client.get(Uri.parse("$url/readProductById/$id"));
@@ -55,9 +63,9 @@ class ProductApi {
     }
   }
 
-  Future<bool> deleteProduct(int id) async {
+  Future<bool> deleteProduct(int? id) async {
     final response = await client.delete(
-      Uri.parse("$url/api/deleteProductById/$id"),
+      Uri.parse("$url/api/deleteProduct/$id"),
       headers: {"content-type": "application/json"},
     );
     if (response.statusCode == 200) {

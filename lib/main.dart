@@ -9,6 +9,9 @@ import 'package:paktani_mobile/presentation/pages/money_page.dart';
 import 'package:flutter/material.dart';
 import 'package:paktani_mobile/presentation/pages/login_page.dart';
 import 'package:paktani_mobile/presentation/pages/shop/add_product_page.dart';
+import 'package:paktani_mobile/presentation/pages/shop/edit_product_detail_page.dart';
+import 'package:paktani_mobile/presentation/pages/shop/edit_product_page.dart';
+//import 'package:paktani_mobile/presentation/pages/shop/edit_product_page.dart';
 import 'package:paktani_mobile/presentation/pages/shop/home_shop_page.dart';
 
 void main() {
@@ -29,12 +32,12 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: kRichBlack,
         textTheme: kTextTheme,
       ),
-      home: HomeProductPage(),
+      //home: HomeProductPage(),
       //home: SearchProductPage(),
       //home: LoginPage(),
       //home: MoneyPage(),
       //home: RegisterPage(),
-      //home:HomeShopPage(),
+      home: HomeShopPage(),
       debugShowCheckedModeBanner: false,
       navigatorObservers: [routeObserver],
       onGenerateRoute: (RouteSettings settings) {
@@ -47,8 +50,11 @@ class MyApp extends StatelessWidget {
           //
           case HomeShopPage.ROUTE_NAME:
             return MaterialPageRoute(builder: (_) => HomeShopPage());
-              case AddProductPage.ROUTE_NAME:
+
+          case AddProductPage.ROUTE_NAME:
             return MaterialPageRoute(builder: (_) => AddProductPage());
+          case EditProductPage.ROUTE_NAME:
+            return MaterialPageRoute(builder: (_) => EditProductPage());
           case HomeProductPage.ROUTE_NAME:
             return MaterialPageRoute(builder: (_) => HomeProductPage());
           case SearchProductPage.ROUTE_NAME:
@@ -56,6 +62,10 @@ class MyApp extends StatelessWidget {
           case ProductDetailPage.ROUTE_NAME:
             final id = settings.arguments as int;
             return MaterialPageRoute(builder: (_) => ProductDetailPage(id: id));
+          case EditProductDetailPage.ROUTE_NAME:
+            final id = settings.arguments as int;
+            return MaterialPageRoute(
+                builder: (_) => EditProductDetailPage(id: id));
 
           case AboutPage.ROUTE_NAME:
             return MaterialPageRoute(builder: (_) => AboutPage());

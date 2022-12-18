@@ -18,7 +18,12 @@ class DetailContent extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     return Stack(
       children: [
-        Image.asset('${product[0].productImageUrl}'),
+        Image.asset(
+          '${product[0].productImageUrl}',
+          errorBuilder: (context, error, stackTrace) {
+            return Center(child: Icon(Icons.not_accessible));
+          },
+        ),
         Container(
           margin: const EdgeInsets.only(top: 48 + 8),
           child: DraggableScrollableSheet(
@@ -63,8 +68,12 @@ class DetailContent extends StatelessWidget {
                             const SizedBox(height: 16),
                             Row(
                               children: [
-                                Icon(Icons.location_on,),
-                                SizedBox(width: 10,),
+                                Icon(
+                                  Icons.location_on,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
                                 Text(
                                   product[0].productLocation,
                                 ),

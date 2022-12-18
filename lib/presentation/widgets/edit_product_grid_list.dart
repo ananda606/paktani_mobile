@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:paktani_mobile/domain/model/product_model.dart';
 import 'package:paktani_mobile/presentation/pages/product/product_detail_page.dart';
+import 'package:paktani_mobile/presentation/pages/shop/edit_product_detail_page.dart';
 
-class ProductGridList extends StatelessWidget {
+class EditProductGridList extends StatelessWidget {
   final List<ProductsModel> products;
-  ProductGridList(this.products);
+  EditProductGridList(this.products);
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -21,7 +22,7 @@ class ProductGridList extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(
                   context,
-                  ProductDetailPage.ROUTE_NAME,
+                EditProductDetailPage.ROUTE_NAME,
                   arguments: product.id,
                 );
               },

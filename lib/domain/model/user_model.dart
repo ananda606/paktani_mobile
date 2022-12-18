@@ -7,7 +7,7 @@ class UserModel {
   String password;
   String userAddress;
   String userPhoneNumber;
- 
+  int? userMoney;
 
   UserModel({
     this.iduser,
@@ -16,16 +16,17 @@ class UserModel {
     required this.username,
     required this.userAddress,
     required this.userPhoneNumber,
-
+    this.userMoney,
   });
   factory UserModel.fromJson(Map<String, dynamic> map) {
     return UserModel(
+      iduser: map['iduser'],
       email: map['email'],
       username: map['username'],
       password: map['password'],
       userAddress: map['userAddress'],
       userPhoneNumber: map['userPhoneNumber'],
-     
+      userMoney: map['userMoney'],
     );
   }
   Map<String, dynamic> toJson() {
@@ -36,13 +37,13 @@ class UserModel {
       'password': password,
       'userAddress': userAddress,
       'userPhoneNumber': userPhoneNumber,
-   
+      'userMoney':userMoney,
     };
   }
 
   @override
   String toString() {
-    return 'UserModel{id:$iduser, email:$email, password:$password, username:$username, userAddress:$userAddress, userPhoneNumber:$userPhoneNumber,}';
+    return 'UserModel{id:$iduser, email:$email, password:$password, username:$username, userAddress:$userAddress, userPhoneNumber:$userPhoneNumber,userMoney:$userMoney}';
   }
 }
 

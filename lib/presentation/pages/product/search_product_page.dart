@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:paktani_mobile/common/constants.dart';
 import 'package:paktani_mobile/domain/api/product_api.dart';
 import 'package:paktani_mobile/domain/model/product_model.dart';
