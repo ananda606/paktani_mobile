@@ -196,11 +196,14 @@ class _LoginPageState extends State<LoginPage> {
                     }
                   }),
             ),
-            ElevatedButton(
-              child: const Text('admin page'),
-              onPressed: () {
-                Navigator.pushNamed(context, HomeShopPage.ROUTE_NAME);
-              },
+            Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: ElevatedButton(
+                child: const Text('admin page'),
+                onPressed: () {
+                  Navigator.pushNamed(context, HomeShopPage.ROUTE_NAME);
+                },
+              ),
             )
           ],
         ),
