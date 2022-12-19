@@ -5,8 +5,6 @@ import 'package:paktani_mobile/domain/model/product_model.dart';
 import 'package:paktani_mobile/presentation/pages/product/product_detail_page.dart';
 import 'package:paktani_mobile/presentation/pages/product/search_product_page.dart';
 import 'package:paktani_mobile/presentation/pages/shop/add_product_page.dart';
-//import 'package:paktani_mobile/presentation/pages/shop/edit_product_page.dart';
-//import 'package:paktani_mobile/presentation/pages/shop/list_product_page.dart';
 import 'package:paktani_mobile/presentation/widgets/edit_product_grid_list.dart';
 import 'package:paktani_mobile/presentation/widgets/product_grid_list.dart';
 

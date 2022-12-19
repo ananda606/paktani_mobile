@@ -12,7 +12,7 @@ class AddProductPage extends StatefulWidget {
 }
 
 class _AddProductPageState extends State<AddProductPage> {
-   final TextEditingController _productNameController = TextEditingController();
+  final TextEditingController _productNameController = TextEditingController();
   final TextEditingController _productLocationController =
       TextEditingController();
   final TextEditingController _productRatingController =
@@ -63,7 +63,7 @@ class _AddProductPageState extends State<AddProductPage> {
           )
         ],
       ),
-      drawer:Drawer(
+      drawer: Drawer(
         child: Column(
           children: <Widget>[
             SizedBox(
@@ -218,6 +218,28 @@ class _AddProductPageState extends State<AddProductPage> {
                   productImageUrl: productImageUrl,
                   productPrice: price,
                 );
+                if (_productNameController != '' &&
+                    _productDescriptionController != '' &&
+                    _productLocationController != '') {
+                  showDialog(
+                      context: context,
+                      builder: ((context) {
+                        return AlertDialog(
+                          title: Text('product berhasil ditambahkan'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Container(
+                                child: Text('ok'),
+                              ),
+                            ),
+                          ],
+                        );
+                      }));
+                }
+
                 _productApi.createProduct(productsModel);
               },
               child: Text('Add Product')),

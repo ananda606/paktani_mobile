@@ -147,7 +147,7 @@ class EditDetailContent extends StatelessWidget {
                                     ElevatedButton(
                                       onPressed: () {
                                         Navigator.pushReplacementNamed(context,
-                                            EditProductPage.ROUTE_NAME);
+                                            EditProductPage.ROUTE_NAME,arguments: product[0]);
                                       },
                                       child: Text('edit'),
                                     ),
@@ -155,10 +155,11 @@ class EditDetailContent extends StatelessWidget {
                                       width: 20,
                                     ),
                                     ElevatedButton(
-                                      onPressed: () {
+                                      onPressed: () async {
+                                        productApi.deleteProduct(1);
                                         showDialog(
                                             context: context,
-                                            builder: ((context) {
+                                            builder: (context) {
                                               return AlertDialog(
                                                 title: Text('Product deleted'),
                                                 content: Column(
@@ -192,9 +193,7 @@ class EditDetailContent extends StatelessWidget {
                                                   ),
                                                 ],
                                               );
-                                            }));
-
-                                        productApi.deleteProduct(product[0].id);
+                                            });
                                       },
                                       child: Text('delete'),
                                     ),

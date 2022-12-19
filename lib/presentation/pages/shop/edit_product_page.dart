@@ -5,14 +5,16 @@ import 'package:paktani_mobile/presentation/pages/product/search_product_page.da
 import 'package:paktani_mobile/presentation/pages/shop/home_shop_page.dart';
 
 class EditProductPage extends StatefulWidget {
-  const EditProductPage({super.key});
+  ProductsModel productsModel;
+  EditProductPage({super.key, required this.productsModel});
   static const ROUTE_NAME = '/edit_product';
+
   @override
   State<EditProductPage> createState() => _EditProductPageState();
 }
 
 class _EditProductPageState extends State<EditProductPage> {
-   final TextEditingController _productNameController = TextEditingController();
+  final TextEditingController _productNameController = TextEditingController();
   final TextEditingController _productLocationController =
       TextEditingController();
   final TextEditingController _productRatingController =
@@ -22,28 +24,28 @@ class _EditProductPageState extends State<EditProductPage> {
   final TextEditingController _productImageUrlController =
       TextEditingController();
   final TextEditingController _productPriceController = TextEditingController();
-  final ProductApi _productApi = ProductApi();
+  late ProductApi _productApi;
 
   @override
   void initState() {
     super.initState();
+    if (widget.productsModel != null) {
+      _productNameController.text = widget.productsModel.productName;
+      _productLocationController.text = widget.productsModel.productLocation;
+      _productImageUrlController.text = widget.productsModel.productImageUrl;
+      _productRatingController.text = widget.productsModel.productRating.toString();
+      _productDescriptionController.text =
+          widget.productsModel.productDescription;
+      _productPriceController.text =
+          widget.productsModel.productPrice.toString();
+    }
     _productNameController;
     _productLocationController;
     _productRatingController;
     _productDescriptionController;
     _productImageUrlController;
     _productPriceController;
-  }
-
-  @override
-  void dispose() {
-    _productNameController.dispose();
-    _productLocationController.dispose();
-    _productRatingController.dispose();
-    _productDescriptionController.dispose();
-    _productImageUrlController.dispose();
-    _productPriceController.dispose();
-    super.dispose();
+    _productApi = ProductApi();
   }
 
   @override
@@ -63,7 +65,7 @@ class _EditProductPageState extends State<EditProductPage> {
           )
         ],
       ),
-      drawer:Drawer(
+      drawer: Drawer(
         child: Column(
           children: <Widget>[
             SizedBox(
@@ -92,6 +94,7 @@ class _EditProductPageState extends State<EditProductPage> {
         SizedBox(
           height: 30,
         ),
+        Text('${widget.productsModel.id}'),
         Padding(
           padding: const EdgeInsets.all(10.0),
           child: Container(
@@ -102,10 +105,11 @@ class _EditProductPageState extends State<EditProductPage> {
               cursorColor: Colors.blue,
               keyboardType: TextInputType.name,
               controller: _productNameController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
+                hintText: widget.productsModel.productName,
                 labelText: 'Product Name',
               ),
             ),
@@ -124,10 +128,11 @@ class _EditProductPageState extends State<EditProductPage> {
               cursorColor: Colors.blue,
               keyboardType: TextInputType.name,
               controller: _productImageUrlController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
+                hintText: widget.productsModel.productImageUrl,
                 labelText: 'Product Image',
               ),
             ),
@@ -146,10 +151,11 @@ class _EditProductPageState extends State<EditProductPage> {
               cursorColor: Colors.blue,
               keyboardType: TextInputType.text,
               controller: _productLocationController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
+                hintText: widget.productsModel.productLocation,
                 labelText: 'Product Location',
               ),
             ),
@@ -168,10 +174,11 @@ class _EditProductPageState extends State<EditProductPage> {
               cursorColor: Colors.blue,
               controller: _productDescriptionController,
               keyboardType: TextInputType.multiline,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
+                hintText: widget.productsModel.productDescription,
                 labelText: 'Product description',
               ),
             ),
@@ -190,10 +197,11 @@ class _EditProductPageState extends State<EditProductPage> {
               cursorColor: Colors.blue,
               keyboardType: TextInputType.number,
               controller: _productPriceController,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
+                hintText: widget.productsModel.productPrice.toString(),
                 labelText: 'Product Price',
               ),
             ),
@@ -205,22 +213,31 @@ class _EditProductPageState extends State<EditProductPage> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 String productName = _productNameController.text;
                 String productLocation = _productLocationController.text;
                 String productDescription = _productDescriptionController.text;
                 String productImageUrl = _productImageUrlController.text;
+                double? rating=double.tryParse(_productRatingController.text);
                 int? price = int.tryParse(_productPriceController.text);
+
                 ProductsModel productsModel = ProductsModel(
                   productName: productName,
                   productLocation: productLocation,
                   productDescription: productDescription,
                   productImageUrl: productImageUrl,
+                  productRating: rating,
                   productPrice: price,
                 );
+                productsModel.id = widget.productsModel.id;
+                print(productsModel.productName);
+                print(productsModel);
+
                 _productApi.updateProduct(productsModel);
+                Navigator.pushReplacementNamed(
+                    context, HomeShopPage.ROUTE_NAME);
               },
-              child: Text('Add Product')),
+              child: Text('Edit Product')),
         ),
       ]),
     );

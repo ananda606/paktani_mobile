@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:paktani_mobile/domain/api/user_api.dart';
 import 'package:paktani_mobile/domain/model/user_model.dart';
 import 'package:paktani_mobile/common/constants.dart';
+import 'package:paktani_mobile/presentation/pages/product/home_product_page.dart';
+import 'package:paktani_mobile/presentation/pages/shop/home_shop_page.dart';
 
 class LoginPage extends StatefulWidget {
   static const ROUTE_NAME = '/login_page';
@@ -93,7 +95,6 @@ class _LoginPageState extends State<LoginPage> {
               child: TextFormField(
                 enabled: true,
                 obscureText: _isObscure,
-              
                 controller: _passwordController,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(
@@ -140,7 +141,17 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: () {
                           if (user == null) {
                           } else {
-                                  Navigator.pushNamed(context, '/home_product');
+                            if (_emailController.text == 'admin' &&
+                                _passwordController.text == 'admin') {
+                              Navigator.pushNamed(
+                                context,
+                                HomeShopPage.ROUTE_NAME,
+                              );
+                            }
+                            Navigator.pushNamed(
+                              context,
+                              '/home_product',
+                            );
                           }
                         },
                       );
@@ -157,7 +168,13 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: () {
                           if (user == null) {
                           } else {
-                            Navigator.pushNamed(context, '/home_product');
+                            if (_emailController.text == 'admin' &&
+                                _passwordController.text == 'admin') {
+                              Navigator.pushNamed(
+                                  context, HomeShopPage.ROUTE_NAME);
+                            }
+                            Navigator.pushNamed(
+                                context, HomeProductPage.ROUTE_NAME);
                           }
                         },
                       );
@@ -167,6 +184,11 @@ class _LoginPageState extends State<LoginPage> {
                         onPressed: () {
                           if (user == null) {
                           } else {
+                            if (_emailController.text == 'admin' &&
+                                _passwordController.text == 'admin') {
+                              Navigator.pushNamed(
+                                  context, HomeShopPage.ROUTE_NAME);
+                            }
                             Navigator.pushNamed(context, '/home_product');
                           }
                         },
@@ -174,6 +196,12 @@ class _LoginPageState extends State<LoginPage> {
                     }
                   }),
             ),
+            ElevatedButton(
+              child: const Text('admin page'),
+              onPressed: () {
+                Navigator.pushNamed(context, HomeShopPage.ROUTE_NAME);
+              },
+            )
           ],
         ),
       ),

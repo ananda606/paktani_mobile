@@ -134,14 +134,16 @@ app.post('/api/createProduct', async (req,res)=>{
     
 });
 //update product
-app.put('/api/updateProductById/:id',(req,res)=>{
+app.put('/api/updateProductById/:id/',async(req,res)=>{
     const idproduct = req.params.id;
     const productName= req.body.productName;
+    const productLocation=req.body.productLocation;
     const productDescription= req.body.productDescription;
-    const productImageUrl= req.body.productImageUrl;;
-    const sqlQuery= "UPDATE product SET productName = ? , productDescription = ?, productImageUrl = ?  WHERE id = ? ";
+    const productImageUrl= req.body.productImageUrl;
+    const productPrice= req.body.productPrice;
+    const sqlQuery= "UPDATE product SET productName = ? , productLocation = ? , productDescription = ?, productImageUrl = ?, productPrice=?  WHERE id = ?";
 
-    db.query(sqlQuery, [productName, productDescription,productImageUrl,idproduct], (err,result)=>{
+    db.query(sqlQuery, [productName, productLocation,productDescription,productImageUrl,productPrice,idproduct], (err,result)=>{
         if(err){
             console.log(err);
      

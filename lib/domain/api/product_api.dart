@@ -13,7 +13,8 @@ class ProductApi {
       return null;
     }
   }
-   Future<List<ProductsModel>?> getPopularProduct() async {
+
+  Future<List<ProductsModel>?> getPopularProduct() async {
     final response = await client.get(Uri.parse("$url/readPopularProduct"));
     if (response.statusCode == 200) {
       return productFromJson(response.body);
@@ -30,8 +31,10 @@ class ProductApi {
       return null;
     }
   }
+
   Future<List<ProductsModel>?> getProductByName(String productName) async {
-    final response = await client.get(Uri.parse("$url/readProductByName/$productName"));
+    final response =
+        await client.get(Uri.parse("$url/readProductByName/$productName"));
     if (response.statusCode == 200) {
       return productFromJson(response.body);
     } else {
@@ -44,6 +47,7 @@ class ProductApi {
         body: productToJson(data),
         headers: {"content-type": "application/json"});
     if (response.statusCode == 201) {
+      print('create success');
       return true;
     } else {
       return false;
@@ -53,17 +57,18 @@ class ProductApi {
   Future<bool> updateProduct(ProductsModel data) async {
     final response = await client.put(
       Uri.parse("$url/api/updateProductById/${data.id}"),
-      headers: {"content-type": "application/json"},
       body: productToJson(data),
+      headers: {"content-type": "application/json"},
     );
     if (response.statusCode == 200) {
+      print('update success');
       return true;
     } else {
       return false;
     }
   }
 
-  Future<bool> deleteProduct(int? id) async {
+  Future<bool> deleteProduct(int id) async {
     final response = await client.delete(
       Uri.parse("$url/api/deleteProduct/$id"),
       headers: {"content-type": "application/json"},

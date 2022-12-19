@@ -1,5 +1,7 @@
 import 'package:paktani_mobile/common/constants.dart';
 import 'package:paktani_mobile/common/utils.dart';
+import 'package:paktani_mobile/domain/model/product_model.dart';
+import 'package:paktani_mobile/domain/model/user_model.dart';
 import 'package:paktani_mobile/presentation/pages/about_page.dart';
 import 'package:paktani_mobile/presentation/pages/product/search_product_page.dart';
 import 'package:paktani_mobile/presentation/pages/product/home_product_page.dart';
@@ -34,10 +36,10 @@ class MyApp extends StatelessWidget {
       ),
       //home: HomeProductPage(),
       //home: SearchProductPage(),
-      //home: LoginPage(),
+      home: LoginPage(),
       //home: MoneyPage(),
       //home: RegisterPage(),
-      home: HomeShopPage(),
+      //home: HomeShopPage(),
       debugShowCheckedModeBanner: false,
       navigatorObservers: [routeObserver],
       onGenerateRoute: (RouteSettings settings) {
@@ -54,7 +56,9 @@ class MyApp extends StatelessWidget {
           case AddProductPage.ROUTE_NAME:
             return MaterialPageRoute(builder: (_) => AddProductPage());
           case EditProductPage.ROUTE_NAME:
-            return MaterialPageRoute(builder: (_) => EditProductPage());
+            final product = settings.arguments as ProductsModel;
+            return MaterialPageRoute(
+                builder: (_) => EditProductPage(productsModel: product));
           case HomeProductPage.ROUTE_NAME:
             return MaterialPageRoute(builder: (_) => HomeProductPage());
           case SearchProductPage.ROUTE_NAME:

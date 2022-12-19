@@ -1,4 +1,4 @@
-
+import 'package:paktani_mobile/domain/model/product_model.dart';
 import 'package:paktani_mobile/presentation/pages/about_page.dart';
 import 'package:paktani_mobile/presentation/pages/product/home_product_page.dart';
 import 'package:paktani_mobile/presentation/pages/money_page.dart';
@@ -8,7 +8,10 @@ import 'package:paktani_mobile/domain/model/user_model.dart';
 
 class DrawerApp extends StatefulWidget {
   final String pageRoute;
-  DrawerApp({required this.pageRoute, });
+
+  DrawerApp({
+    required this.pageRoute,
+  });
 
   @override
   State<DrawerApp> createState() => _DrawerAppState();
@@ -21,26 +24,30 @@ class _DrawerAppState extends State<DrawerApp> {
     return Drawer(
       child: Column(
         children: [
-          FutureBuilder(
-            future: userApi.getLoginUser('anandalm', 'password'),
-            builder: (context, snapshot) {
-              List<UserModel>? user = snapshot.data;
-              if (snapshot.hasError) {
-                return Text('something wrong');
-              } else if (snapshot.hasData) {
-                return UserAccountsDrawerHeader(
-                  currentAccountPicture: Icon(
-                    Icons.person,
-                    color: Colors.black,
-                  ),
-                  accountName: Text('${user?[0].email.toString()}'),
-                  accountEmail: Text('${user?[0].username.toString()}'),
-                );
-              } else {
-                return Text('empty');
-              }
-            },
+          SizedBox(
+            height: 200,
           ),
+          // children: [
+          //   FutureBuilder(
+          //     future: userApi.getLoginUser(widget.userModel.email, widget.userModel.password),
+          //     builder: (context, snapshot) {
+          //       List<UserModel>? user = snapshot.data;
+          //       if (snapshot.hasError) {
+          //         return Text('something wrong');
+          //       } else if (snapshot.hasData) {
+          //         return UserAccountsDrawerHeader(
+          //           currentAccountPicture: Icon(
+          //             Icons.person,
+          //             color: Colors.black,
+          //           ),
+          //           accountName: Text('${user?[0].email.toString()}'),
+          //           accountEmail: Text('${user?[0].username.toString()}'),
+          //         );
+          //       } else {
+          //         return Text('empty');
+          //       }
+          //     },
+          //   ),
           ListTile(
             leading: const Icon(Icons.production_quantity_limits),
             title: const Text('Product'),

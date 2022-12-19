@@ -1,6 +1,6 @@
-
 import 'package:paktani_mobile/common/constants.dart';
 import 'package:paktani_mobile/domain/api/product_api.dart';
+import 'package:paktani_mobile/domain/model/user_model.dart';
 import 'package:paktani_mobile/presentation/pages/product/search_product_page.dart';
 import 'package:paktani_mobile/presentation/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +13,7 @@ class HomeProductPage extends StatefulWidget {
 
   HomeProductPage({
     super.key,
+  
   });
   @override
   _HomeProductPageState createState() => _HomeProductPageState();
@@ -31,6 +32,7 @@ class _HomeProductPageState extends State<HomeProductPage> {
     return Scaffold(
       drawer: DrawerApp(
         pageRoute: HomeProductPage.ROUTE_NAME,
+        
       ),
       appBar: AppBar(
         title: const Text('PakTani'),

@@ -1,7 +1,7 @@
 import 'package:paktani_mobile/domain/model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:paktani_mobile/domain/api/product_api.dart';
-import 'package:paktani_mobile/presentation/widgets/detail_content.dart';
+//import 'package:paktani_mobile/presentation/widgets/detail_content.dart';
 import 'package:paktani_mobile/presentation/widgets/edit_detail_content.dart';
 
 class EditProductDetailPage extends StatefulWidget {
@@ -33,7 +33,7 @@ class _EditProductDetailPageState extends State<EditProductDetailPage> {
                 return const Center(child: Text('something wrong!'));
               } else if (snapshot.hasData) {
                 late List<ProductsModel>? products = snapshot.data;
-                bool isAddedWishlist = false;
+                
                 return SafeArea(child: EditDetailContent(products!));
               } else {
                 return const CircularProgressIndicator();
