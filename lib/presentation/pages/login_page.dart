@@ -199,7 +199,7 @@ class _LoginPageState extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.all(30.0),
               child: ElevatedButton(
-                child: const Text('admin page'),
+                child: const Text('Seller page'),
                 onPressed: () {
                   Navigator.pushNamed(context, HomeShopPage.ROUTE_NAME);
                 },
